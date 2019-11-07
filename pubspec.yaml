@@ -1,0 +1,59 @@
+name: uhk_events
+description: UHK Events
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.3.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  http:
+
+  # State management
+  flutter_bloc: ^1.0.0
+
+  # NoSQL storage
+  hive: 1.1.1
+  hive_flutter: 0.2.1
+
+  # Firebase
+  firebase_core: ^0.4.0+9
+  cloud_firestore: ^0.12.9+5
+  firebase_messaging: ^5.1.6
+  firebase_auth: ^0.14.0+5
+
+  google_maps_flutter: ^0.5.21+8
+
+  #DI
+  get_it: ^3.0.3
+
+  # Tools
+  intl: 0.16.0
+  equatable: ^0.6.1
+  flutter_svg: ^0.14.4
+
+  cupertino_icons: ^0.1.2
+
+  flutter_i18n: 0.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  hive_generator: 0.5.2
+  build_runner:
+
+
+flutter:
+  assets:
+    - assets/i18n/
+
+  fonts:
+    - family: Comenia Sans
+      fonts:
+        - asset: assets/fonts/ComeniaSans.otf
+        - asset: assets/fonts/ComeniaSansMed.otf
+        - asset: assets/fonts/ComeniaSansBold.otf
+

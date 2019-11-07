@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "650304992286",
+    "firebase_url": "https://uhk-events.firebaseio.com",
+    "project_id": "uhk-events",
+    "storage_bucket": "uhk-events.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650304992286:android:21b223b8e64b1b1a43ea0f",
+        "android_client_info": {
+          "package_name": "cz.stepanzalis.uhkevents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650304992286-00fu19sr7a7ha2lqeqf28bssm6q3r2r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDhpXjCo087XGhRkfEr6ise6R-OHSVOKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650304992286-00fu19sr7a7ha2lqeqf28bssm6q3r2r1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "650304992286-rgbsm2hqn554rp5js66pkoi63uk648sr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cz.uhk.eventapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
