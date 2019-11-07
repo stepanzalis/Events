@@ -1,16 +1,7 @@
-# uhk_events
+# Events
 
-UHK Events
+<img src="https://camo.githubusercontent.com/de20d75ca61aa884f5259e6e34090efeda1bfd45/68747470733a2f2f666c75747465722e6465762f6173736574732f666c75747465722d6c6f636b75702d346362306565303732616233313265353937383464396662663466623761643432363838613766646165613132373063636636626266346633346237653033662e737667" alt="Flutter logo" style="max-width:100%;">
 
-## Getting Started
+**Android & iOS app to see events at Univerzita Hradec Králové**
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[![Codemagic build status](https://api.codemagic.io/apps/5dc476090679e126d8facf36/5dc476090679e126d8facf35/status_badge.svg)](https://codemagic.io/apps/5dc476090679e126d8facf36/5dc476090679e126d8facf35/latest_build)
