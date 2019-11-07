@@ -19,7 +19,9 @@ class EventsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'EventApp ',
-      theme: theme,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: Container(),
       localizationsDelegates: [
         FlutterI18nDelegate(fallbackFile: 'cs', path: 'assets/i18n'),
