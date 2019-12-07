@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 final ThemeData theme = ThemeData(
-  primarySwatch: Colors.white,
   brightness: Brightness.light,
-  fontFamily: 'ComeniaSans',
+  fontFamily: 'Comenia Sans',
   primaryColor: Color(0xffffffff),
   primaryColorBrightness: Brightness.light,
   primaryColorLight: Color(0xffe6e6e6),

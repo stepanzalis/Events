@@ -1,4 +1,4 @@
-import 'package:uhk_events/di/locator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/api/ApiProvider.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
 import 'package:uhk_events/io/model/event_item.dart';
@@ -8,37 +8,40 @@ import 'package:uhk_events/io/model/scheduled_event.dart';
 
 import 'event_repository.dart';
 
-class EventRepositoryImpl extends EventRepository {
-  final ApiProvider _apiProvider = locator.get<ApiProvider>();
-  final FirestoreProvider _firestoreProvider = locator.get<FirestoreProvider>();
+class EventRepositoryImpl with EventRepository {
+
+  final ApiProvider apiProvider;
+  final FirestoreProvider firestoreProvider;
+
+  const EventRepositoryImpl({@required this.apiProvider, @required this.firestoreProvider});
 
   @override
   Future<GeneralInfo> fetchGeneralInfo() {
-    return _firestoreProvider.fetchGeneralInfo();
+    return firestoreProvider.fetchGeneralInfo();
   }
 
   @override
   Future<List<MainEvent>> fetchMainEvents() {
-    return _firestoreProvider.fetchMainEvents();
+    return firestoreProvider.fetchMainEvents();
   }
 
   @override
   Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId) {
-    return _firestoreProvider.fetchScheduleFromEvent(eventId);
+    return firestoreProvider.fetchScheduleFromEvent(eventId);
   }
 
   @override
   Future<List<EventItem>> getEventList() {
-    return _apiProvider.getEventList();
+    return apiProvider.getEventList();
   }
 
   @override
   Future<void> postSchedule(String userId, String eventId, ScheduledEvent event) {
-    return _firestoreProvider.postSchedule(userId, eventId, event);
+    return firestoreProvider.postSchedule(userId, eventId, event);
   }
 
   @override
   Future<void> removeSchedule(String userId, String eventId, String scheduleEventId) {
-    return _firestoreProvider.removeSchedule(userId, eventId, scheduleEventId);
+    return firestoreProvider.removeSchedule(userId, eventId, scheduleEventId);
   }
 }

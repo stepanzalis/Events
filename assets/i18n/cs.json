@@ -1,3 +1,9 @@
 {
-  "title": "Test App Anglais"
+  "title": "UHK Events",
+  "continue" : "Pokračovat",
+  "addToCalendar": "Přidejte si událost do kalendáře a budťe v obraze.",
+  "conference": "Některé události lze navšívit a zjistit detailní program.",
+  "notifications": "Pokud si přejete dostávat notifikaci a nových událostech, povolte notifikace níže.",
+  "allowNotifications": "Povolit notifikace",
+  "skipOnboarding": "Přeskočit"
 }

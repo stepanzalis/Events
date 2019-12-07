@@ -12,7 +12,9 @@ DateTime getDate(String date, String format) {
   return rawFormat.parse(date);
 }
 
-String formatDate(String unformattedDate, {String fromFormat = API_DATE_FORMAT, String toFormat = HUMAN_DATE_FORMAT}) {
+String formatDate(String unformattedDate,
+    {String fromFormat = API_DATE_FORMAT,
+    String toFormat = HUMAN_DATE_FORMAT}) {
   final rawFormat = DateFormat(fromFormat);
   final dateFormat = DateFormat(toFormat);
   return dateFormat.format(rawFormat.parse(unformattedDate));

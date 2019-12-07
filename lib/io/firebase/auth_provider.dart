@@ -1,4 +1,5 @@
-abstract class UserRepository {
+
+abstract class AuthProvider {
 
   Future<void> signInAnonymously();
 
