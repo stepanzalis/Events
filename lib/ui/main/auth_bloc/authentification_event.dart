@@ -25,5 +25,5 @@ class SkippedAuth extends AuthenticationEvent {
   List<Object> get props => [];
 
   @override
-  String toString() => 'SkippedAuth{}';
+  String toString() => 'SkippedAuth';
 }

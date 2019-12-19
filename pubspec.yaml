@@ -3,7 +3,7 @@ description: UHK Events
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   flutter_i18n: 0.8.0
+  device_simulator: ^0.9.5
 
 dev_dependencies:
   flutter_test:
@@ -54,5 +55,7 @@ flutter:
     - family: Comenia Sans
       fonts:
         - asset: assets/fonts/ComeniaSans.otf
+        - asset: assets/fonts/ComeniaSansBold.otf
+          weight: 700
 
 

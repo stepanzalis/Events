@@ -15,9 +15,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   AuthenticationState get initialState => SplashScreen();
 
   @override
-  Stream<AuthenticationState> mapEventToState(
-    AuthenticationEvent event,
-  ) async* {
+  Stream<AuthenticationState> mapEventToState(AuthenticationEvent event) async* {
+    yield SplashScreen();
+    await Future.delayed(Duration(seconds: 1));
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     } else {
@@ -30,7 +30,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       final isSignedIn = await userRepository.isSignedIn();
       if (isSignedIn) {
         final userId = await userRepository.getUserId();
-        yield Authenticated(userId);
+          yield Authenticated(userId);
       } else {
         userRepository.signInAnonymously();
         yield Uninitialized();

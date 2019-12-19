@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'common/colors.dart';
+
 ThemeData theme = ThemeData(
+  backgroundColor: Colors.white,
   buttonColor: Colors.black,
   fontFamily: 'Comenia Sans',
   primaryColor: Colors.white,
@@ -14,6 +17,11 @@ ThemeData theme = ThemeData(
       disabledColor: Colors.grey,
       hoverColor: Colors.black),
   textTheme: TextTheme(
-    body1: TextStyle(color: Colors.black, fontSize: 20),
-  ),
+      body1: TextStyle(color: primaryTextColor, fontSize: 20),
+      body2: TextStyle(color: primaryTextColor, fontSize: 18),
+      title: TextStyle(
+          color: Colors.black,
+          fontSize: 28,
+          fontFamily: 'Comenia Sans Bold',
+          fontWeight: FontWeight.w700)),
 );

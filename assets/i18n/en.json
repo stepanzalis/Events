@@ -5,6 +5,10 @@
   "conference": "Některé události lze navšívit a zjistit detailní program.",
   "notifications": "Pokud si přejete dostávat notifikaci a nových událostech, povolte notifikace níže.",
   "allowNotifications": "Povolit notifikace",
-  "skipOnboarding": "Přeskočit"
+  "skipOnboarding": "Přeskočit",
+
+  "appTitle": "Events",
+  "appTitleFull": "UHK EVENTS",
+  "eventError": "Nelze načíst události"
 
 }

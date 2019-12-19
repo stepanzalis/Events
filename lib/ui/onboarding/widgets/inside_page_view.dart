@@ -17,7 +17,7 @@ class InsidePageView extends StatelessWidget {
         Container(
           width: double.infinity,
           height: double.infinity,
-          child: Image.asset("/assets/icons/background.jpg"),
+          child: Image.asset("/assets/icons/background.png"),
         ),
         showSkippedButton
             ? Positioned(
