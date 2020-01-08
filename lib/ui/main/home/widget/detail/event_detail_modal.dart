@@ -85,9 +85,12 @@ class _EventTimeSubSection extends StatelessWidget {
           SvgPicture.asset("assets/icons/time_icon.svg",
               width: 15, color: item.faculty.facultyColor()),
           SizedBox(width: 20),
-          Text(item.eventTime,
-              style:
-                  Theme.of(context).textTheme.display1.copyWith(fontSize: 15))
+          Expanded(
+              child: Text(item.eventTime,
+                  style: Theme.of(context)
+                      .textTheme
+                      .display1
+                      .copyWith(fontSize: 15)))
         ],
       );
 }
