@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uhk_events/common/extensions/event_item_extensions.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/repositories/events/event_repository.dart';
+
 import './bloc.dart';
-import 'package:uhk_events/common/extensions/event_item_extensions.dart';
 
 class EventsBloc extends Bloc<EventsEvent, EventsState> {
   final EventRepository repository;
@@ -20,8 +21,6 @@ class EventsBloc extends Bloc<EventsEvent, EventsState> {
   ) async* {
     if (event is LoadEvents) {
       yield* _mapLoadEventToState(repository);
-    } else if (event is ToggleFaculty) {
-      yield* _mapToggleFacultyToState();
     }
   }
 }
@@ -34,5 +33,3 @@ Stream<EventsState> _mapLoadEventToState(EventRepository repository) async* {
     yield EventsNotLoaded();
   }
 }
-
-Stream<EventsState> _mapToggleFacultyToState() async* {}

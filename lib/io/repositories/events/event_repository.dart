@@ -20,4 +20,6 @@ abstract class EventRepository {
   Future<void> removeSchedule(
       String userId, String eventId, String scheduleEventId);
 
+  Future<bool> isMainEvent(int id);
+
 }

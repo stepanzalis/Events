@@ -6,15 +6,17 @@ class MainEventEntity extends Equatable {
   final String id;
   final String title;
   final String backgroundUrl;
-  final Timestamp date;
+  final Timestamp startDate;
+  final Timestamp endDate;
   final String infoAbout;
   final bool active;
 
-  MainEventEntity(
+  const MainEventEntity(
       {@required this.id,
       @required this.title,
       @required this.backgroundUrl,
-      @required this.date,
+      @required this.startDate,
+      @required this.endDate,
       @required this.infoAbout,
       @required this.active});
 
@@ -23,14 +25,17 @@ class MainEventEntity extends Equatable {
           id: snap.data['ID'],
           title: snap.data['title'],
           backgroundUrl: snap.data['backgroundUrl'] ?? "",
-          date: snap.data['date'],
+          startDate: snap.data['startDate'],
+          endDate: snap.data['endDate'],
           infoAbout: snap.data['infoAbout'] ?? "",
           active: snap.data['isActive'] ?? false);
 
-  @override
-  String toString() =>
-      'MainEventEntity{ id: $id, title: $title, infoAbout: $infoAbout, backgroundUrl: $backgroundUrl, date: $date, active: $active}';
 
   @override
-  List<Object> get props => [id, title, infoAbout, backgroundUrl, date, active];
+  String toString() {
+    return 'MainEventEntity{id: $id, title: $title, backgroundUrl: $backgroundUrl, startDate: $startDate, endDate: $endDate, infoAbout: $infoAbout, active: $active}';
+  }
+
+  @override
+  List<Object> get props => [id, title, infoAbout, backgroundUrl, startDate, active];
 }

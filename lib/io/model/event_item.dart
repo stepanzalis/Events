@@ -1,14 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uhk_events/common/constants.dart';
+import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/util/date_formatter.dart';
-import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 
 @immutable
 class EventItem extends Equatable {
   final int id;
+  final String eventTime;
   final String eventStart;
   final String eventEnds;
   final Faculty faculty;
@@ -18,6 +19,7 @@ class EventItem extends Equatable {
 
   EventItem(
       {this.id,
+      this.eventTime,
       this.eventStart,
       this.eventEnds,
       this.faculty,
@@ -33,11 +35,14 @@ class EventItem extends Equatable {
         eventTitle: eventTitle ?? this.eventTitle,
         faculty: faculty ?? this.faculty,
         multiDayEvent: multiDayEvent ?? this.multiDayEvent,
+        eventTime: eventTime ?? this.eventTime,
       );
 
   static EventItem fromEntity(EventItemEntity entity) => EventItem(
       id: entity.id,
-      multiDayEvent: entity.multipleEventStart != null && entity.multipleEventEnd != null,
+      multiDayEvent:
+          entity.multipleEventStart != null && entity.multipleEventEnd != null,
+      eventTime: entity.getEventTime(),
       eventStart: entity.multipleEventStart == null
           ? formatDate(entity.singleEventStart,
               fromFormat: API_DATE_FORMAT_LONGER)
@@ -51,7 +56,7 @@ class EventItem extends Equatable {
 
   @override
   String toString() {
-    return 'EventItem {id: $id, eventTitle: $eventTitle, multipleDays: $multiDayEvent, eventTag: $eventTag, facultyType: $faculty}';
+    return 'EventItem{id: $id, eventTime: $eventTime, eventStart: $eventStart, eventEnds: $eventEnds, faculty: $faculty, eventTitle: $eventTitle, eventTag: $eventTag, multiDayEvent: $multiDayEvent}';
   }
 
   @override
@@ -61,6 +66,7 @@ class EventItem extends Equatable {
         faculty,
         eventTitle,
         eventTag,
-        multiDayEvent
+        multiDayEvent,
+        eventTime
       ];
 }

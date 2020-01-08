@@ -43,7 +43,7 @@ class MainEvent extends Equatable {
         id: entity.id,
         title: entity.title,
         backgroundUrl: entity.backgroundUrl,
-        date: entity.date.toDate(),
+        date: entity.startDate.toDate(),
         infoAbout: entity.infoAbout,
         active: entity.active ?? false,
       );

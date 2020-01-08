@@ -1,25 +1,26 @@
 import 'dart:io';
 
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:uhk_events/util/preference_manager_base.dart';
 
-class PreferenceManager {
-  
-  static final PreferenceManager _singleton = PreferenceManager._internal();
+class PreferenceManager extends BasePreferenceManager {
 
-  PreferenceManager._internal();
-
-  factory PreferenceManager() => _singleton;
-
-  PreferenceManager.init(Directory directory) {
+  @override
+  void init() async {
+    final Directory directory = await getApplicationDocumentsDirectory();
     Hive.init(directory.path);
   }
 
+  @override
   Future<Box<dynamic>> openBox(String key) async => Hive.openBox(key);
 
+  @override
   dynamic getBox(String key) async {
     final box = Hive.box(key);
     return box.get(key);
   }
 
-  dispose() => Hive.close();
+  @override
+  void dispose() => Hive.close();
 }

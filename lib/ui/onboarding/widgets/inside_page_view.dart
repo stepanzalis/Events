@@ -19,15 +19,17 @@ class InsidePageView extends StatelessWidget {
           height: double.infinity,
           child: Image.asset("/assets/icons/background.png"),
         ),
-        showSkippedButton
-            ? Positioned(
-                top: 40,
-                right: 20,
-                child: OutlineButton(
-                    child: Text(FlutterI18n.translate(context, "skipOnboarding")),
-                    onPressed: () => BlocProvider.of<AuthenticationBloc>(context).add(SkippedAuth())),
-              )
-            : Container(),
+        if (showSkippedButton)
+          Positioned(
+              top: 40,
+              right: 20,
+              child: OutlineButton(
+                  onPressed: () => BlocProvider.of<AuthenticationBloc>(context)
+                      .add(SkippedAuth()),
+                  child:
+                      Text(FlutterI18n.translate(context, "skipOnboarding"))))
+        else
+          Container(),
         child
       ],
     );

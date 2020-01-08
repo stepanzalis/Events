@@ -4,6 +4,7 @@ import 'package:uhk_events/common/colors.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 
 extension FacultyExtensions on Faculty {
+
   Color facultyColor() {
     switch (this) {
       case Faculty.Fim:

@@ -1,14 +1,15 @@
 {
   "title": "UHK Events",
   "continue" : "Pokračovat",
-  "addToCalendar": "Přidejte si událost do kalendáře a budťe v obraze.",
-  "conference": "Některé události lze navšívit a zjistit detailní program.",
-  "notifications": "Pokud si přejete dostávat notifikaci a nových událostech, povolte notifikace níže.",
+  "addToCalendar": "Události si můžete přidat do svého kalendáře.",
+  "conference": "Některé události lze navšívit a zjistit detailní program. Můžete si vytvořit svůj harmonogram tak, aby vám to vyhovovalo.",
+  "notifications": "Pokud si přejete dostávat notifikaci o nově přidaných událostech, povolte notifikace níže.",
   "allowNotifications": "Povolit notifikace",
   "skipOnboarding": "Přeskočit",
 
   "appTitle": "Events",
   "appTitleFull": "UHK EVENTS",
-  "eventError": "Nelze načíst události"
+  "eventError": "Nelze načíst události",
+  "addToCalendarBtn": "PŘIDAT DO KALENDÁŘE"
 
 }

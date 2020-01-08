@@ -2,26 +2,25 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 
-@immutable
-abstract class EventsState extends Equatable {
+abstract class EventsState {
   const EventsState();
 }
 
-class EventsLoading extends EventsState {
+class EventsLoading extends EventsState with EquatableMixin {
   @override
   List<Object> get props => [];
 }
 
-class EventsLoaded extends EventsState {
+class EventsLoaded extends EventsState with EquatableMixin{
 
   final List<EventItem> events;
-  const EventsLoaded(this.events);
+  EventsLoaded(this.events);
 
   @override
   List<Object> get props => [events];
 }
 
-class EventsNotLoaded extends EventsState {
+class EventsNotLoaded extends EventsState with EquatableMixin {
   @override
   List<Object> get props => [];
 }

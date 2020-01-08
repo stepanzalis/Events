@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
-import './bloc.dart';
+
+import 'bloc.dart';
 
 class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
   final EventsBloc eventsBloc;
@@ -19,12 +21,12 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
 
   @override
   EventFilteredState get initialState {
-    return eventsBloc.state is EventsLoaded
-        ? FilteredEventsLoaded(
-            (eventsBloc.state as EventsLoaded).events,
-            <Faculty>[],
-          )
-        : FilteredEventsLoading();
+    if (eventsBloc.state is EventsLoaded) {
+      return FilteredEventsLoaded(
+          (eventsBloc.state as EventsLoaded).events, const <Faculty>[]);
+    } else {
+      return FilteredEventsLoading();
+    }
   }
 
   @override
@@ -35,6 +37,8 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
       yield* _mapUpdateFilterToState(event);
     } else if (event is UpdateEvents) {
       yield* _mapEventsUpdatedToState(event);
+    } else if (event is GetEventDetail) {
+      yield* _mapGetEventDetailToState(event);
     }
   }
 
@@ -43,7 +47,9 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
   ) async* {
     if (eventsBloc.state is EventsLoaded) {
       final events = (eventsBloc.state as EventsLoaded).events;
-      final faculties = (state as FilteredEventsLoaded).faculties;
+      final faculties = state is FilteredEventsLoaded
+          ? (state as FilteredEventsLoaded).faculties
+          : const <Faculty>[];
       final filter = _addOrRemoveFilterFaculty(faculties, event.faculty);
 
       yield FilteredEventsLoaded(
@@ -51,13 +57,15 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
     }
   }
 
-  List<Faculty> _addOrRemoveFilterFaculty(List<Faculty> faculties, Faculty faculty) {
-    var newList = <Faculty>[]..addAll(faculties);
+  List<Faculty> _addOrRemoveFilterFaculty(
+      List<Faculty> faculties, Faculty faculty) {
+    final newList = <Faculty>[...faculties];
 
-    if (newList.contains(faculty))
+    if (newList.contains(faculty)) {
       newList.remove(faculty);
-    else
+    } else {
       newList.add(faculty);
+    }
     return newList;
   }
 
@@ -77,6 +85,15 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
       List<EventItem> events, List<Faculty> filter) {
     if (filter.isEmpty) return events;
     return events.where((e) => filter.contains(e.faculty)).toList();
+  }
+
+  Stream<EventFilteredState> _mapGetEventDetailToState(
+      GetEventDetail event) async* {
+    if (await eventsBloc.repository.isMainEvent(event.item.id)) {
+      yield EventConferenceTypeDetail(id: event.item.id.toString());
+    } else {
+      yield EventModalDetail(item: event.item);
+    }
   }
 
   @override

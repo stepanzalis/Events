@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uhk_events/common/constants.dart';
 
 class SplashScreenView extends StatelessWidget {
   const SplashScreenView();
@@ -10,8 +11,8 @@ class SplashScreenView extends StatelessWidget {
     return Stack(
       alignment: Alignment.topCenter,
       children: <Widget>[
-        _Background(),
-        _LogoWithTitle()
+        const _Background(),
+        const _LogoWithTitle()
       ],
     );
   }
@@ -32,20 +33,18 @@ class _Background extends StatelessWidget {
 class _LogoWithTitle extends StatelessWidget {
   const _LogoWithTitle();
 
-  final double logoSize = 80;
-
   @override
   Widget build(BuildContext context) => Positioned(
         top: MediaQuery.of(context).size.height / 4,
         child: Column(
           children: <Widget>[
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             SvgPicture.asset(
               "assets/icons/uhk_events.svg",
               width: logoSize,
               height: logoSize,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(FlutterI18n.translate(context, "appTitleFull"),
                 style: Theme.of(context).textTheme.title)
           ],

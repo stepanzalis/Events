@@ -10,7 +10,7 @@ class ScheduledEventEntity extends Equatable {
   final String description;
   final String place;
 
-  ScheduledEventEntity(
+  const ScheduledEventEntity(
       {@required this.id,
       @required this.title,
       @required this.description,

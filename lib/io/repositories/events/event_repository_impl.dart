@@ -44,4 +44,9 @@ class EventRepositoryImpl with EventRepository {
   Future<void> removeSchedule(String userId, String eventId, String scheduleEventId) {
     return firestoreProvider.removeSchedule(userId, eventId, scheduleEventId);
   }
+
+  @override
+  Future<bool> isMainEvent(int id) {
+    return firestoreProvider.isConferenceType(id);
+  }
 }

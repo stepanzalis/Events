@@ -31,7 +31,7 @@ class _PageViewIndicatorState extends State<PageViewIndicator> {
     );
   }
 
-  pageChanged(int index) =>
+  void pageChanged(int index) =>
       BlocProvider.of<OnboardingBloc>(context).add(ChangedPaged(index: index));
 
   @override

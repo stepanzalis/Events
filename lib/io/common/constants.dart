@@ -1,6 +1,6 @@
 import 'package:uhk_events/io/model/faculty.dart';
 
-final faculties = [
+final List<Faculty> faculties = [
   Faculty.Uhk,
   Faculty.Ff,
   Faculty.Fim,

@@ -1,11 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:device_simulator/device_simulator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:uhk_events/io/api/ApiProvider.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
 import 'package:uhk_events/io/repositories/events/event_repository_impl.dart';
@@ -13,14 +11,13 @@ import 'package:uhk_events/io/repositories/user/user_repository_impl.dart';
 import 'package:uhk_events/styling.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/home_view.dart';
-import 'package:uhk_events/util/preference_manager.dart';
+
 import 'io/firebase/firebase_auth_provider.dart';
 import 'ui/main/auth_bloc/auth_bloc.dart';
 import 'ui/onboarding/onboarding_view.dart';
-import 'ui/splashscreen/splashscreen.dart';
 import 'util/bloc_delegate.dart';
 
-_statusBarColor() {
+void _statusBarColor() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
@@ -30,7 +27,6 @@ void main() async {
   _statusBarColor();
   WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
-  PreferenceManager.init(await getApplicationDocumentsDirectory());
 
   runApp(
     BlocProvider(
@@ -58,25 +54,20 @@ class EventsApp extends StatelessWidget {
       ],
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          if (state is SplashScreen) {
-            return SplashScreenView();
-          } else if (state is Uninitialized) {
+          if (state is Uninitialized) {
             return OnboardingView();
           } else {
             return BlocProvider(
-              create: (context) {
-                return EventFilteredBloc(
-                  eventsBloc: EventsBloc(
-                      repository: EventRepositoryImpl(
-                          apiProvider: ApiProvider(),
-                          firestoreProvider: FirestoreProvider()))
-                    ..add(
-                      LoadEvents(),
-                    ),
-                );
-              },
-              child: HomeView(),
-            );
+                create: (context) => EventsBloc(
+                    repository: EventRepositoryImpl(
+                        apiProvider: ApiProvider(),
+                        firestoreProvider: FirestoreProvider())),
+                child: BlocProvider(
+                  create: (context) => EventFilteredBloc(
+                      eventsBloc: BlocProvider.of<EventsBloc>(context)
+                        ..add(LoadEvents())),
+                  child: HomeView(),
+                ));
           }
         },
       ),

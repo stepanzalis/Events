@@ -6,17 +6,18 @@ import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/widgets/inside_page_view.dart';
 import 'package:uhk_events/ui/onboarding/widgets/notification_panel.dart';
 import 'package:uhk_events/ui/onboarding/widgets/page_view_indicator.dart';
+import 'package:uhk_events/util/preference_manager.dart';
 
 import 'bloc/onboarding_bloc.dart';
 
 class OnboardingView extends StatelessWidget {
-
   final List<Widget> onboardingPages = [
-    InsidePageView(
+    const InsidePageView(
         child: ImageTextPageView("assets/icons/calendar.svg", "addToCalendar")),
-    InsidePageView(
+    const InsidePageView(
         child: ImageTextPageView("assets/icons/conference.svg", "conference")),
-    InsidePageView(child: NotificationPanel(), showSkippedButton: false),
+    const InsidePageView(
+        child: const NotificationPanel(), showSkippedButton: false),
   ];
 
   @override
@@ -25,7 +26,11 @@ class OnboardingView extends StatelessWidget {
       body: MultiBlocProvider(
         providers: [
           BlocProvider<OnboardingBloc>(create: (context) => OnboardingBloc()),
-          BlocProvider<NotificationBloc>(create: (context) => NotificationBloc()),
+          BlocProvider<NotificationBloc>(
+            create: (context) => NotificationBloc(
+              manager: PreferenceManager(),
+            ),
+          ),
         ],
         child: PageViewIndicator(children: onboardingPages),
       ),
@@ -47,9 +52,9 @@ class ImageTextPageView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SvgPicture.asset(iconAsset),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           OnboardingTitle(titleKey),
-          SizedBox(height: 200),
+          const SizedBox(height: 200),
         ],
       ),
     );
@@ -57,14 +62,14 @@ class ImageTextPageView extends StatelessWidget {
 }
 
 class OnboardingTitle extends StatelessWidget {
-
   final String titleKey;
+
   const OnboardingTitle(this.titleKey);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 40.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
         FlutterI18n.translate(context, titleKey),
         textAlign: TextAlign.center,

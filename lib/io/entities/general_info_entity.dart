@@ -6,7 +6,7 @@ import 'package:uhk_events/io/entities/wifi_info_entity.dart';
 class GeneralInfoEntity extends Equatable {
   final WifiInfoEntity wifi;
 
-  GeneralInfoEntity({@required this.wifi});
+  const GeneralInfoEntity({@required this.wifi});
 
   factory GeneralInfoEntity.fromSnapshot(DocumentSnapshot snap) {
     return GeneralInfoEntity(wifi: WifiInfoEntity.fromSnapshot(snap));

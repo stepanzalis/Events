@@ -16,7 +16,7 @@ class EventItemEntity extends Equatable {
   final String eventTitle;
   final String eventTag;
 
-  EventItemEntity(
+  const EventItemEntity(
       {this.id,
       this.publishDate,
       this.singleEventStart,
@@ -32,9 +32,9 @@ class EventItemEntity extends Equatable {
       EventItemEntity(
         id: json['id'],
         publishDate: json['publishDate'],
-        singleEventStart: json['singleEventStart'] ?? null,
-        multipleEventEnd: json['multipleEventEnd'] ?? null,
-        multipleEventStart: json['multipleEventStart'] ?? null,
+        singleEventStart: json['singleEventStart'],
+        multipleEventEnd: json['multipleEventEnd'],
+        multipleEventStart: json['multipleEventStart'],
         facultyTitle: json['facultyTitle'],
         facultyType: json['facultyType'],
         eventTag: json['eventTag'],
@@ -45,6 +45,15 @@ class EventItemEntity extends Equatable {
   @override
   String toString() =>
       'EventListEntity {id: $id, eventTitle: $eventTitle, eventTag: $eventTag, eventUrl: $eventUrl, facultyType: $facultyType, facultyTitle: $facultyTitle publishDate: $publishDate, singleEventStart: $singleEventStart }';
+
+
+  String getEventTime() {
+    if (this.multipleEventStart != null && this.multipleEventEnd != null) {
+      return "${formatDate(this.multipleEventStart)} - ${formatDate(this.multipleEventEnd)}";
+    } else {
+      return formatDate(this.singleEventStart, fromFormat: API_DATE_FORMAT_LONGER);
+    }
+  }
 
   @override
   List<Object> get props => [

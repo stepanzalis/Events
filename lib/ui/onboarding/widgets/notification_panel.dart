@@ -16,12 +16,12 @@ class NotificationPanel extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _NotificationImage(),
-        SizedBox(height: 40),
-        OnboardingTitle("notifications"),
-        SizedBox(height: 30),
-        _NotificationSwitch(),
-        SizedBox(height: 80),
+        const _NotificationImage(),
+        const SizedBox(height: 40),
+        const OnboardingTitle("notifications"),
+        const SizedBox(height: 30),
+        const _NotificationSwitch(),
+        const SizedBox(height: 80),
         _ContinueButton(
             () => BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn()))
       ],
@@ -56,13 +56,13 @@ class _NotificationSwitch extends StatelessWidget {
               FlutterI18n.translate(context, "allowNotifications"),
               style: Theme.of(context).textTheme.body1,
             ),
-            SizedBox(width: 30),
+            const SizedBox(width: 30),
             Switch.adaptive(
               activeColor: Colors.black,
               value: state.allowed,
               onChanged: (value) =>
                   BlocProvider.of<NotificationBloc>(context).add(
-                ToggleNotifications(value),
+                ToggleNotifications(allowed: value),
               ),
             )
           ],
@@ -82,7 +82,7 @@ class _ContinueButton extends StatelessWidget {
     return OutlineButton(
       color: Theme.of(context).buttonColor,
       onPressed: onClick,
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       highlightedBorderColor: Theme.of(context).buttonColor,
       borderSide: BorderSide(color: Theme.of(context).buttonColor),
       child: Text(FlutterI18n.translate(context, "continue"),

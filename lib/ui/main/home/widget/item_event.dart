@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 
-
 class EventItemRow extends StatelessWidget {
+
   final Faculty faculty;
   final String dateTime;
   final String message;
@@ -16,7 +16,7 @@ class EventItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ItemContainer(
+    return ItemContainer(
       Stack(
         children: <Widget>[
           _ItemDateLogo(dateTime, faculty),
@@ -27,29 +27,27 @@ class EventItemRow extends StatelessWidget {
   }
 }
 
-class _ItemContainer extends StatelessWidget {
+class ItemContainer extends StatelessWidget {
   final Widget child;
 
-  const _ItemContainer(this.child);
+  const ItemContainer(this.child);
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(2.0)),
-            boxShadow: <BoxShadow>[
-              new BoxShadow(
-                color: Colors.grey.withOpacity(0.15),
-                blurRadius: 20.0,
-                spreadRadius: 3,
-                offset: Offset(0.0, 10.0),
-              )
-            ],
-          ),
-          child: child,
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.15),
+              blurRadius: 20.0,
+              spreadRadius: 3,
+              offset: const Offset(0.0, 10.0),
+            )
+          ],
         ),
+        child: child,
       );
 }
 

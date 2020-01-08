@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 
 abstract class EventsEvent extends Equatable {
@@ -11,8 +12,8 @@ class LoadEvents extends EventsEvent {
 }
 
 class ToggleFaculty extends EventsEvent {
-
   final Faculty faculty;
+
   const ToggleFaculty(this.faculty);
 
   @override

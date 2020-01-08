@@ -10,6 +10,12 @@ import 'package:uhk_events/io/model/scheduled_event.dart';
 class FirestoreProvider {
   final Firestore _firestore = Firestore.instance;
 
+  Future<bool> isConferenceType(int id) async {
+    final snapshot =
+        await _firestore.collection("events").document(id.toString()).get();
+    return snapshot.exists ? true : false;
+  }
+
   Future<List<MainEvent>> fetchMainEvents() => _firestore
       .collection('events')
       .orderBy('isActive', descending: true)

@@ -1,5 +1,5 @@
 // Boxes
-final String preferences = "notificationBox";
+const String preferences = "notificationBox";
 
 // Keys
-final String notifications = "notificationsAllowed";
+const String notifications = "notificationsAllowed";

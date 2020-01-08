@@ -6,7 +6,7 @@ class UserEntity extends Equatable {
   final String id;
   final String firebaseToken;
 
-  UserEntity({@required this.id, @required this.firebaseToken});
+  const UserEntity({@required this.id, @required this.firebaseToken});
 
   factory UserEntity.fromSnapshot(DocumentSnapshot snap) => UserEntity(
       id: snap.data['ID'], firebaseToken: snap.data['firebaseToken']);

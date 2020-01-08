@@ -12,7 +12,7 @@ dependencies:
   http:
 
   # State management
-  flutter_bloc: ^2.1.0
+  flutter_bloc: ^3.0.0
 
   # NoSQL storage
   hive: 1.1.1
@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   flutter_i18n: 0.8.0
-  device_simulator: ^0.9.5
+  shimmer: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +44,8 @@ dev_dependencies:
 
   hive_generator: 0.5.2
   build_runner:
+  bloc_test: ^3.0.0
+  pedantic: ^1.8.0
 
 
 flutter:

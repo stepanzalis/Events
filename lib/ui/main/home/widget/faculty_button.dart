@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 
 class FilterFacultyButton extends StatelessWidget {
-  final double buttonSize = 40;
-  final bool isEnabled;
+  final bool isActive;
   final Faculty faculty;
 
-  const FilterFacultyButton({@required this.faculty, this.isEnabled = false});
+  const FilterFacultyButton({@required this.faculty, this.isActive = false});
 
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(right: 5),
         child: Opacity(
-          opacity: isEnabled ? 1 : 0.3,
+          opacity: isActive ? 1 : 0.3,
           child: Container(
             width: buttonSize,
             height: buttonSize,
             decoration: BoxDecoration(
-                color: isEnabled ? faculty.facultyColor() : Colors.transparent,
+                color: isActive ? faculty.facultyColor() : Colors.transparent,
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: faculty.facultyColor(),
@@ -27,7 +27,7 @@ class FilterFacultyButton extends StatelessWidget {
                 )),
             child: Center(
               child: SvgPicture.asset(faculty.facultySymbol(),
-                  color: isEnabled ? Colors.white : faculty.facultyColor()),
+                  color: isActive ? Colors.white : faculty.facultyColor()),
             ),
           ),
         ),
