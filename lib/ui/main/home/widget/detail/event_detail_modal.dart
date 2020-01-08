@@ -64,7 +64,7 @@ class _TopSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _CloseWithLogo(logo: item.faculty.facultyLogo()),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             Align(
                 alignment: Alignment.centerLeft,
                 child: Text(item.eventTitle,
@@ -124,6 +124,7 @@ class _CalendarButton extends StatelessWidget {
         child: RaisedButton(
           child: Text(
               FlutterI18n.translate(context, "addToCalendarBtn").toUpperCase(),
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.display1.copyWith(
                   fontSize: 15, color: Colors.white, letterSpacing: 1.5)),
           onPressed: () => null, // TODO: udělat klik

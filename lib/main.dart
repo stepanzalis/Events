@@ -19,7 +19,7 @@ import 'util/bloc_delegate.dart';
 
 void _statusBarColor() {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    SystemUiOverlayStyle(statusBarColor: Colors.white),
   );
 }
 
@@ -56,6 +56,12 @@ class EventsApp extends StatelessWidget {
         builder: (context, state) {
           if (state is Uninitialized) {
             return OnboardingView();
+          }
+          if (state is SplashScreen) {
+            return Container(
+                color: Colors.white,
+                width: double.infinity,
+                height: double.infinity);
           } else {
             return BlocProvider(
                 create: (context) => EventsBloc(

@@ -6,7 +6,8 @@ import 'package:uhk_events/io/repositories/user/user_repository.dart';
 
 import 'auth_bloc.dart';
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository userRepository;
 
   AuthenticationBloc({@required this.userRepository});
@@ -15,7 +16,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   AuthenticationState get initialState => SplashScreen();
 
   @override
-  Stream<AuthenticationState> mapEventToState(AuthenticationEvent event) async* {
+  Stream<AuthenticationState> mapEventToState(
+      AuthenticationEvent event) async* {
     yield SplashScreen();
     await Future.delayed(Duration(seconds: 1));
     if (event is AppStarted) {
@@ -27,10 +29,11 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
+      yield SplashScreen();
       final isSignedIn = await userRepository.isSignedIn();
       if (isSignedIn) {
         final userId = await userRepository.getUserId();
-          yield Authenticated(userId);
+        yield Authenticated(userId);
       } else {
         userRepository.signInAnonymously();
         yield Uninitialized();
