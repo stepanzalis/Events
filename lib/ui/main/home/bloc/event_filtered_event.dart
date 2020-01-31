@@ -15,7 +15,7 @@ class UpdateFilter extends EventFilteredEvent {
   String toString() => 'UpdateFilter { filter: $faculty }';
 }
 
-class UpdateEvents extends EventFilteredEvent with EquatableMixin{
+class UpdateEvents extends EventFilteredEvent with EquatableMixin {
   final List<EventItem> events;
 
   UpdateEvents(this.events);
@@ -28,9 +28,8 @@ class GetEventDetail extends EventFilteredEvent {
   final EventItem item;
 
   const GetEventDetail(this.item);
-
-  @override
-  List<Object> get props => [item];
 }
 
-
+class ShowErrorMessage extends EventFilteredEvent {
+  const ShowErrorMessage();
+}

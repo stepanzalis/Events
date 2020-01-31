@@ -1,8 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uhk_events/io/firebase/auth_provider.dart';
+
+abstract class AuthProvider {
+  Future<void> signInAnonymously();
+
+  Future<void> signOut();
+
+  Future<bool> isSignedIn();
+
+  Future<String> getUserId();
+}
 
 class FirebaseAuthProvider with AuthProvider {
-
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
@@ -19,7 +27,7 @@ class FirebaseAuthProvider with AuthProvider {
 
   @override
   Future<String> getUserId() async {
-     final user = await _firebaseAuth.currentUser();
-     return user.uid;
+    final user = await _firebaseAuth.currentUser();
+    return user.uid;
   }
 }

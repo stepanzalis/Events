@@ -46,12 +46,12 @@ class EventItemEntity extends Equatable {
   String toString() =>
       'EventListEntity {id: $id, eventTitle: $eventTitle, eventTag: $eventTag, eventUrl: $eventUrl, facultyType: $facultyType, facultyTitle: $facultyTitle publishDate: $publishDate, singleEventStart: $singleEventStart }';
 
-
   String getEventTime() {
     if (this.multipleEventStart != null && this.multipleEventEnd != null) {
       return "${formatDate(this.multipleEventStart)} - ${formatDate(this.multipleEventEnd)}";
     } else {
-      return formatDate(this.singleEventStart, fromFormat: API_DATE_FORMAT_LONGER);
+      return formatDate(this.singleEventStart,
+          fromFormat: API_DATE_FORMAT_LONGER);
     }
   }
 

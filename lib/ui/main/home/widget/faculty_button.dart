@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uhk_events/common/constants.dart';
-import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
+import 'package:uhk_events/io/model/faculty.dart';
 
 class FilterFacultyButton extends StatelessWidget {
   final bool isActive;

@@ -1,21 +1,41 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/util/date_formatter.dart';
 
-@immutable
-class EventItem extends Equatable {
+part 'event_item.g.dart';
+
+@HiveType(typeId: 0)
+class EventItem extends HiveObject with EquatableMixin {
+  @HiveField(0)
   final int id;
+
+  @HiveField(1)
   final String eventTime;
+
+  @HiveField(2)
   final String eventStart;
+
+  @HiveField(3)
   final String eventEnds;
+
+  @HiveField(4)
   final Faculty faculty;
+
+  @HiveField(5)
   final String eventTitle;
+
+  @HiveField(6)
   final String eventTag;
+
+  @HiveField(7)
   final bool multiDayEvent;
+
+  @HiveField(8)
+  final bool isConference;
 
   EventItem(
       {this.id,
@@ -25,6 +45,7 @@ class EventItem extends Equatable {
       this.faculty,
       this.eventTitle,
       this.eventTag,
+      this.isConference,
       this.multiDayEvent});
 
   EventItem copyWith() => EventItem(
@@ -36,6 +57,7 @@ class EventItem extends Equatable {
         faculty: faculty ?? this.faculty,
         multiDayEvent: multiDayEvent ?? this.multiDayEvent,
         eventTime: eventTime ?? this.eventTime,
+        isConference: isConference ?? this.isConference,
       );
 
   static EventItem fromEntity(EventItemEntity entity) => EventItem(
@@ -56,7 +78,7 @@ class EventItem extends Equatable {
 
   @override
   String toString() {
-    return 'EventItem{id: $id, eventTime: $eventTime, eventStart: $eventStart, eventEnds: $eventEnds, faculty: $faculty, eventTitle: $eventTitle, eventTag: $eventTag, multiDayEvent: $multiDayEvent}';
+    return 'EventItem{id: $id, eventTime: $eventTime, eventStart: $eventStart, eventEnds: $eventEnds, faculty: $faculty, eventTitle: $eventTitle, eventTag: $eventTag, multiDayEvent: $multiDayEvent, isConference: $isConference}';
   }
 
   @override
@@ -67,6 +89,7 @@ class EventItem extends Equatable {
         eventTitle,
         eventTag,
         multiDayEvent,
-        eventTime
+        isConference,
+        eventTime,
       ];
 }

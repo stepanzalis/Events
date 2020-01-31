@@ -3,36 +3,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
-import 'package:uhk_events/ui/onboarding/widgets/inside_page_view.dart';
-import 'package:uhk_events/ui/onboarding/widgets/notification_panel.dart';
 import 'package:uhk_events/ui/onboarding/widgets/page_view_indicator.dart';
-import 'package:uhk_events/util/preference_manager.dart';
+import 'package:uhk_events/util/service_locator.dart';
 
 import 'bloc/onboarding_bloc.dart';
 
 class OnboardingView extends StatelessWidget {
-  final List<Widget> onboardingPages = [
-    const InsidePageView(
-        child: ImageTextPageView("assets/icons/calendar.svg", "addToCalendar")),
-    const InsidePageView(
-        child: ImageTextPageView("assets/icons/conference.svg", "conference")),
-    const InsidePageView(
-        child: const NotificationPanel(), showSkippedButton: false),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: MultiBlocProvider(
         providers: [
-          BlocProvider<OnboardingBloc>(create: (context) => OnboardingBloc()),
+          BlocProvider<OnboardingBloc>(
+              create: (context) => injector<OnboardingBloc>()),
           BlocProvider<NotificationBloc>(
-            create: (context) => NotificationBloc(
-              manager: PreferenceManager(),
-            ),
-          ),
+              create: (context) => injector<NotificationBloc>()),
         ],
-        child: PageViewIndicator(children: onboardingPages),
+        child: Stack(
+          children: <Widget>[
+            _Background(),
+            PageViewIndicator(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Background extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/icons/background.png"),
+            fit: BoxFit.cover),
       ),
     );
   }
@@ -52,9 +59,8 @@ class ImageTextPageView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SvgPicture.asset(iconAsset),
-          const SizedBox(height: 40),
+          const SizedBox(height: 30),
           OnboardingTitle(titleKey),
-          const SizedBox(height: 200),
         ],
       ),
     );
@@ -74,7 +80,9 @@ class OnboardingTitle extends StatelessWidget {
         FlutterI18n.translate(context, titleKey),
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 20, color: Theme.of(context).textTheme.body1.color),
+            height: 1.5,
+            fontSize: 20,
+            color: Theme.of(context).textTheme.body1.color),
       ),
     );
   }

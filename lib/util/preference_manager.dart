@@ -1,26 +1,49 @@
-import 'dart:io';
-
 import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:uhk_events/util/preference_manager_base.dart';
+import 'package:uhk_events/io/model/event_item.dart';
 
-class PreferenceManager extends BasePreferenceManager {
+import 'constants.dart';
 
+abstract class BasePreferences {
+  void putEvents(List<EventItem> events);
+
+  void putToken(String token);
+
+  Future<String> getToken();
+
+  Future<List<EventItem>> getEvents();
+
+  Future<bool> isUserLoggedIn();
+}
+
+class AppPreferences implements BasePreferences {
   @override
-  void init() async {
-    final Directory directory = await getApplicationDocumentsDirectory();
-    Hive.init(directory.path);
+  void putEvents(List<EventItem> events) {
+    Hive.box<EventItem>(Events)
+      ..clear()
+      ..addAll(events);
   }
 
   @override
-  Future<Box<dynamic>> openBox(String key) async => Hive.openBox(key);
-
-  @override
-  dynamic getBox(String key) async {
-    final box = Hive.box(key);
-    return box.get(key);
+  void putToken(String token) {
+    Hive.box(Preferences)..get(ApiToken);
   }
 
   @override
-  void dispose() => Hive.close();
+  Future<String> getToken() async {
+    Box box = await Hive.box(ApiToken);
+    return await box.get(ApiToken);
+  }
+
+  @override
+  Future<List<EventItem>> getEvents() async {
+    final box = Hive.box<EventItem>(Events);
+    final values = await box.values;
+    return await values.toList();
+  }
+
+  @override
+  Future<bool> isUserLoggedIn() async {
+    String token = await getToken();
+    return (token != null && token.isNotEmpty);
+  }
 }

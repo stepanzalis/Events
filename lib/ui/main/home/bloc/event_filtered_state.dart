@@ -9,6 +9,8 @@ abstract class EventFilteredState {
 
 class FilteredEventsLoading extends EventFilteredState {}
 
+class FilteredEventsError extends EventFilteredState {}
+
 class FilteredEventsLoaded extends EventFilteredState with EquatableMixin {
   final List<EventItem> events;
   final List<Faculty> faculties;
@@ -36,10 +38,11 @@ class EventModalDetail extends EventFilteredState {
   String toString() => 'EventModalDetail{event: $item}';
 }
 
-class EventConferenceTypeDetail extends EventFilteredState {
+class EventConferenceDetail extends EventFilteredState {
   final String id;
+  final Faculty faculty;
 
-  const EventConferenceTypeDetail({@required this.id});
+  const EventConferenceDetail({@required this.id, this.faculty});
 
   @override
   String toString() => 'EventConferenceTypeDetail{event: $id}';

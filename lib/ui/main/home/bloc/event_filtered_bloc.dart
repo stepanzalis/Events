@@ -6,6 +6,8 @@ import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 
 import 'bloc.dart';
+import 'event_filtered_state.dart';
+import 'events_state.dart';
 
 class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
   final EventsBloc eventsBloc;
@@ -14,7 +16,10 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
   EventFilteredBloc({@required this.eventsBloc}) {
     eventsSubscription = eventsBloc.listen((state) {
       if (state is EventsLoaded) {
-        add(UpdateEvents((eventsBloc.state as EventsLoaded).events));
+        final _state = (eventsBloc.state as EventsLoaded);
+        add(UpdateEvents(_state.events));
+      } else if (state is EventsNotLoaded) {
+        add(ShowErrorMessage());
       }
     });
   }
@@ -39,6 +44,8 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
       yield* _mapEventsUpdatedToState(event);
     } else if (event is GetEventDetail) {
       yield* _mapGetEventDetailToState(event);
+    } else {
+      yield FilteredEventsError();
     }
   }
 
@@ -89,8 +96,8 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
 
   Stream<EventFilteredState> _mapGetEventDetailToState(
       GetEventDetail event) async* {
-    if (await eventsBloc.repository.isMainEvent(event.item.id)) {
-      yield EventConferenceTypeDetail(id: event.item.id.toString());
+    if (await eventsBloc.repository.isMainEvent(event.item.id.toString())) {
+      yield EventConferenceDetail(id: event.item.id.toString());
     } else {
       yield EventModalDetail(item: event.item);
     }

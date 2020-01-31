@@ -2,49 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:uhk_events/common/transitions/slide_transition.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
+import 'package:uhk_events/ui/conference/conference_view.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/widget/detail/event_detail_modal.dart';
 import 'package:uhk_events/ui/main/home/widget/faculty_button.dart';
 import 'package:uhk_events/ui/main/home/widget/item_event.dart';
 
-class HomeView extends StatefulWidget {
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
+class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           centerTitle: false,
           elevation: 0,
-          actions: <Widget>[_FilterButtons()],
+          actions: <Widget>[_FacultyFilterButtons()],
           title: Text(FlutterI18n.translate(context, "appTitle"),
               style: Theme.of(context).textTheme.title),
         ),
         body: BlocConsumer<EventFilteredBloc, EventFilteredState>(
-            listenWhen: (_, state) =>
-                state is EventModalDetail || state is EventConferenceTypeDetail,
-            listener: (context, EventFilteredState state) {
+            listener: (_, EventFilteredState state) {
               if (state is EventModalDetail) {
-                return showDialog(
-                  context: context,
-                  builder: (context) {
-                    return EventDetailModal(eventItem: state.item);
-                  },
-                );
-              } else if (state is EventConferenceTypeDetail) {
-                return Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Container()));
-              } else
-                return null;
+                return _showModalDialog(state, context);
+              } else if (state is EventConferenceDetail) {
+                return _showConferenceView(state, context);
+              }
             },
             buildWhen: (_, state) =>
-                state is FilteredEventsLoading || state is FilteredEventsLoaded,
-            builder: (context, state) {
+                state is FilteredEventsLoading ||
+                state is FilteredEventsLoaded ||
+                state is FilteredEventsError,
+            builder: (_, state) {
               if (state is FilteredEventsLoading) {
                 return _LoadingList();
               } else if (state is FilteredEventsLoaded) {
@@ -54,6 +44,44 @@ class _HomeViewState extends State<HomeView> {
               }
             }),
       );
+
+  void _showModalDialog(EventModalDetail state, BuildContext context) {
+    final bloc = BlocProvider.of<EventFilteredBloc>(context);
+
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: '',
+      barrierColor: Colors.black54,
+      transitionDuration: const Duration(milliseconds: 100),
+      pageBuilder: (context, animation1, animation2) {
+        return BlocProvider.value(
+          value: bloc,
+          child: EventDetailModal(eventItem: state.item),
+        );
+      },
+      transitionBuilder: (context, animation, _, child) {
+        return Transform.scale(
+          scale: animation.value,
+          child: Opacity(
+            opacity: animation.value,
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  void _showConferenceView(EventConferenceDetail state, BuildContext context) {
+    Navigator.of(context).push(
+      SlideLeftRoute(
+        child: ConferenceView(
+          eventId: state.id,
+          faculty: state.faculty,
+        ),
+      ),
+    );
+  }
 }
 
 class _EventListView extends StatelessWidget {
@@ -62,37 +90,36 @@ class _EventListView extends StatelessWidget {
   const _EventListView({@required this.items});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        final EventItem event = items[index];
-        return GestureDetector(
-          onTap: () => BlocProvider.of<EventFilteredBloc>(context)
-              .add(GetEventDetail(event)),
-          child: EventItemRow(
-            dateTime: event.eventTime,
-            message: event.eventTitle,
-            faculty: event.faculty,
-          ),
-        );
-      },
-    );
-  }
+  Widget build(BuildContext context) => ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final EventItem event = items[index];
+          return GestureDetector(
+            onTap: () => BlocProvider.of<EventFilteredBloc>(context)
+                .add(GetEventDetail(event)),
+            child: EventItemRow(
+              dateTime: event.eventTime,
+              message: event.eventTitle,
+              faculty: event.faculty,
+            ),
+          );
+        },
+      );
 }
 
 class _EmptyEventList extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          FlutterI18n.translate(context, "eventError"),
-          style: Theme.of(context).textTheme.body1,
+  Widget build(BuildContext context) => Container(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Center(
+            child: Text(
+              FlutterI18n.translate(context, "eventError"),
+              style: Theme.of(context).textTheme.body1,
+            ),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _LoadingList extends StatelessWidget {
@@ -107,7 +134,7 @@ class _LoadingList extends StatelessWidget {
               child: Shimmer.fromColors(
                 highlightColor: Colors.white,
                 baseColor: Colors.grey[300],
-                period: Duration(milliseconds: 400),
+                period: const Duration(milliseconds: 400),
                 child: Container(
                   height: 80,
                   child: Column(
@@ -119,7 +146,7 @@ class _LoadingList extends StatelessWidget {
                           width: 100,
                           color: Colors.grey,
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Container(
                           margin: const EdgeInsets.only(top: 17, left: 20),
                           height: 17,
@@ -133,12 +160,12 @@ class _LoadingList extends StatelessWidget {
   }
 }
 
-class _FilterButtons extends StatelessWidget {
+class _FacultyFilterButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.only(right: 10),
         child: BlocBuilder<EventFilteredBloc, EventFilteredState>(
-          condition: (prev, state) => state is FilteredEventsLoaded,
+          condition: (_, state) => state is FilteredEventsLoaded,
           builder: (context, state) {
             if (state is FilteredEventsLoaded) {
               return Row(
@@ -149,8 +176,9 @@ class _FilterButtons extends StatelessWidget {
                                     .add(UpdateFilter(faculty)),
                             child: FilterFacultyButton(
                                 faculty: faculty,
-                                isActive:
-                                    isFilterActive(state.faculties, faculty)),
+                                isActive: isFilterActive(
+                                    (state as FilteredEventsLoaded).faculties,
+                                    faculty)),
                           ))
                       .toList());
             } else {

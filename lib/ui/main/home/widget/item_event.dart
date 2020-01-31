@@ -15,8 +15,8 @@ class EventItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ItemContainer(
-      Stack(
+    return ItemContainerSkeleton(
+      child: Stack(
         children: <Widget>[
           _ItemDateLogo(dateTime, faculty),
           _ItemMessage(message)
@@ -26,10 +26,10 @@ class EventItemRow extends StatelessWidget {
   }
 }
 
-class ItemContainer extends StatelessWidget {
+class ItemContainerSkeleton extends StatelessWidget {
   final Widget child;
 
-  const ItemContainer(this.child);
+  const ItemContainerSkeleton({@required this.child});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -95,7 +95,7 @@ class _ItemMessage extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 50, 20, 15),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.body2,
+        style: Theme.of(context).textTheme.body2.copyWith(height: 1.3),
         maxLines: 2,
       ),
     );

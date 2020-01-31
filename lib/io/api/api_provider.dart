@@ -6,8 +6,7 @@ import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 
 class ApiProvider with Api {
-
-  final  String url = 'https://www.uhk.cz/cs/kalendar-akci/json/udalosti-uhk.js';
+  final String url = 'https://www.uhk.cz/cs/kalendar-akci/json/udalosti-uhk.js';
 
   @override
   Future<List<EventItem>> getEventList() async {

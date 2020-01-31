@@ -2,35 +2,35 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uhk_events/util/constants.dart';
-import 'package:uhk_events/util/preference_manager.dart';
+import 'package:uhk_events/util/messaging_manager.dart';
 
 import './bloc.dart';
 
-class NotificationBloc extends Bloc<NotificationEvent, NotificationsAllowed> {
-  final PreferenceManager manager;
+class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
+  final MessagingManager messagingManager;
 
-  NotificationBloc({@required this.manager});
-
-  @override
-  NotificationsAllowed get initialState => NotificationsAllowed.initial();
+  NotificationBloc({@required this.messagingManager});
 
   @override
-  Stream<NotificationsAllowed> mapEventToState(
+  NotificationState get initialState => NotificationState.initial();
+
+  @override
+  Stream<NotificationState> mapEventToState(
     NotificationEvent event,
   ) async* {
     if (event is ToggleNotifications) {
-      _saveNotificationValue(event.allowed);
-
       if (event.allowed) {
-        yield NotificationsAllowed.enabled();
-      } else
-        yield NotificationsAllowed.disabled();
+        _saveNotificationValue(event.allowed);
+        yield NotificationState.enabled();
+      } else {
+        yield NotificationState.disabled();
+      }
     }
   }
 
-  _saveNotificationValue(bool value) async {
-    await manager.openBox(preferences)
-      ..put(notifications, value);
+  _saveNotificationValue(bool allowed) async {
+    if (allowed) {
+      await messagingManager.saveToken();
+    }
   }
 }

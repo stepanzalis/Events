@@ -7,6 +7,8 @@ import 'package:uhk_events/ui/main/auth_bloc/auth_bloc.dart';
 import 'package:uhk_events/ui/main/auth_bloc/authentification_bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/onboarding_view.dart';
+import 'package:uhk_events/util/messaging_manager.dart';
+import 'package:uhk_events/util/service_locator.dart';
 
 class NotificationPanel extends StatelessWidget {
   const NotificationPanel();
@@ -17,11 +19,11 @@ class NotificationPanel extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         const _NotificationImage(),
-        const SizedBox(height: 40),
+        const SizedBox(height: 30),
         const OnboardingTitle("notifications"),
         const SizedBox(height: 30),
         const _NotificationSwitch(),
-        const SizedBox(height: 80),
+        const SizedBox(height: 20),
         _ContinueButton(
             () => BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn()))
       ],
@@ -34,7 +36,7 @@ class _NotificationImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NotificationBloc, NotificationsAllowed>(
+    return BlocBuilder<NotificationBloc, NotificationState>(
       builder: (context, state) {
         return SvgPicture.asset(state.icon);
       },
@@ -47,7 +49,11 @@ class _NotificationSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NotificationBloc, NotificationsAllowed>(
+    return BlocConsumer<NotificationBloc, NotificationState>(
+      listenWhen: (_, state) => state.allowed,
+      listener: (_, state) {
+        injector<MessagingManager>().iOSNotificationPermission();
+      },
       builder: (context, state) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -79,14 +85,16 @@ class _ContinueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
+    return MaterialButton(
       color: Theme.of(context).buttonColor,
       onPressed: onClick,
+      minWidth: MediaQuery.of(context).size.width * 0.7,
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-      highlightedBorderColor: Theme.of(context).buttonColor,
-      borderSide: BorderSide(color: Theme.of(context).buttonColor),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40.0),
+      ),
       child: Text(FlutterI18n.translate(context, "continue"),
-          style: TextStyle(fontSize: 18, color: Colors.black)),
+          style: const TextStyle(fontSize: 18, color: Colors.white)),
     );
   }
 }

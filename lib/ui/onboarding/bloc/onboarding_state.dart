@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class OnboardingState extends Equatable {
-  const OnboardingState();
-}
+abstract class OnboardingState extends Equatable {}
 
 class CurrentPageState extends OnboardingState {
   final int index;

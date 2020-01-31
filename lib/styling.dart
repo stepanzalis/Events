@@ -19,14 +19,16 @@ ThemeData theme = ThemeData(
   textTheme: TextTheme(
       body1: TextStyle(color: primaryTextColor, fontSize: 20),
       body2: TextStyle(color: primaryTextColor, fontSize: 18),
+      subhead: TextStyle(
+          fontSize: 16, color: Colors.white, fontFamily: 'Comenia Sans'),
       display1: TextStyle(
           color: Colors.black,
           fontSize: 22,
-          fontFamily: 'ComeniaSansBold',
+          fontFamily: 'Comenia Sans Bold',
           fontWeight: FontWeight.w700),
       title: TextStyle(
           color: Colors.black,
           fontSize: 28,
-          fontFamily: 'ComeniaSansBold',
+          fontFamily: 'Comenia Sans Bold',
           fontWeight: FontWeight.w700)),
 );

@@ -10,10 +10,7 @@ class SplashScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.topCenter,
-      children: <Widget>[
-        const _Background(),
-        const _LogoWithTitle()
-      ],
+      children: <Widget>[const _Background(), const _LogoWithTitle()],
     );
   }
 }
@@ -22,32 +19,37 @@ class _Background extends StatelessWidget {
   const _Background();
 
   @override
-  Widget build(BuildContext context) => Image.asset(
-        "assets/icons/background.png",
-        fit: BoxFit.fill,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-      );
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/icons/background.png"),
+            fit: BoxFit.cover),
+      ),
+    );
+  }
 }
 
 class _LogoWithTitle extends StatelessWidget {
   const _LogoWithTitle();
 
   @override
-  Widget build(BuildContext context) => Positioned(
-        top: MediaQuery.of(context).size.height / 4,
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 50),
-            SvgPicture.asset(
-              "assets/icons/uhk_events.svg",
-              width: logoSize,
-              height: logoSize,
-            ),
-            const SizedBox(height: 20),
-            Text(FlutterI18n.translate(context, "appTitleFull"),
-                style: Theme.of(context).textTheme.title)
-          ],
-        ),
-      );
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: MediaQuery.of(context).size.height / 4,
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 50),
+          SvgPicture.asset(
+            "assets/icons/uhk_events.svg",
+            width: logoSize,
+            height: logoSize,
+          ),
+          const SizedBox(height: 20),
+          Text(FlutterI18n.translate(context, "appTitleFull"),
+              style: Theme.of(context).textTheme.title)
+        ],
+      ),
+    );
+  }
 }

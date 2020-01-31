@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 
 abstract class EventsEvent extends Equatable {
