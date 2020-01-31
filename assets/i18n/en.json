@@ -9,7 +9,7 @@
 
   "appTitle": "Events",
   "appTitleFull": "UHK EVENTS",
-  "eventError": "Nelze načíst události",
+  "eventError": "Nelze načíst události, zkontrolujte připojení k internetu",
   "addToCalendarBtn": "PŘIDAT DO KALENDÁŘE"
 
 }
