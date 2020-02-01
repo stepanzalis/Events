@@ -113,9 +113,20 @@ class _EmptyEventList extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Center(
-            child: Text(
-              FlutterI18n.translate(context, "eventError"),
-              style: Theme.of(context).textTheme.body1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SvgPicture.asset(
+                  "assets/icons/no_wifi.svg",
+                  width: NoInternetIconSize,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  context.translate("eventError"),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.body1,
+                ),
+              ],
             ),
           ),
         ),
@@ -176,9 +187,8 @@ class _FacultyFilterButtons extends StatelessWidget {
                                     .add(UpdateFilter(faculty)),
                             child: FilterFacultyButton(
                                 faculty: faculty,
-                                isActive: isFilterActive(
-                                    (state as FilteredEventsLoaded).faculties,
-                                    faculty)),
+                                isActive:
+                                    isFilterActive(state.faculties, faculty)),
                           ))
                       .toList());
             } else {
