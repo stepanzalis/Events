@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:uhk_events/common/extensions/context.dart';
 import 'package:uhk_events/common/transitions/slide_transition.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
-import 'package:uhk_events/ui/conference/conference_view.dart';
+import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
+import 'package:uhk_events/ui/main/conference/conference_view.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/widget/detail/event_detail_modal.dart';
 import 'package:uhk_events/ui/main/home/widget/faculty_button.dart';
 import 'package:uhk_events/ui/main/home/widget/item_event.dart';
+import 'package:uhk_events/util/constants.dart';
+import 'package:uhk_events/util/service_locator.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -35,6 +40,7 @@ class HomeView extends StatelessWidget {
                 state is FilteredEventsLoaded ||
                 state is FilteredEventsError,
             builder: (_, state) {
+              return _EmptyEventList();
               if (state is FilteredEventsLoading) {
                 return _LoadingList();
               } else if (state is FilteredEventsLoaded) {
@@ -75,9 +81,12 @@ class HomeView extends StatelessWidget {
   void _showConferenceView(EventConferenceDetail state, BuildContext context) {
     Navigator.of(context).push(
       SlideLeftRoute(
-        child: ConferenceView(
-          eventId: state.id,
-          faculty: state.faculty,
+        child: BlocProvider(
+          create: (context) => injector<NavigatorBloc>(),
+          child: ConferenceView(
+            eventId: state.id,
+            faculty: state.faculty,
+          ),
         ),
       ),
     );

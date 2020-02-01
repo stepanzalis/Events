@@ -88,7 +88,9 @@ class _EventsAppState extends State<EventsApp> {
 
 void _statusBarColor() {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.transparent),
   );
 }
 

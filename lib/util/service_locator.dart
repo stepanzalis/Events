@@ -7,6 +7,7 @@ import 'package:uhk_events/io/firebase/firestore_provider.dart';
 import 'package:uhk_events/io/repositories/event_repository.dart';
 import 'package:uhk_events/io/repositories/user_repository.dart';
 import 'package:uhk_events/ui/main/auth_bloc/auth_bloc.dart';
+import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/notification_bloc.dart';
@@ -37,6 +38,8 @@ Future<void> initDi() async {
 
   injector.registerFactory<OnboardingBloc>(() => OnboardingBloc());
 
+  injector.registerFactory<NavigatorBloc>(() => NavigatorBloc());
+
   // Repositories
   injector.registerLazySingleton<EventRepository>(
     () => EventRepositoryImpl(
@@ -64,7 +67,7 @@ Future<void> initDi() async {
     () => FirebaseAuthProvider(),
   );
 
-  injector.registerLazySingleton<BasePreferences>(
+  injector.registerLazySingleton<AppPreferences>(
     () => AppPreferences(),
   );
 

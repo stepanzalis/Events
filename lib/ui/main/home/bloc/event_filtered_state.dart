@@ -42,7 +42,7 @@ class EventConferenceDetail extends EventFilteredState {
   final String id;
   final Faculty faculty;
 
-  const EventConferenceDetail({@required this.id, this.faculty});
+  EventConferenceDetail({@required this.id, this.faculty});
 
   @override
   String toString() => 'EventConferenceTypeDetail{event: $id}';

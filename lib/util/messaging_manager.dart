@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +19,8 @@ class MessagingManager {
       @required this.preferenceManager,
       this.firestoreProvider}) {
     firebaseMessaging.configure(
-      onBackgroundMessage: _backgroundMessageHandler,
+      onBackgroundMessage:
+          Platform.isAndroid ? _backgroundMessageHandler : null,
       onMessage: (Map<String, dynamic> message) async {
         _controller.add(message);
       },

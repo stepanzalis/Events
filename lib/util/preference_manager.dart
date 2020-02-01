@@ -15,7 +15,7 @@ abstract class BasePreferences {
   Future<bool> isUserLoggedIn();
 }
 
-class AppPreferences implements BasePreferences {
+class AppPreferences with BasePreferences {
   @override
   void putEvents(List<EventItem> events) {
     Hive.box<EventItem>(Events)

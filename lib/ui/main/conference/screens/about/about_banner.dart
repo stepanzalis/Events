@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uhk_events/common/colors.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/faculty.dart';
-import 'package:uhk_events/ui/conference/widget/back_button.dart';
+import 'package:uhk_events/ui/main/conference/widget/back_button.dart';
 
 class BannerWidget extends StatelessWidget {
   final Faculty faculty;
