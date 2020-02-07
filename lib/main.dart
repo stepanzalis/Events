@@ -9,13 +9,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:print_lumberdash/print_lumberdash.dart';
 import 'package:uhk_events/io/common/constants.dart';
-import 'package:uhk_events/styling.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/home_view.dart';
 import 'package:uhk_events/ui/splashscreen/splashscreen.dart';
 import 'package:uhk_events/util/constants.dart';
 import 'package:uhk_events/util/messaging_manager.dart';
 import 'package:uhk_events/util/service_locator.dart';
+import 'package:uhk_events/util/theme/styling.dart';
 
 import 'io/model/event_item.dart';
 import 'io/model/faculty.dart';

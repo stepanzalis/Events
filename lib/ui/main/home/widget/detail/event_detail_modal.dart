@@ -1,8 +1,8 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uhk_events/common/constants.dart';
+import 'package:uhk_events/common/extensions/context.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/ui/common/widgets.dart';
@@ -121,22 +121,10 @@ class _CalendarButton extends StatelessWidget {
   const _CalendarButton({@required this.item});
 
   @override
-  Widget build(BuildContext context) => Container(
-        height: 50,
-        margin: const EdgeInsets.only(bottom: 10, top: 25),
-        width: double.infinity,
-        child: RaisedButton(
-          child: Text(
-              FlutterI18n.translate(context, "addToCalendarBtn").toUpperCase(),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.display1.copyWith(
-                  fontSize: 15, color: Colors.white, letterSpacing: 1.5)),
-          onPressed: () => _addItemToCalendar(item),
-          color: item.faculty.facultyColor(),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40.0),
-          ),
-        ),
+  Widget build(BuildContext context) => RoundedButton(
+        title: context.translate("addToCalendarBtn"),
+        color: item.faculty.facultyColor(),
+        onClick: () => _addItemToCalendar(item),
       );
 
   void _addItemToCalendar(EventItem eventItem) {

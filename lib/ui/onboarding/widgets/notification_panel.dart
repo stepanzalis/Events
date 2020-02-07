@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/ui/main/auth_bloc/auth_bloc.dart';
 import 'package:uhk_events/ui/main/auth_bloc/authentification_bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
@@ -59,7 +59,7 @@ class _NotificationSwitch extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              FlutterI18n.translate(context, "allowNotifications"),
+              context.translate("allowNotifications"),
               style: Theme.of(context).textTheme.body1,
             ),
             const SizedBox(width: 30),
@@ -93,7 +93,7 @@ class _ContinueButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(40.0),
       ),
-      child: Text(FlutterI18n.translate(context, "continue"),
+      child: Text(context.translate("continue"),
           style: const TextStyle(fontSize: 18, color: Colors.white)),
     );
   }

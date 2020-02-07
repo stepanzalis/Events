@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
           centerTitle: false,
           elevation: 0,
           actions: <Widget>[_FacultyFilterButtons()],
-          title: Text(FlutterI18n.translate(context, "appTitle"),
+          title: Text(context.translate( "appTitle"),
               style: Theme.of(context).textTheme.title),
         ),
         body: BlocConsumer<EventFilteredBloc, EventFilteredState>(
@@ -40,7 +40,6 @@ class HomeView extends StatelessWidget {
                 state is FilteredEventsLoaded ||
                 state is FilteredEventsError,
             builder: (_, state) {
-              return _EmptyEventList();
               if (state is FilteredEventsLoading) {
                 return _LoadingList();
               } else if (state is FilteredEventsLoaded) {
@@ -52,8 +51,6 @@ class HomeView extends StatelessWidget {
       );
 
   void _showModalDialog(EventModalDetail state, BuildContext context) {
-    final bloc = BlocProvider.of<EventFilteredBloc>(context);
-
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -62,7 +59,7 @@ class HomeView extends StatelessWidget {
       transitionDuration: const Duration(milliseconds: 100),
       pageBuilder: (context, animation1, animation2) {
         return BlocProvider.value(
-          value: bloc,
+          value: BlocProvider.of<EventFilteredBloc>(context),
           child: EventDetailModal(eventItem: state.item),
         );
       },

@@ -7,6 +7,8 @@ import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/ui/main/auth_bloc/authentification_bloc.dart';
 import 'package:uhk_events/ui/main/auth_bloc/authentification_event.dart';
+import 'package:uhk_events/common/extensions/extensions.dart';
+
 
 class SkipOnbardingButton extends StatelessWidget {
   @override
@@ -24,7 +26,7 @@ class SkipOnbardingButton extends StatelessWidget {
         onPressed: () =>
             BlocProvider.of<AuthenticationBloc>(context).add(SkippedAuth()),
         child: Text(
-          FlutterI18n.translate(context, "skipOnboarding"),
+          context.translate( "skipOnboarding"),
           style: TextStyle(color: Colors.white),
         ),
       ),

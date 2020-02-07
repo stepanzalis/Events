@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/faculty.dart';
+import 'package:uhk_events/ui/common/widgets.dart';
 
 class EventItemRow extends StatelessWidget {
   final Faculty faculty;
@@ -24,30 +25,6 @@ class EventItemRow extends StatelessWidget {
       ),
     );
   }
-}
-
-class ItemContainerSkeleton extends StatelessWidget {
-  final Widget child;
-
-  const ItemContainerSkeleton({@required this.child});
-
-  @override
-  Widget build(BuildContext context) => Container(
-        margin: const EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(2.0)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              blurRadius: 20.0,
-              spreadRadius: 3,
-              offset: const Offset(0.0, 10.0),
-            )
-          ],
-        ),
-        child: child,
-      );
 }
 
 class _ItemDateLogo extends StatelessWidget {
@@ -95,7 +72,7 @@ class _ItemMessage extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 50, 20, 15),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.body2.copyWith(height: 1.3),
+        style: Theme.of(context).textTheme.body2,
         maxLines: 2,
       ),
     );

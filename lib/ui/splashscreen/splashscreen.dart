@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uhk_events/common/constants.dart';
+import 'package:uhk_events/common/extensions/extensions.dart';
 
 class SplashScreenView extends StatelessWidget {
   const SplashScreenView();
@@ -46,7 +47,7 @@ class _LogoWithTitle extends StatelessWidget {
             height: logoSize,
           ),
           const SizedBox(height: 20),
-          Text(FlutterI18n.translate(context, "appTitleFull"),
+          Text(context.translate( "appTitleFull"),
               style: Theme.of(context).textTheme.title)
         ],
       ),

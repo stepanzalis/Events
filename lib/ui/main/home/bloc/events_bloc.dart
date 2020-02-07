@@ -15,9 +15,7 @@ class EventsBloc extends Bloc<EventsEvent, EventsState> {
   EventsState get initialState => EventsLoading();
 
   @override
-  Stream<EventsState> mapEventToState(
-    EventsEvent event,
-  ) async* {
+  Stream<EventsState> mapEventToState(EventsEvent event) async* {
     if (event is LoadEvents) {
       yield* _mapLoadEventToState(repository);
     }

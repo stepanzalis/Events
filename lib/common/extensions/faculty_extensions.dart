@@ -4,7 +4,6 @@ import 'package:uhk_events/common/colors.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 
 extension FacultyExtensions on Faculty {
-
   Color facultyColor() {
     switch (this) {
       case Faculty.Fim:
@@ -17,6 +16,21 @@ extension FacultyExtensions on Faculty {
         return PrfColor;
       default:
         return UhkColor;
+    }
+  }
+
+  Color facultyBackgroundColor() {
+    switch (this) {
+      case Faculty.Fim:
+        return FimBackgroundColor;
+      case Faculty.Ff:
+        return FfBackgroundColor;
+      case Faculty.Pdf:
+        return PdfBackgroundColor;
+      case Faculty.Prf:
+        return PrfBackgroundColor;
+      default:
+        return UhkBackgroundColor;
     }
   }
 

@@ -10,6 +10,10 @@
   "appTitle": "Events",
   "appTitleFull": "UHK EVENTS",
   "eventError": "Nelze načíst události, zkontrolujte připojení k internetu",
-  "addToCalendarBtn": "PŘIDAT DO KALENDÁŘE"
-
+  "addToCalendarBtn": "PŘIDAT DO KALENDÁŘE",
+  "aboutEvent": "O akci",
+  "mySchedule" : "Můj program",
+  "more" : "Více",
+  "noSavedEvents": "Nemáte zatím žádné uložené akce",
+  "tillStart": " do začátku"
 }
