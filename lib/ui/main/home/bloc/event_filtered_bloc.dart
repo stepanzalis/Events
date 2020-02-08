@@ -96,8 +96,11 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
 
   Stream<EventFilteredState> _mapGetEventDetailToState(
       GetEventDetail event) async* {
-    if (await eventsBloc.repository.isMainEvent(event.item.id.toString())) {
-      yield EventConferenceDetail(id: event.item.id.toString());
+    final eventRepository = eventsBloc.repository;
+
+    if (await eventRepository.isMainEvent(event.item.id.toString())) {
+      yield EventConferenceDetail(
+          id: event.item.id.toString(), faculty: event.item.faculty);
     } else {
       yield EventModalDetail(item: event.item);
     }

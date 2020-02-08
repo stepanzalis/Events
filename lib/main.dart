@@ -17,9 +17,10 @@ import 'package:uhk_events/util/messaging_manager.dart';
 import 'package:uhk_events/util/service_locator.dart';
 import 'package:uhk_events/util/theme/styling.dart';
 
+import 'io/entities/main_event_item_entity.dart';
 import 'io/model/event_item.dart';
 import 'io/model/faculty.dart';
-import 'ui/main/auth_bloc/auth_bloc.dart';
+import 'ui/main/home/auth_bloc/auth_bloc.dart';
 import 'ui/onboarding/onboarding_view.dart';
 import 'util/bloc_delegate.dart';
 
@@ -113,7 +114,9 @@ Future<void> _initHive() async {
 
   Hive.registerAdapter<Faculty>(FacultyAdapter());
   Hive.registerAdapter<EventItem>(EventItemAdapter());
+  Hive.registerAdapter<MainEventItemEntity>(MainEventItemEntityAdapter());
 
   await Hive.openBox<EventItem>(Events);
+  await Hive.openBox<MainEventItemEntity>(MainItemEvents);
   await Hive.openBox(Preferences);
 }

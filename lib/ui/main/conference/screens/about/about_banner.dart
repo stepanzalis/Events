@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uhk_events/common/colors.dart';
 import 'package:uhk_events/common/constants.dart';
-import 'package:uhk_events/common/extensions/faculty_extensions.dart';
-import 'package:uhk_events/io/model/faculty.dart';
 
 class BannerWidget extends StatelessWidget {
-  final Faculty faculty;
+  final Color color;
   final String title;
   final String date;
 
-  const BannerWidget({@required this.title, @required this.faculty, this.date});
+  const BannerWidget({@required this.title, @required this.color, this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class BannerWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _ConferenceBackButton(fillColor: faculty.facultyColor()),
+        _ConferenceBackButton(fillColor: color),
         _BannerSkeleton(
           date: "17.2.2020",
           title: "Zasedání asociace děkanů filozofických fakult",

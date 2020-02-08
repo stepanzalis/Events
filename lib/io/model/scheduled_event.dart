@@ -8,7 +8,8 @@ class ScheduledEvent extends Equatable {
   final String id;
   final String title;
   final String detailImageUrl;
-  final DateTime date;
+  final DateTime startDateTime;
+  final DateTime endDateTime;
   final String description;
   final String place;
 
@@ -16,11 +17,12 @@ class ScheduledEvent extends Equatable {
       {@required this.id,
       @required this.title,
       @required this.description,
-      @required this.date,
+      @required this.startDateTime,
+      @required this.endDateTime,
       @required this.detailImageUrl,
       @required this.place})
       : assert(title != null),
-        assert(date != null);
+        assert(startDateTime != null);
 
   ScheduledEvent copyWith(
           {String id,
@@ -34,7 +36,8 @@ class ScheduledEvent extends Equatable {
           title: title ?? this.title,
           description: detailImageUrl ?? this.description,
           detailImageUrl: backgroundUrl ?? this.detailImageUrl,
-          date: date ?? this.date,
+          startDateTime: date ?? this.startDateTime,
+          endDateTime: date ?? this.endDateTime,
           place: place ?? this.place);
 
   static ScheduledEvent fromEntity(ScheduledEventEntity entity) =>
@@ -43,23 +46,29 @@ class ScheduledEvent extends Equatable {
           title: entity.title ?? "",
           description: entity.description ?? "",
           detailImageUrl: entity.detailImageUrl ?? "",
-          date: entity.timestamp.toDate(),
+          startDateTime: entity.startDateTime.toDate(),
+          endDateTime: entity.endDateTime.toDate(),
           place: entity.place ?? "");
 
   ScheduledEventEntity toEntity() => ScheduledEventEntity(
       id: id,
       title: title,
       description: description,
-      timestamp:
-          Timestamp.fromMillisecondsSinceEpoch(date.millisecondsSinceEpoch),
+      startDateTime: Timestamp.fromMillisecondsSinceEpoch(
+          startDateTime.millisecondsSinceEpoch),
+      endDateTime: Timestamp.fromMillisecondsSinceEpoch(
+          endDateTime.millisecondsSinceEpoch),
       place: place,
       detailImageUrl: detailImageUrl);
 
   @override
-  String toString() =>
-      'ScheduledEvent { id: $id, title: $title, backgroundUrl: $detailImageUrl, date: $date, infoAbout: $description, place: $place}';
-
-  @override
-  List<Object> get props =>
-      [id, title, detailImageUrl, date, description, place];
+  List<Object> get props => [
+        id,
+        title,
+        detailImageUrl,
+        startDateTime,
+        endDateTime,
+        description,
+        place
+      ];
 }

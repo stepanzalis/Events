@@ -43,6 +43,7 @@ class MessagingManager {
 
   void saveToken() async {
     final String token = await firebaseMessaging.getToken();
+    await firestoreProvider.sendFirebaseToken(token);
     await preferenceManager.putToken(token);
   }
 

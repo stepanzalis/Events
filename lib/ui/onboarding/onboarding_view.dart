@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/widgets/page_view_indicator.dart';
 import 'package:uhk_events/util/service_locator.dart';
-import 'package:uhk_events/common/extensions/extensions.dart';
 
 import 'bloc/onboarding_bloc.dart';
 
@@ -78,7 +77,7 @@ class OnboardingTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
-        context.translate( titleKey),
+        context.translate(titleKey),
         textAlign: TextAlign.center,
         style: TextStyle(
             height: 1.5,

@@ -6,7 +6,8 @@ class ScheduledEventEntity extends Equatable {
   final String id;
   final String title;
   final String detailImageUrl;
-  final Timestamp timestamp;
+  final Timestamp startDateTime;
+  final Timestamp endDateTime;
   final String description;
   final String place;
 
@@ -14,7 +15,8 @@ class ScheduledEventEntity extends Equatable {
       {@required this.id,
       @required this.title,
       @required this.description,
-      @required this.timestamp,
+      @required this.startDateTime,
+      @required this.endDateTime,
       @required this.detailImageUrl,
       @required this.place});
 
@@ -23,7 +25,8 @@ class ScheduledEventEntity extends Equatable {
           id: snap.data['ID'],
           title: snap.data['title'],
           detailImageUrl: snap.data['detailImageUrl'] ?? "",
-          timestamp: snap.data['date'],
+          startDateTime: snap.data['startDateTime'],
+          endDateTime: snap.data['endDateTime'],
           description: snap.data['description'] ?? "",
           place: snap.data['place'] ?? "");
 
@@ -32,17 +35,26 @@ class ScheduledEventEntity extends Equatable {
       'ID': id,
       'title': title,
       'detailImageUrl': detailImageUrl,
-      'date': timestamp,
+      'startDateTime': startDateTime,
+      'endDateTime': endDateTime,
       'description': description,
       'place': place
     };
   }
 
   @override
-  String toString() =>
-      'ScheduledEventEntity{ id: $id, title: $title, description: $description, detailImageUrl: $detailImageUrl, date: $timestamp, place: $place}';
+  String toString() {
+    return 'ScheduledEventEntity{id: $id, title: $title, detailImageUrl: $detailImageUrl, startDateTime: $startDateTime, endDateTime: $endDateTime, description: $description, place: $place}';
+  }
 
   @override
-  List<Object> get props =>
-      [id, title, description, detailImageUrl, timestamp, place];
+  List<Object> get props => [
+        id,
+        title,
+        description,
+        detailImageUrl,
+        startDateTime,
+        endDateTime,
+        place
+      ];
 }

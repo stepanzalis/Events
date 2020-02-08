@@ -7,7 +7,8 @@ class MainEvent extends Equatable {
   final String id;
   final String title;
   final String backgroundUrl;
-  final DateTime date;
+  final DateTime startDate;
+  final DateTime endDate;
   final String infoAbout;
   final bool active;
 
@@ -15,10 +16,11 @@ class MainEvent extends Equatable {
       {@required this.id,
       @required this.title,
       @required this.backgroundUrl,
-      @required this.date,
+      @required this.startDate,
+      @required this.endDate,
       @required this.infoAbout,
       @required this.active})
-      : assert(title != null, date != null);
+      : assert(title != null, startDate != null);
 
   MainEvent copyWith(
           {String id,
@@ -32,22 +34,25 @@ class MainEvent extends Equatable {
           title: title ?? this.title,
           infoAbout: infoAbout ?? this.infoAbout,
           backgroundUrl: backgroundUrl ?? this.backgroundUrl,
-          date: date ?? this.date,
+          startDate: startDate ?? this.startDate,
+          endDate: endDate ?? this.endDate,
           active: active ?? this.active);
 
   @override
   String toString() =>
-      'MainEvent { id: $id, title: $title, infoAbout: $infoAbout, backgroundUrl: $backgroundUrl, date: $date, active: $active}';
+      'MainEvent { id: $id, title: $title, infoAbout: $infoAbout, backgroundUrl: $backgroundUrl, startDate: $startDate, active: $active}';
 
   static MainEvent fromEntity(MainEventEntity entity) => MainEvent(
         id: entity.id,
         title: entity.title,
         backgroundUrl: entity.backgroundUrl,
-        date: entity.startDate.toDate(),
+        startDate: entity.startDate.toDate(),
+        endDate: entity.endDate.toDate(),
         infoAbout: entity.infoAbout,
         active: entity.active ?? false,
       );
 
   @override
-  List<Object> get props => [id, title, backgroundUrl, date, infoAbout, active];
+  List<Object> get props =>
+      [id, title, backgroundUrl, startDate, endDate, infoAbout, active];
 }

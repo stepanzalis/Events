@@ -30,12 +30,12 @@ class MainEventEntity extends Equatable {
           infoAbout: snap.data['infoAbout'] ?? "",
           active: snap.data['isActive'] ?? false);
 
-
   @override
   String toString() {
     return 'MainEventEntity{id: $id, title: $title, backgroundUrl: $backgroundUrl, startDate: $startDate, endDate: $endDate, infoAbout: $infoAbout, active: $active}';
   }
 
   @override
-  List<Object> get props => [id, title, infoAbout, backgroundUrl, startDate, active];
+  List<Object> get props =>
+      [id, title, infoAbout, backgroundUrl, startDate, active];
 }

@@ -18,11 +18,7 @@ ThemeData theme = ThemeData(
       hoverColor: primaryTextColor),
   textTheme: TextTheme(
       body1: TextStyle(color: primaryTextColor, fontSize: 20),
-      body2: TextStyle(
-          color: primaryTextColor,
-          fontSize: 18,
-          letterSpacing: 1.5,
-          height: 1.3),
+      body2: TextStyle(color: primaryTextColor, fontSize: 18, height: 1.3),
       subhead: TextStyle(
           fontSize: 16, color: Colors.white, fontFamily: 'Comenia Sans'),
       display1: TextStyle(
@@ -33,7 +29,6 @@ ThemeData theme = ThemeData(
       subtitle: TextStyle(
           fontSize: 20,
           color: Colors.black,
-          letterSpacing: 1.5,
           fontFamily: 'Comenia Sans Bold',
           fontWeight: FontWeight.w700),
       title: TextStyle(

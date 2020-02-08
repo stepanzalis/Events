@@ -1,6 +1,7 @@
 import 'package:either_option/either_option.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/api/api_provider.dart';
+import 'package:uhk_events/io/entities/main_event_item_entity.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/general_info.dart';
@@ -28,6 +29,8 @@ abstract class EventRepository {
   Future<bool> isMainEvent(String id);
 
   Future<List<MainEvent>> getMainEvents();
+
+  Future<List<MainEventItemEntity>> getMainItemEvents();
 }
 
 class EventRepositoryImpl extends EventRepository {
@@ -55,6 +58,11 @@ class EventRepositoryImpl extends EventRepository {
   @override
   Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId) {
     return firestoreProvider.fetchScheduleFromEvent(eventId);
+  }
+
+  @override
+  Future<List<MainEventItemEntity>> getMainItemEvents() {
+    return localDataSource.getMainItemsEvents();
   }
 
   @override

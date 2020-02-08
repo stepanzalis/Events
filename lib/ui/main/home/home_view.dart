@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:uhk_events/common/extensions/context.dart';
@@ -10,6 +9,7 @@ import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/conference_view.dart';
+import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/widget/detail/event_detail_modal.dart';
 import 'package:uhk_events/ui/main/home/widget/faculty_button.dart';
@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
           centerTitle: false,
           elevation: 0,
           actions: <Widget>[_FacultyFilterButtons()],
-          title: Text(context.translate( "appTitle"),
+          title: Text(context.translate("appTitle"),
               style: Theme.of(context).textTheme.title),
         ),
         body: BlocConsumer<EventFilteredBloc, EventFilteredState>(
@@ -51,6 +51,8 @@ class HomeView extends StatelessWidget {
       );
 
   void _showModalDialog(EventModalDetail state, BuildContext context) {
+    final bloc = BlocProvider.of<EventFilteredBloc>(context);
+
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -59,7 +61,7 @@ class HomeView extends StatelessWidget {
       transitionDuration: const Duration(milliseconds: 100),
       pageBuilder: (context, animation1, animation2) {
         return BlocProvider.value(
-          value: BlocProvider.of<EventFilteredBloc>(context),
+          value: bloc,
           child: EventDetailModal(eventItem: state.item),
         );
       },
@@ -80,9 +82,10 @@ class HomeView extends StatelessWidget {
       SlideLeftRoute(
         child: BlocProvider(
           create: (context) => injector<NavigatorBloc>(),
-          child: ConferenceView(
-            eventId: state.id,
+          child: MainEventInheritedWidget(
+            id: state.id,
             faculty: state.faculty,
+            child: ConferenceView(),
           ),
         ),
       ),

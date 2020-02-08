@@ -42,8 +42,10 @@ class EventConferenceDetail extends EventFilteredState {
   final String id;
   final Faculty faculty;
 
-  EventConferenceDetail({@required this.id, this.faculty});
+  EventConferenceDetail({@required this.id, @required this.faculty});
 
   @override
-  String toString() => 'EventConferenceTypeDetail{event: $id}';
+  String toString() {
+    return 'EventConferenceDetail{id: $id, faculty: $faculty}';
+  }
 }

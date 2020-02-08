@@ -7,6 +7,8 @@ import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/ui/common/widgets.dart';
 import 'package:uhk_events/util/constants.dart';
 
+import 'main_event_inherited_widget.dart';
+
 class MyEventItemRow extends StatelessWidget {
   final String title;
   final String place;
@@ -21,7 +23,7 @@ class MyEventItemRow extends StatelessWidget {
       padding: EdgeInsets.only(left: 10),
       child: ItemContainerSkeleton(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -36,7 +38,7 @@ class MyEventItemRow extends StatelessWidget {
                       .subhead
                       .copyWith(color: primaryTextColor)),
               const SizedBox(height: conferenceWidth),
-              _TimeLeftPanel(timeLeft: "30MIN", faculty: Faculty.Uhk)
+              _TimeLeftPanel(timeLeft: "30MIN")
             ],
           ),
         ),
@@ -50,12 +52,13 @@ class _TimeLeftPanel extends StatelessWidget {
   final double panelHeight = 35;
 
   final String timeLeft;
-  final Faculty faculty;
 
-  const _TimeLeftPanel({@required this.timeLeft, @required this.faculty});
+  const _TimeLeftPanel({@required this.timeLeft});
 
   @override
   Widget build(BuildContext context) {
+    final Faculty faculty = MainEventInheritedWidget.of(context).faculty;
+
     return Container(
       height: panelHeight,
       decoration: BoxDecoration(
@@ -77,11 +80,14 @@ class _TimeLeftPanel extends StatelessWidget {
             text: TextSpan(
               text: timeLeft,
               style: Theme.of(context).textTheme.subtitle.copyWith(
-                  fontSize: conferenceFontSize, color: faculty.facultyColor()),
+                  letterSpacing: 1.4,
+                  fontSize: conferenceFontSize,
+                  color: faculty.facultyColor()),
               children: [
                 TextSpan(
                   text: context.translate("tillStart").toUpperCase(),
                   style: Theme.of(context).textTheme.body2.copyWith(
+                        letterSpacing: 1.4,
                         fontSize: conferenceFontSize,
                         color: faculty.facultyColor(),
                       ),
@@ -97,19 +103,19 @@ class _TimeLeftPanel extends StatelessWidget {
 }
 
 class MyEventEmptyRow extends StatelessWidget {
-  final Color color;
-
-  const MyEventEmptyRow({@required this.color});
-
   @override
   Widget build(BuildContext context) {
+    final Faculty faculty = MainEventInheritedWidget.of(context).faculty;
+
     return Container(
+      height: 100,
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Row(
         children: <Widget>[
           Opacity(
               opacity: 0.2,
-              child: SvgPicture.asset("assets/icons/clock.svg", color: color)),
+              child: SvgPicture.asset("assets/icons/clock.svg",
+                  color: faculty.facultyColor())),
           const SizedBox(width: conferenceWidth),
           Expanded(
               child: Text(context.translate("noSavedEvents"),
