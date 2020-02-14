@@ -23,6 +23,7 @@ class EventsBloc extends Bloc<EventsEvent, EventsState> {
 }
 
 Stream<EventsState> _mapLoadEventToState(EventRepository repository) async* {
+  yield EventsLoading();
   final itemsOrError = await repository.getEventList();
   yield itemsOrError.fold(
       (failure) => EventsNotLoaded(), (response) => EventsLoaded(response));

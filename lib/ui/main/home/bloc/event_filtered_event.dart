@@ -24,12 +24,6 @@ class UpdateEvents extends EventFilteredEvent with EquatableMixin {
   List<Object> get props => [events];
 }
 
-class GetEventDetail extends EventFilteredEvent {
-  final EventItem item;
-
-  const GetEventDetail(this.item);
-}
-
 class ShowErrorMessage extends EventFilteredEvent {
   const ShowErrorMessage();
 }

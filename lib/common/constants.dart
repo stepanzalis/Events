@@ -7,3 +7,4 @@ const String API_DATE_FORMAT_LOCALE = "'EEEE dd. MM. yyyy', 'cs'";
 const double buttonSize = 40;
 const double backButtonSize = 50;
 const double logoSize = 80;
+const double appBarRightPadding = 10;

@@ -16,10 +16,10 @@ class MainEventItemEntity extends HiveObject implements EquatableMixin {
   @HiveField(2)
   final String backgroundUrl;
 
-  @HiveField(3)
+  //@HiveField(3)
   final Timestamp startDateTime;
 
-  @HiveField(4)
+  //@HiveField(4)
   final Timestamp endDateTime;
 
   @HiveField(5)
@@ -59,6 +59,7 @@ class MainEventItemEntity extends HiveObject implements EquatableMixin {
         description,
         backgroundUrl,
         startDateTime,
+        endDateTime,
         endDateTime,
         isChosen
       ];

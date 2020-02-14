@@ -20,7 +20,7 @@ dependencies:
 
   # Firebase
   firebase_core: ^0.4.0+9
-  cloud_firestore: ^0.12.9+5
+  cloud_firestore: ^0.13.2
   firebase_messaging: ^6.0.9
   firebase_auth: ^0.14.0+5
 
@@ -51,6 +51,7 @@ dev_dependencies:
   hive_generator: 0.7.0
   build_runner: ^1.7.2
   bloc_test: ^3.0.0
+  mockito: ^4.1.1
   pedantic: ^1.8.0
   flutter_launcher_icons: ^0.7.3
 
@@ -63,9 +64,12 @@ flutter:
   assets:
     - assets/i18n/
     - assets/icons/
+    - assets/fonts/
+
+  uses-material-design: true
 
   fonts:
-    - family: Comenia Sans
+    - family: ComeniaSans
       fonts:
         - asset: assets/fonts/ComeniaSans.otf
         - asset: assets/fonts/ComeniaSansBold.otf

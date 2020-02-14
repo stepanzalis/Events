@@ -1,5 +1,7 @@
+import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/util/date_formatter.dart';
+
 import '../constants.dart';
 
 extension EventExtensions on List<EventItem> {
@@ -10,5 +12,14 @@ extension EventExtensions on List<EventItem> {
       ),
     );
     return this;
+  }
+}
+
+extension EventEntityExtensions on List<EventItemEntity> {
+  List<EventItem> fromEntityList() {
+    return this
+        .map((item) => EventItem.fromEntity(item))
+        .where((item) => item.eventTag.isNotEmpty)
+        .toList();
   }
 }

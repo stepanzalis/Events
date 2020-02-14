@@ -19,27 +19,30 @@ class MyEventItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 10),
-      child: ItemContainerSkeleton(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                title,
-                style: Theme.of(context).textTheme.subtitle,
-              ),
-              const SizedBox(height: conferenceWidth),
-              Text(place,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subhead
-                      .copyWith(color: primaryTextColor)),
-              const SizedBox(height: conferenceWidth),
-              _TimeLeftPanel(timeLeft: "30MIN")
-            ],
+    return SizedBox(
+      height: 150,
+      child: Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: ItemContainerSkeleton(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.subtitle,
+                ),
+                const SizedBox(height: conferenceWidth),
+                Text(place,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subhead
+                        .copyWith(color: primaryTextColor)),
+                const SizedBox(height: conferenceWidth),
+                _TimeLeftPanel(timeLeft: "30MIN")
+              ],
+            ),
           ),
         ),
       ),

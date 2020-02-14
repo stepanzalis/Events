@@ -18,13 +18,18 @@ class FirestoreProvider {
   Future<void> sendFirebaseToken(String token) =>
       _firestore.collection('users').add({"firebaseToken": token});
 
-  Future<List<MainEvent>> fetchMainEvents() => _firestore
+  Future<List<String>> fetchMainEvents() => _firestore
       .collection('events')
-      .orderBy('isActive', descending: true)
+      .getDocuments()
+      .then((list) => list.documents.map((doc) => doc.documentID).toList());
+
+  Future<MainEvent> fetchMainEventInfo(String id) => _firestore
+      .collection('events')
       .getDocuments()
       .then((list) => list.documents
+          .where((doc) => doc.documentID == id)
           .map((doc) => MainEvent.fromEntity(MainEventEntity.fromSnapshot(doc)))
-          .toList());
+          .first);
 
   Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId) =>
       _firestore

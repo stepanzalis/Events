@@ -42,8 +42,6 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
       yield* _mapUpdateFilterToState(event);
     } else if (event is UpdateEvents) {
       yield* _mapEventsUpdatedToState(event);
-    } else if (event is GetEventDetail) {
-      yield* _mapGetEventDetailToState(event);
     } else {
       yield FilteredEventsError();
     }
@@ -92,18 +90,6 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
       List<EventItem> events, List<Faculty> filter) {
     if (filter.isEmpty) return events;
     return events.where((e) => filter.contains(e.faculty)).toList();
-  }
-
-  Stream<EventFilteredState> _mapGetEventDetailToState(
-      GetEventDetail event) async* {
-    final eventRepository = eventsBloc.repository;
-
-    if (await eventRepository.isMainEvent(event.item.id.toString())) {
-      yield EventConferenceDetail(
-          id: event.item.id.toString(), faculty: event.item.faculty);
-    } else {
-      yield EventModalDetail(item: event.item);
-    }
   }
 
   @override

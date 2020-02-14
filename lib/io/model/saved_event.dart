@@ -16,7 +16,8 @@ class SavedEvent extends Equatable {
         place: entity.place,
         timeLeft: DateTime.now()
             .difference(DateTime.fromMillisecondsSinceEpoch(
-                entity.startDateTime.millisecondsSinceEpoch * 1000))
+                entity.startDateTime?.millisecondsSinceEpoch ??
+                    DateTime.now().millisecondsSinceEpoch * 1000))
             .inMinutes
             .toString());
   }

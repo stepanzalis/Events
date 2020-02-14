@@ -1,40 +1,19 @@
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
 import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/util/date_formatter.dart';
 
-part 'event_item.g.dart';
-
-@HiveType(typeId: 0)
-class EventItem extends HiveObject with EquatableMixin {
-  @HiveField(0)
+class EventItem extends Equatable {
   final int id;
-
-  @HiveField(1)
   final String eventTime;
-
-  @HiveField(2)
   final String eventStart;
-
-  @HiveField(3)
   final String eventEnds;
-
-  @HiveField(4)
   final Faculty faculty;
-
-  @HiveField(5)
   final String eventTitle;
-
-  @HiveField(6)
   final String eventTag;
-
-  @HiveField(7)
   final bool multiDayEvent;
-
-  @HiveField(8)
   final bool isConference;
 
   EventItem(
@@ -45,10 +24,35 @@ class EventItem extends HiveObject with EquatableMixin {
       this.faculty,
       this.eventTitle,
       this.eventTag,
-      this.isConference,
+      this.isConference = false,
       this.multiDayEvent});
 
-  EventItem copyWith() => EventItem(
+  EventItem update({
+    bool isConference,
+  }) {
+    return copyWith(
+        id: id,
+        eventEnds: eventEnds,
+        eventStart: eventStart,
+        eventTime: eventTime,
+        faculty: faculty,
+        eventTag: eventTag,
+        eventTitle: eventTitle,
+        multiDayEvent: multiDayEvent,
+        isConference: isConference);
+  }
+
+  EventItem copyWith(
+      {final int id,
+      final String eventTime,
+      final String eventStart,
+      final String eventEnds,
+      final Faculty faculty,
+      final String eventTitle,
+      final String eventTag,
+      final bool isConference,
+      final bool multiDayEvent}) {
+    return EventItem(
         id: id ?? this.id,
         eventStart: eventStart ?? this.eventStart,
         eventEnds: eventEnds ?? this.eventEnds,
@@ -57,8 +61,8 @@ class EventItem extends HiveObject with EquatableMixin {
         faculty: faculty ?? this.faculty,
         multiDayEvent: multiDayEvent ?? this.multiDayEvent,
         eventTime: eventTime ?? this.eventTime,
-        isConference: isConference ?? this.isConference,
-      );
+        isConference: isConference ?? this.isConference);
+  }
 
   static EventItem fromEntity(EventItemEntity entity) => EventItem(
       id: entity.id,
@@ -74,6 +78,7 @@ class EventItem extends HiveObject with EquatableMixin {
           : null,
       eventTag: entity.eventTag,
       eventTitle: entity.eventTitle,
+      isConference: entity.isConference ?? false,
       faculty: entity.facultyType.getFaculty());
 
   @override

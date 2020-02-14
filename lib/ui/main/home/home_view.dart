@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/context.dart';
+import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/common/transitions/slide_transition.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
+import 'package:uhk_events/ui/common/widgets.dart';
 import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/conference_view.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
@@ -20,37 +23,46 @@ import 'package:uhk_events/util/service_locator.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          elevation: 0,
-          actions: <Widget>[_FacultyFilterButtons()],
-          title: Text(context.translate("appTitle"),
-              style: Theme.of(context).textTheme.title),
+        appBar: eventAppBar(
+            context.translate("appTitle"), [_FacultyFilterButtons()], context),
+        body: BlocBuilder<EventFilteredBloc, EventFilteredState>(
+          builder: (_, state) {
+            if (state is FilteredEventsLoading) {
+              return _LoadingList();
+            } else if (state is FilteredEventsLoaded) {
+              return _EventListView(items: state.events);
+            } else {
+              return _EmptyEventList();
+            }
+          },
         ),
-        body: BlocConsumer<EventFilteredBloc, EventFilteredState>(
-            listener: (_, EventFilteredState state) {
-              if (state is EventModalDetail) {
-                return _showModalDialog(state, context);
-              } else if (state is EventConferenceDetail) {
-                return _showConferenceView(state, context);
-              }
-            },
-            buildWhen: (_, state) =>
-                state is FilteredEventsLoading ||
-                state is FilteredEventsLoaded ||
-                state is FilteredEventsError,
-            builder: (_, state) {
-              if (state is FilteredEventsLoading) {
-                return _LoadingList();
-              } else if (state is FilteredEventsLoaded) {
-                return _EventListView(items: state.events);
-              } else {
-                return _EmptyEventList();
-              }
-            }),
+      );
+}
+
+class _EventListView extends StatelessWidget {
+  final List<EventItem> items;
+
+  const _EventListView({@required this.items});
+
+  @override
+  Widget build(BuildContext context) => ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final EventItem event = items[index];
+          return GestureDetector(
+            onTap: () => event.isConference
+                ? _showConferenceView(event, context)
+                : _showModalDialog(event, context),
+            child: EventItemRow(
+              dateTime: event.eventTime,
+              message: event.eventTitle,
+              faculty: event.faculty,
+            ),
+          );
+        },
       );
 
-  void _showModalDialog(EventModalDetail state, BuildContext context) {
+  void _showModalDialog(EventItem item, BuildContext context) {
     final bloc = BlocProvider.of<EventFilteredBloc>(context);
 
     showGeneralDialog(
@@ -62,7 +74,7 @@ class HomeView extends StatelessWidget {
       pageBuilder: (context, animation1, animation2) {
         return BlocProvider.value(
           value: bloc,
-          child: EventDetailModal(eventItem: state.item),
+          child: EventDetailModal(eventItem: item),
         );
       },
       transitionBuilder: (context, animation, _, child) {
@@ -77,43 +89,20 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  void _showConferenceView(EventConferenceDetail state, BuildContext context) {
+  void _showConferenceView(EventItem item, BuildContext context) {
     Navigator.of(context).push(
       SlideLeftRoute(
         child: BlocProvider(
           create: (context) => injector<NavigatorBloc>(),
           child: MainEventInheritedWidget(
-            id: state.id,
-            faculty: state.faculty,
+            id: item.id.toString(),
+            faculty: item.faculty,
             child: ConferenceView(),
           ),
         ),
       ),
     );
   }
-}
-
-class _EventListView extends StatelessWidget {
-  final List<EventItem> items;
-
-  const _EventListView({@required this.items});
-
-  @override
-  Widget build(BuildContext context) => ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final EventItem event = items[index];
-          return GestureDetector(
-            onTap: () => BlocProvider.of<EventFilteredBloc>(context)
-                .add(GetEventDetail(event)),
-            child: EventItemRow(
-              dateTime: event.eventTime,
-              message: event.eventTitle,
-              faculty: event.faculty,
-            ),
-          );
-        },
-      );
 }
 
 class _EmptyEventList extends StatelessWidget {
@@ -183,7 +172,7 @@ class _LoadingList extends StatelessWidget {
 class _FacultyFilterButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.only(right: 10),
+        padding: EdgeInsets.only(right: appBarRightPadding),
         child: BlocBuilder<EventFilteredBloc, EventFilteredState>(
           condition: (_, state) => state is FilteredEventsLoaded,
           builder: (context, state) {

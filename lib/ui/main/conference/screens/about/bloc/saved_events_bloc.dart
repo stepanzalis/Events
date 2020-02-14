@@ -42,7 +42,6 @@ class SavedEventsBloc extends Bloc<SavedEventsEvent, SavedEventsState> {
       final List<SavedEvent> myEventOverview =
           await _mapMainItemEventToOverview(events);
       yield EventsLoaded(events: myEventOverview);
-      add(StartObserving());
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:uhk_events/io/api/api_provider.dart';
 import 'package:uhk_events/io/firebase/firebase_auth_provider.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
@@ -9,6 +10,7 @@ import 'package:uhk_events/io/repositories/user_repository.dart';
 import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/screens/about/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/screens/about/bloc/ticker.dart';
+import 'package:uhk_events/ui/main/conference/screens/schedule/bloc/main_event_bloc.dart';
 import 'package:uhk_events/ui/main/home/auth_bloc/auth_bloc.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
@@ -45,6 +47,13 @@ Future<void> initDi() async {
   injector.registerFactory<SavedEventsBloc>(
       () => SavedEventsBloc(eventRepository: injector(), ticker: injector()));
 
+  injector.registerFactory<AboutInfoBloc>(
+      () => AboutInfoBloc(eventRepository: injector()));
+
+  injector.registerFactory<MainEventBloc>(
+    () => MainEventBloc(eventRepository: injector()),
+  );
+
   // Repositories
   injector.registerLazySingleton<EventRepository>(
     () => EventRepositoryImpl(
@@ -61,7 +70,7 @@ Future<void> initDi() async {
 
   // Data sources
   injector.registerLazySingleton<ApiProvider>(
-    () => ApiProvider(),
+    () => ApiProvider(client: injector()),
   );
 
   injector.registerLazySingleton<FirestoreProvider>(
@@ -91,4 +100,5 @@ Future<void> initDi() async {
   injector.registerLazySingleton(() => DataConnectionChecker());
   injector.registerLazySingleton(() => FirebaseMessaging());
   injector.registerLazySingleton(() => Ticker());
+  injector.registerLazySingleton(() => http.Client());
 }

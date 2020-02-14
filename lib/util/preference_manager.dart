@@ -1,11 +1,11 @@
 import 'package:hive/hive.dart';
+import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/entities/main_event_item_entity.dart';
-import 'package:uhk_events/io/model/event_item.dart';
 
 import 'constants.dart';
 
 abstract class BasePreferences {
-  void putEvents(List<EventItem> events);
+  void putEvents(List<EventItemEntity> events);
 
   void putToken(String token);
 
@@ -13,7 +13,7 @@ abstract class BasePreferences {
 
   Future<String> getToken();
 
-  Future<List<EventItem>> getEvents();
+  Future<List<EventItemEntity>> getEvents();
 
   Future<bool> isUserLoggedIn();
 
@@ -22,8 +22,8 @@ abstract class BasePreferences {
 
 class AppPreferences with BasePreferences {
   @override
-  void putEvents(List<EventItem> events) {
-    Hive.box<EventItem>(Events)
+  void putEvents(List<EventItemEntity> events) {
+    Hive.box<EventItemEntity>(Events)
       ..clear()
       ..addAll(events);
   }
@@ -47,8 +47,8 @@ class AppPreferences with BasePreferences {
   }
 
   @override
-  Future<List<EventItem>> getEvents() async {
-    final Box box = Hive.box<EventItem>(Events);
+  Future<List<EventItemEntity>> getEvents() async {
+    final Box box = Hive.box<EventItemEntity>(Events);
     final values = await box.values;
     return await values.toList();
   }

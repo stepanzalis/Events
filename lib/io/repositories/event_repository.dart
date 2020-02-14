@@ -1,6 +1,8 @@
 import 'package:either_option/either_option.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/io/api/api_provider.dart';
+import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/entities/main_event_item_entity.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
 import 'package:uhk_events/io/model/event_item.dart';
@@ -14,8 +16,6 @@ import 'package:uhk_events/util/preference_manager.dart';
 abstract class EventRepository {
   Future<Either<Failure, List<EventItem>>> getEventList();
 
-  Future<List<MainEvent>> fetchMainEvents();
-
   Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId);
 
   Future<GeneralInfo> fetchGeneralInfo();
@@ -28,7 +28,9 @@ abstract class EventRepository {
 
   Future<bool> isMainEvent(String id);
 
-  Future<List<MainEvent>> getMainEvents();
+  Future<MainEvent> fetchMainEventInfo(String id);
+
+  Future<void> saveMainItemsEvents(List<MainEventItemEntity> events);
 
   Future<List<MainEventItemEntity>> getMainItemEvents();
 }
@@ -51,11 +53,6 @@ class EventRepositoryImpl extends EventRepository {
   }
 
   @override
-  Future<List<MainEvent>> fetchMainEvents() {
-    return firestoreProvider.fetchMainEvents();
-  }
-
-  @override
   Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId) {
     return firestoreProvider.fetchScheduleFromEvent(eventId);
   }
@@ -68,17 +65,43 @@ class EventRepositoryImpl extends EventRepository {
   @override
   Future<Either<Failure, List<EventItem>>> getEventList() async {
     if (await networkInfo.isConnected) {
-      final List<EventItem> response = await apiProvider.getEventList();
+      final List<dynamic> response = await apiProvider.getEventList();
+
+      final eventEntities =
+          response.map((item) => EventItemEntity.fromJson(item)).toList();
+      final mainEventsId = await firestoreProvider.fetchMainEvents();
+      await _pairConferenceWithEvent(eventEntities, mainEventsId);
+
       if (response != null) {
-        await localDataSource.putEvents(response);
-        return Right(response);
+        await localDataSource.putEvents(eventEntities);
+        final List<EventItem> events = await _getEventsFromDatabase();
+        return Right(events);
       } else {
         return Left(ServerFailure());
       }
     } else {
-      final List<EventItem> events = await localDataSource.getEvents();
+      final List<EventItem> events = await _getEventsFromDatabase();
       return Right(events);
     }
+  }
+
+  Future<void> _pairConferenceWithEvent(
+      List<EventItemEntity> eventEntities, List<String> mainEventsId) async {
+    for (int i = 0; i < mainEventsId.length; i++) {
+      final eventId = mainEventsId[i];
+      final EventItemEntity eventEntity = eventEntities
+          .firstWhere((e) => e.id.toString() == eventId, orElse: () => null);
+
+      if (eventEntity != null) {
+        final index = eventEntities.indexOf(eventEntity);
+        eventEntities[index] = eventEntity.update(isConference: true);
+      }
+    }
+  }
+
+  Future<List<EventItem>> _getEventsFromDatabase() async {
+    final List<EventItemEntity> entities = await localDataSource.getEvents();
+    return entities.fromEntityList();
   }
 
   @override
@@ -99,7 +122,12 @@ class EventRepositoryImpl extends EventRepository {
   }
 
   @override
-  Future<List<MainEvent>> getMainEvents() {
-    return firestoreProvider.fetchMainEvents();
+  Future<MainEvent> fetchMainEventInfo(String id) {
+    return firestoreProvider.fetchMainEventInfo(id);
+  }
+
+  @override
+  Future<void> saveMainItemsEvents(List<MainEventItemEntity> events) async {
+    return await localDataSource.saveMainItemsEvents(events);
   }
 }
