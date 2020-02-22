@@ -74,7 +74,9 @@ class EventRepositoryImpl extends EventRepository {
 
       if (response != null) {
         await localDataSource.putEvents(eventEntities);
-        final List<EventItem> events = await _getEventsFromDatabase();
+        final List<EventItem> events = await _getEventsFromDatabase()
+          ..sortedByDateDesc();
+
         return Right(events);
       } else {
         return Left(ServerFailure());

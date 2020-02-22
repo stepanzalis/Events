@@ -7,8 +7,13 @@ class BannerWidget extends StatelessWidget {
   final Color color;
   final String title;
   final String date;
+  final String url;
 
-  const BannerWidget({@required this.title, @required this.color, this.date});
+  const BannerWidget(
+      {@required this.title,
+      @required this.url,
+      @required this.color,
+      this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +23,9 @@ class BannerWidget extends StatelessWidget {
       children: <Widget>[
         _ConferenceBackButton(fillColor: color),
         _BannerSkeleton(
-          date: "17.2.2020",
-          title: "Zasedání asociace děkanů filozofických fakult",
+          url: url,
+          date: date,
+          title: title,
         )
       ],
     );
@@ -54,48 +60,61 @@ class _ConferenceBackButton extends StatelessWidget {
 class _BannerSkeleton extends StatelessWidget {
   final String title;
   final String date;
+  final String url;
 
-  const _BannerSkeleton({@required this.title, @required this.date});
+  const _BannerSkeleton(
+      {@required this.title, @required this.url, @required this.date});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.25,
-      decoration: BoxDecoration(
-        // image: DecorationImage(image: NetworkImage("")),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[Colors.white, disableBarItemColor],
+    return Stack(
+      children: <Widget>[
+        ShaderMask(
+          shaderCallback: (rect) {
+            return LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[Colors.transparent, disableBarItemColor],
+            ).createShader(Rect.fromLTRB(0, 80, 0, 400));
+          },
+          blendMode: BlendMode.darken,
+          child: Image.network(
+            url,
+            height: MediaQuery.of(context).size.height * 0.25,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.fitWidth,
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            child: Text(
-              date,
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: Colors.white),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.25,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                child: Text(
+                  date,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subhead
+                      .copyWith(color: Colors.white),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+              ),
+              Padding(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.display1.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w700),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+              ),
+            ],
           ),
-          Padding(
-            child: Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .display1
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

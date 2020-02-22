@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/widgets/page_view_indicator.dart';
@@ -82,7 +82,7 @@ class OnboardingTitle extends StatelessWidget {
         style: TextStyle(
             height: 1.5,
             fontSize: 20,
-            color: Theme.of(context).textTheme.body1.color),
+            color: Theme.of(context).textTheme.body2.color),
       ),
     );
   }

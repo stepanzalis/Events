@@ -8,6 +8,7 @@ import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget
 
 import 'about_banner.dart';
 import 'bloc/about_info_event.dart';
+import 'event_list.dart';
 
 class AboutContent extends StatelessWidget {
   @override
@@ -23,20 +24,43 @@ class AboutContent extends StatelessWidget {
             BannerWidget(
                 color: faculty.facultyColor(),
                 title: state.title,
+                url: state.url,
                 date: state.date),
-            _SectionTitle(text: context.translate("aboutEvent")),
-            const SizedBox(height: 10),
-            _EventDescriptionText(
-                text: state.description,
-                color: faculty.facultyColor(),
-                onClick: () => BlocProvider.of<AboutInfoBloc>(context).add(
-                    ToggleDescription(expanded: !state.isDescriptionExpanded)),
-                isExpanded: state.isDescriptionExpanded),
-            const SizedBox(height: 35),
-            _SectionTitle(text: context.translate("mySchedule")),
+            _ExpandedScrollContainer(
+              children: <Widget>[
+                _SectionTitle(text: context.translate("aboutEvent")),
+                const SizedBox(height: 10),
+                _EventDescriptionText(
+                    text: state.description,
+                    color: faculty.facultyColor(),
+                    onClick: () => BlocProvider.of<AboutInfoBloc>(context).add(
+                        ToggleDescription(
+                            expanded: !state.isDescriptionExpanded)),
+                    isExpanded: state.isDescriptionExpanded),
+                const SizedBox(height: 35),
+                _SectionTitle(text: context.translate("mySchedule")),
+                MainEventItemsListView()
+              ],
+            ),
           ],
         );
       },
+    );
+  }
+}
+
+class _ExpandedScrollContainer extends StatelessWidget {
+  final List<Widget> children;
+
+  _ExpandedScrollContainer({@required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start, children: children),
+      ),
     );
   }
 }
@@ -122,7 +146,7 @@ class _ShowMoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35,
+      height: 30,
       width: 80,
       child: RaisedButton(
         child: Text(title.toUpperCase(),

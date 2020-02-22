@@ -28,8 +28,8 @@ class AboutInfoBloc extends Bloc<AboutInfoEvent, AboutInfoState> {
 
   Stream<AboutInfoState> _mapLoadMainEventInfoToState(String id) async* {
     final MainEvent mainEvent = await eventRepository.fetchMainEventInfo(id);
-    yield AboutInfoState.filled(
-        mainEvent.title, mainEvent.infoAbout, mainEvent.date);
+    yield AboutInfoState.filled(mainEvent.title, mainEvent.infoAbout,
+        mainEvent.backgroundUrl, mainEvent.date);
   }
 
   Stream<AboutInfoState> _mapToggleDescriptionToState(

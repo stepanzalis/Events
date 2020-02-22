@@ -9,7 +9,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:print_lumberdash/print_lumberdash.dart';
 import 'package:uhk_events/io/common/constants.dart';
-import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/home_view.dart';
 import 'package:uhk_events/ui/splashscreen/splashscreen.dart';
@@ -18,6 +17,7 @@ import 'package:uhk_events/util/messaging_manager.dart';
 import 'package:uhk_events/util/service_locator.dart';
 import 'package:uhk_events/util/theme/styling.dart';
 
+import 'io/entities/event_item_entity.dart';
 import 'io/entities/main_event_item_entity.dart';
 import 'ui/main/home/auth_bloc/auth_bloc.dart';
 import 'ui/onboarding/onboarding_view.dart';

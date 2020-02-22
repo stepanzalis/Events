@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:uhk_events/common/constants.dart';
 
 String dateFromTimestamp(int timestamp) {
-  final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
   final dateFormat = DateFormat(HUMAN_DATE_TIME_FORMAT);
   return dateFormat.format(dateTime);
 }

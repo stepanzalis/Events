@@ -16,8 +16,7 @@ class UserRepositoryImp extends UserRepository {
   final AuthProvider remoteProvider;
   final NetworkInfo networkInfo;
 
-  UserRepositoryImp(
-      {@required this.remoteProvider, @required this.networkInfo});
+  UserRepositoryImp({@required this.remoteProvider, @required this.networkInfo});
 
   @override
   Future<String> getUserId() => remoteProvider.getUserId();

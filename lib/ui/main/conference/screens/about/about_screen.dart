@@ -5,7 +5,6 @@ import 'package:uhk_events/util/service_locator.dart';
 
 import 'about_content.dart';
 import 'bloc/bloc.dart';
-import 'event_list.dart';
 
 class AboutView extends StatelessWidget {
   @override
@@ -27,14 +26,7 @@ class AboutView extends StatelessWidget {
             ),
         )
       ],
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Flexible(flex: 4, child: AboutContent()),
-          Flexible(child: MainEventItemsListView()),
-        ],
-      ),
+      child: AboutContent(),
     );
   }
 }

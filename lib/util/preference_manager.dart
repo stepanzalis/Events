@@ -25,6 +25,7 @@ class AppPreferences with BasePreferences {
   void putEvents(List<EventItemEntity> events) {
     Hive.box<EventItemEntity>(Events)
       ..clear()
+      ..clear()
       ..addAll(events);
   }
 
