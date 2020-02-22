@@ -64,7 +64,8 @@ Future<void> initDi() async {
   );
 
   injector.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImp(remoteProvider: injector(), networkInfo: injector()),
+    () =>
+        UserRepositoryImp(remoteProvider: injector(), networkInfo: injector()),
   );
 
   // Data sources

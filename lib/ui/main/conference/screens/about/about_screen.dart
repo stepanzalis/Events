@@ -10,13 +10,12 @@ class AboutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String eventId = MainEventInheritedWidget.of(context).id;
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<SavedEventsBloc>(
           create: (context) => injector<SavedEventsBloc>()
             ..add(
-              LoadMyEvents(),
+              LoadMyEvents(eventId: eventId),
             ),
         ),
         BlocProvider<AboutInfoBloc>(

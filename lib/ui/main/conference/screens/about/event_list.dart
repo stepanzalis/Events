@@ -8,25 +8,27 @@ import 'bloc/bloc.dart';
 class MainEventItemsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SavedEventsBloc, SavedEventsState>(
-      builder: (context, state) {
-        if (state is EventsLoaded) {
-          final List<SavedEvent> events = state.events;
-          return ListView.builder(
-            itemCount: state.events.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              final SavedEvent event = events[index];
-              return MyEventItemRow(
-                  title: event.title,
-                  place: event.place,
-                  timeLeft: event.timeLeft);
-            },
-          );
-        } else {
-          return MyEventEmptyRow();
-        }
-      },
-    );
+    return SizedBox(
+        height: 170,
+        child: BlocBuilder<SavedEventsBloc, SavedEventsState>(
+          builder: (context, state) {
+            if (state is EventsLoaded) {
+              final List<SavedEvent> events = state.events;
+              return ListView.builder(
+                itemCount: state.events.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  final SavedEvent event = events[index];
+                  return MyEventItemRow(
+                      title: event.title,
+                      place: event.place,
+                      timeLeft: event.timeLeft);
+                },
+              );
+            } else {
+              return MyEventEmptyRow();
+            }
+          },
+        ));
   }
 }

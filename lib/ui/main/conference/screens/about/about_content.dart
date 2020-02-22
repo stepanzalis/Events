@@ -37,11 +37,10 @@ class AboutContent extends StatelessWidget {
                         ToggleDescription(
                             expanded: !state.isDescriptionExpanded)),
                     isExpanded: state.isDescriptionExpanded),
-                const SizedBox(height: 35),
-                _SectionTitle(text: context.translate("mySchedule")),
-                MainEventItemsListView()
               ],
             ),
+            _SectionTitle(text: context.translate("mySchedule")),
+            MainEventItemsListView()
           ],
         );
       },
