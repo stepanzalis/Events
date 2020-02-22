@@ -31,6 +31,9 @@ class MainEventItemEntity extends HiveObject implements EquatableMixin {
   @HiveField(7)
   final String place;
 
+  @HiveField(8)
+  final String parentEventId;
+
   MainEventItemEntity(
       {@required this.id,
       @required this.title,
@@ -39,9 +42,11 @@ class MainEventItemEntity extends HiveObject implements EquatableMixin {
       @required this.startDateTime,
       @required this.endDateTime,
       @required this.description,
-      @required this.isChosen});
+      this.parentEventId,
+      this.isChosen});
 
-  factory MainEventItemEntity.fromSnapshot(DocumentSnapshot snap) =>
+  factory MainEventItemEntity.fromSnapshot(
+          DocumentSnapshot snap, String parentId) =>
       MainEventItemEntity(
           id: snap.data['ID'],
           title: snap.data['title'],
@@ -50,6 +55,7 @@ class MainEventItemEntity extends HiveObject implements EquatableMixin {
           endDateTime: snap.data['endDateTime'],
           place: snap.data['place'],
           description: snap.data['description'] ?? "",
+          parentEventId: parentId,
           isChosen: false);
 
   @override
@@ -61,6 +67,7 @@ class MainEventItemEntity extends HiveObject implements EquatableMixin {
         startDateTime,
         endDateTime,
         endDateTime,
+        parentEventId,
         isChosen
       ];
 }

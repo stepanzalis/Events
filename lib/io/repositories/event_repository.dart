@@ -32,7 +32,7 @@ abstract class EventRepository {
 
   Future<void> saveMainItemsEvents(List<MainEventItemEntity> events);
 
-  Future<List<MainEventItemEntity>> getMainItemEvents();
+  Future<List<MainEventItemEntity>> getMainItemEvents(String eventId);
 }
 
 class EventRepositoryImpl extends EventRepository {
@@ -58,8 +58,15 @@ class EventRepositoryImpl extends EventRepository {
   }
 
   @override
-  Future<List<MainEventItemEntity>> getMainItemEvents() {
-    return localDataSource.getMainItemsEvents();
+  Future<List<MainEventItemEntity>> getMainItemEvents(String eventId) {
+    return localDataSource.getMainItemsEvents().then((events) {
+      return filterFromEvent(eventId, events);
+    });
+  }
+
+  List<MainEventItemEntity> filterFromEvent(
+      String eventId, List<MainEventItemEntity> entities) {
+    return entities.where((entity) => entity.parentEventId == eventId).toList();
   }
 
   @override

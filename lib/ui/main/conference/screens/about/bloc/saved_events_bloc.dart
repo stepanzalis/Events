@@ -25,7 +25,7 @@ class SavedEventsBloc extends Bloc<SavedEventsEvent, SavedEventsState> {
     SavedEventsEvent event,
   ) async* {
     if (event is LoadMyEvents) {
-      yield* _mapLoadEventsToState();
+      yield* _mapLoadEventsToState(event.eventId);
     } else if (event is StartObserving) {
       yield* _mapStartObservingToState();
     } else if (event is StopObserving) {
@@ -33,9 +33,9 @@ class SavedEventsBloc extends Bloc<SavedEventsEvent, SavedEventsState> {
     }
   }
 
-  Stream<SavedEventsState> _mapLoadEventsToState() async* {
+  Stream<SavedEventsState> _mapLoadEventsToState(String eventId) async* {
     final List<MainEventItemEntity> events =
-        await eventRepository.getMainItemEvents();
+        await eventRepository.getMainItemEvents(eventId);
     if (events.isEmpty) {
       yield EmptyList();
     } else {
