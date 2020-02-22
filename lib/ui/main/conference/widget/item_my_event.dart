@@ -25,7 +25,7 @@ class MyEventItemRow extends StatelessWidget {
         padding: EdgeInsets.only(left: 10),
         child: ItemContainerSkeleton(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -39,7 +39,7 @@ class MyEventItemRow extends StatelessWidget {
                         .textTheme
                         .subhead
                         .copyWith(color: primaryTextColor)),
-                const SizedBox(height: conferenceWidth),
+                const SizedBox(height: conferenceWidth * 1.5),
                 _TimeLeftPanel(timeLeft: "30MIN")
               ],
             ),
