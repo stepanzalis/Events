@@ -26,9 +26,9 @@ class AboutContent extends StatelessWidget {
                 title: state.title,
                 url: state.url,
                 date: state.date),
+            _SectionTitle(text: context.translate("aboutEvent")),
             _ExpandedScrollContainer(
               children: <Widget>[
-                _SectionTitle(text: context.translate("aboutEvent")),
                 const SizedBox(height: 10),
                 _EventDescriptionText(
                     text: state.description,

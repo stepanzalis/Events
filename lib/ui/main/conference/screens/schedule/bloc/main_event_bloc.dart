@@ -11,12 +11,20 @@ class MainEventBloc extends Bloc<MainEventEvent, MainEventState> {
   MainEventBloc({@required this.eventRepository});
 
   @override
-  MainEventState get initialState => InitialMainEventState();
+  MainEventState get initialState => MainEventLoading();
 
   @override
   Stream<MainEventState> mapEventToState(
     MainEventEvent event,
   ) async* {
-    // TODO: Add Logic
+    if (event is LoadMainEvents) {
+      yield* _mapLoadMainEventsToState(event.id, event.savedEvents);
+    }
+  }
+
+  Stream<MainEventState> _mapLoadMainEventsToState(
+      String id, bool savedEvents) async* {
+    //TODO
+    yield MainEventLoaded(dayEvents: null);
   }
 }

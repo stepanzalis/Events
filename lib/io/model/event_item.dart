@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/util/date_formatter.dart';
 
+@immutable
 class EventItem extends Equatable {
   final int id;
   final String eventTime;

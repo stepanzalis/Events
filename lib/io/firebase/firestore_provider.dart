@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uhk_events/io/entities/general_info_entity.dart';
 import 'package:uhk_events/io/entities/main_event_entity.dart';
-import 'package:uhk_events/io/entities/scheduled_event_entity.dart';
+import 'package:uhk_events/io/entities/main_event_item_entity.dart';
 import 'package:uhk_events/io/entities/user_entity.dart';
 import 'package:uhk_events/io/model/general_info.dart';
 import 'package:uhk_events/io/model/main_event.dart';
@@ -31,15 +31,15 @@ class FirestoreProvider {
           .map((doc) => MainEvent.fromEntity(MainEventEntity.fromSnapshot(doc)))
           .first);
 
-  Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId) =>
+  Future<List<MainEventItem>> fetchScheduleFromEvent(String eventId) =>
       _firestore
           .collection('events')
           .document(eventId)
           .collection('schedule')
           .getDocuments()
           .then((list) => list.documents
-              .map((doc) => ScheduledEvent.fromEntity(
-                  ScheduledEventEntity.fromSnapshot(doc)))
+              .map((doc) => MainEventItem.fromEntity(
+                  MainEventItemEntity.fromSnapshot(doc, eventId)))
               .toList());
 
   Future<String> sendUser(UserEntity user, String eventId) =>
@@ -54,7 +54,7 @@ class FirestoreProvider {
       });
 
   Future<void> postSchedule(
-          String userId, String eventId, ScheduledEvent event) =>
+          String userId, String eventId, MainEventItem event) =>
       _firestore
           .collection('users')
           .document(userId)

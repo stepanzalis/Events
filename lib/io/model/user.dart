@@ -18,7 +18,7 @@ class User extends Equatable {
   @override
   String toString() => 'User { id: $id, title: $firebaseToken}';
 
-  static User fromEntity(UserEntity entity) =>
+  factory User.fromEntity(UserEntity entity) =>
       User(id: entity.id, firebaseToken: entity.firebaseToken ?? "");
 
   @override

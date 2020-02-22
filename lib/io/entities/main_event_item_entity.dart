@@ -58,6 +58,18 @@ class MainEventItemEntity extends HiveObject implements EquatableMixin {
           parentEventId: parentId,
           isChosen: false);
 
+  Map<String, Object> toDocument() {
+    return {
+      'ID': id,
+      'title': title,
+      'detailImageUrl': backgroundUrl,
+      'startDateTime': startDateTime,
+      'endDateTime': endDateTime,
+      'description': description,
+      'place': place
+    };
+  }
+
   @override
   List<Object> get props => [
         id,

@@ -19,7 +19,8 @@ class MainEvent extends Equatable {
       @required this.date,
       @required this.infoAbout,
       @required this.active})
-      : assert(title != null, date != null);
+      : assert(title != null),
+        assert(date != null);
 
   MainEvent copyWith(
           {String id,

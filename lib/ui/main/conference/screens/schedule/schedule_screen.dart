@@ -40,7 +40,7 @@ class MyScheduleFilter extends StatelessWidget {
       children: <Widget>[
         Text(context.translate("mySchedule")),
         Switch.adaptive(
-            activeColor: color, value: false, onChanged: (value) => {}),
+            activeColor: color, value: false, onChanged: (value) {}),
         SizedBox(width: appBarRightPadding)
       ],
     );

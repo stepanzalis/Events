@@ -16,12 +16,11 @@ import 'package:uhk_events/util/preference_manager.dart';
 abstract class EventRepository {
   Future<Either<Failure, List<EventItem>>> getEventList();
 
-  Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId);
+  Future<List<MainEventItem>> fetchScheduleFromEvent(String eventId);
 
   Future<GeneralInfo> fetchGeneralInfo();
 
-  Future<void> postSchedule(
-      String userId, String eventId, ScheduledEvent event);
+  Future<void> postSchedule(String userId, String eventId, MainEventItem event);
 
   Future<void> removeSchedule(
       String userId, String eventId, String scheduleEventId);
@@ -53,7 +52,7 @@ class EventRepositoryImpl extends EventRepository {
   }
 
   @override
-  Future<List<ScheduledEvent>> fetchScheduleFromEvent(String eventId) {
+  Future<List<MainEventItem>> fetchScheduleFromEvent(String eventId) {
     return firestoreProvider.fetchScheduleFromEvent(eventId);
   }
 
@@ -115,7 +114,7 @@ class EventRepositoryImpl extends EventRepository {
 
   @override
   Future<void> postSchedule(
-      String userId, String eventId, ScheduledEvent event) {
+      String userId, String eventId, MainEventItem event) {
     return firestoreProvider.postSchedule(userId, eventId, event);
   }
 
