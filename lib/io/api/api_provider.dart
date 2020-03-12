@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:uhk_events/io/api/api.dart';
+
+abstract class Api {
+  Future<List<dynamic>> getEventList();
+}
 
 class ApiProvider with Api {
   final String url = 'https://www.uhk.cz/cs/kalendar-akci/json/udalosti-uhk.js';

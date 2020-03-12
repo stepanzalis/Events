@@ -8,7 +8,7 @@ import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget
 
 import 'about_banner.dart';
 import 'bloc/about_info_event.dart';
-import 'event_list.dart';
+import 'saved_event_list.dart';
 
 class AboutContent extends StatelessWidget {
   @override

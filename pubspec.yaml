@@ -38,7 +38,7 @@ dependencies:
   print_lumberdash: ^2.1.0
   data_connection_checker: ^0.3.4
   either_option: ^1.0.5
-
+  animations: ^1.0.0+5
   cupertino_icons: ^0.1.2
 
   shimmer: ^1.0.1

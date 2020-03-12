@@ -13,7 +13,7 @@ class ConferenceView extends StatelessWidget {
       builder: (context, currentIndex) {
         return Scaffold(
           body: IndexedStack(
-            children: pages,
+            children: _pages,
             index: currentIndex,
           ),
           bottomNavigationBar: ConferenceBottomNavigation(index: currentIndex),
@@ -22,7 +22,7 @@ class ConferenceView extends StatelessWidget {
     );
   }
 
-  final List<Widget> pages = [
+  final List<Widget> _pages = [
     AboutView(),
     ScheduleView(),
     Container(),

@@ -17,7 +17,7 @@ class MessagingManager {
   MessagingManager(
       {@required this.firebaseMessaging,
       @required this.preferenceManager,
-      this.firestoreProvider}) {
+      @required this.firestoreProvider}) {
     firebaseMessaging.configure(
       onBackgroundMessage:
           Platform.isAndroid ? _backgroundMessageHandler : null,
@@ -38,8 +38,7 @@ class MessagingManager {
     await _controller.add(message);
   }
 
-  void iOSNotificationPermission() =>
-      firebaseMessaging.requestNotificationPermissions();
+  void iOSNotificationPermission() => firebaseMessaging.requestNotificationPermissions();
 
   void saveToken() async {
     final String token = await firebaseMessaging.getToken();

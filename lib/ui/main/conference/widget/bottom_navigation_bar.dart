@@ -27,32 +27,56 @@ class ConferenceBottomNavigation extends StatelessWidget {
   List<BottomNavigationBarItem> navigationItems(BuildContext context) {
     return [
       BottomNavigationBarItem(
-        icon: SvgPicture.asset("assets/icons/about.svg",
-            color: disableBarItemColor),
-        activeIcon:
-            SvgPicture.asset("assets/icons/about.svg", color: Colors.black),
-        title: Text(context.translate("")),
+        icon: SvgPicture.asset(
+          "assets/icons/about.svg",
+          color: disableBarItemColor,
+        ),
+        activeIcon: SvgPicture.asset(
+          "assets/icons/about.svg",
+          color: Colors.black,
+        ),
+        title: Text(
+          context.translate(""),
+        ),
       ),
       BottomNavigationBarItem(
-        icon: SvgPicture.asset("assets/icons/timetable.svg",
-            color: disableBarItemColor),
-        activeIcon:
-            SvgPicture.asset("assets/icons/timetable.svg", color: Colors.black),
-        title: Text(context.translate("")),
+        icon: SvgPicture.asset(
+          "assets/icons/timetable.svg",
+          color: disableBarItemColor,
+        ),
+        activeIcon: SvgPicture.asset(
+          "assets/icons/timetable.svg",
+          color: Colors.black,
+        ),
+        title: Text(
+          context.translate(""),
+        ),
       ),
       BottomNavigationBarItem(
-        icon: SvgPicture.asset("assets/icons/map.svg",
-            color: disableBarItemColor),
-        activeIcon:
-            SvgPicture.asset("assets/icons/map.svg", color: Colors.black),
-        title: Text(context.translate("")),
+        icon: SvgPicture.asset(
+          "assets/icons/map.svg",
+          color: disableBarItemColor,
+        ),
+        activeIcon: SvgPicture.asset(
+          "assets/icons/map.svg",
+          color: Colors.black,
+        ),
+        title: Text(
+          context.translate(""),
+        ),
       ),
       BottomNavigationBarItem(
-        icon: SvgPicture.asset("assets/icons/wifi.svg",
-            color: disableBarItemColor),
-        activeIcon:
-            SvgPicture.asset("assets/icons/wifi.svg", color: Colors.black),
-        title: Text(context.translate("")),
+        icon: SvgPicture.asset(
+          "assets/icons/wifi.svg",
+          color: disableBarItemColor,
+        ),
+        activeIcon: SvgPicture.asset(
+          "assets/icons/wifi.svg",
+          color: Colors.black,
+        ),
+        title: Text(
+          context.translate(""),
+        ),
       ),
     ];
   }

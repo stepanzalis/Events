@@ -8,23 +8,28 @@ import './bloc.dart';
 
 class MainEventBloc extends Bloc<MainEventEvent, MainEventState> {
   final EventRepository eventRepository;
+
   MainEventBloc({@required this.eventRepository});
 
   @override
-  MainEventState get initialState => MainEventLoading();
+  MainEventState get initialState => MainEventState.loading();
 
   @override
   Stream<MainEventState> mapEventToState(
     MainEventEvent event,
   ) async* {
     if (event is LoadMainEvents) {
-      yield* _mapLoadMainEventsToState(event.id, event.savedEvents);
+      yield* _mapLoadMainEventsToState(event.id);
+    } else if (event is ToggleSavedEvents) {
+      yield* _mapToggleSavedEventsToState(event.savedEvents);
     }
   }
 
-  Stream<MainEventState> _mapLoadMainEventsToState(
-      String id, bool savedEvents) async* {
+  Stream<MainEventState> _mapLoadMainEventsToState(String id) async* {
     //TODO
-    yield MainEventLoaded(dayEvents: null);
+  }
+
+  Stream<MainEventState> _mapToggleSavedEventsToState(bool showSaved) async* {
+    yield state.copyWith(isLoading: true, showSavedEvents: showSaved);
   }
 }

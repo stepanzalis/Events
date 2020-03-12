@@ -8,10 +8,10 @@
   "skipOnboarding": "Přeskočit",
 
   "appTitle": "Events",
-  "scheduleTitle": "Schedule",
+  "scheduleTitle": "Program",
 
   "appTitleFull": "UHK EVENTS",
-  "eventError": "Nelze načíst události, zkontrolujte připojení k internetu",
+  "eventError": "Nelze načíst události, zkontrolujte prosím připojení k internetu",
   "addToCalendarBtn": "PŘIDAT DO KALENDÁŘE",
   "aboutEvent": "O akci",
   "mySchedule" : "Můj program",

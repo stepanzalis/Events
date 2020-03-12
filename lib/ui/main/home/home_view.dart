@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +10,7 @@ import 'package:uhk_events/common/transitions/slide_transition.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
-import 'package:uhk_events/ui/common/widgets.dart';
+import 'package:uhk_events/ui/common/app_bar.dart';
 import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/conference_view.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
@@ -23,8 +24,8 @@ import 'package:uhk_events/util/service_locator.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: eventAppBar(
-            context.translate("appTitle"), [_FacultyFilterButtons()], context),
+        appBar: EventAppBar(context.translate("appTitle"),
+            actions: [_FacultyFilterButtons()]),
         body: BlocBuilder<EventFilteredBloc, EventFilteredState>(
           builder: (_, state) {
             if (state is FilteredEventsLoading) {
@@ -65,28 +66,15 @@ class _EventListView extends StatelessWidget {
   void _showModalDialog(EventItem item, BuildContext context) {
     final bloc = BlocProvider.of<EventFilteredBloc>(context);
 
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: '',
-      barrierColor: Colors.black54,
-      transitionDuration: const Duration(milliseconds: 100),
-      pageBuilder: (context, animation1, animation2) {
-        return BlocProvider.value(
-          value: bloc,
-          child: EventDetailModal(eventItem: item),
-        );
-      },
-      transitionBuilder: (context, animation, _, child) {
-        return Transform.scale(
-          scale: animation.value,
-          child: Opacity(
-            opacity: animation.value,
-            child: child,
-          ),
-        );
-      },
-    );
+    showModal(
+        context: context,
+        configuration: FadeScaleTransitionConfiguration(),
+        builder: (context) {
+          return BlocProvider.value(
+            value: bloc,
+            child: EventDetailModal(eventItem: item),
+          );
+        });
   }
 
   void _showConferenceView(EventItem item, BuildContext context) {

@@ -48,8 +48,10 @@ class _ConferenceBackButton extends StatelessWidget {
           height: backButtonSize,
           decoration: BoxDecoration(color: fillColor, shape: BoxShape.circle),
           child: Center(
-            child:
-                SvgPicture.asset("assets/icons/arrow.svg", color: Colors.white),
+            child: SvgPicture.asset(
+              "assets/icons/arrow.svg",
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -75,7 +77,9 @@ class _BannerSkeleton extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: <Color>[Colors.transparent, disableBarItemColor],
-            ).createShader(Rect.fromLTRB(0, 80, 0, 400));
+            ).createShader(
+              Rect.fromLTRB(0, 80, 0, 400),
+            );
           },
           blendMode: BlendMode.darken,
           child: Image.network(
@@ -106,10 +110,14 @@ class _BannerSkeleton extends StatelessWidget {
                 child: Text(
                   title,
                   style: Theme.of(context).textTheme.display1.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.w700),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 30,
+                ),
               ),
             ],
           ),

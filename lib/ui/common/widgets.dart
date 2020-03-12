@@ -81,15 +81,3 @@ class RoundedButton extends StatelessWidget {
     );
   }
 }
-
-Widget eventAppBar(String title, List<Widget> actions, BuildContext context) {
-  return AppBar(
-    centerTitle: false,
-    elevation: 0,
-    automaticallyImplyLeading: false,
-    actions: actions,
-    title: Text(title, style: Theme.of(context).textTheme.title),
-  );
-}
-
-class EventAppBar extends AppBar {}

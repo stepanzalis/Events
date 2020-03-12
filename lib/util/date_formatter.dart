@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:uhk_events/common/constants.dart';
 
@@ -10,6 +11,12 @@ String dateFromTimestamp(int timestamp) {
 DateTime getDate(String date, String format) {
   final rawFormat = DateFormat(format);
   return rawFormat.parse(date);
+}
+
+String format(
+    {@required DateTime dateTime, String format = HUMAN_DATE_TIME_FORMAT}) {
+  var formatter = DateFormat(format);
+  return formatter.format(dateTime);
 }
 
 String formatDate(String unformattedDate,

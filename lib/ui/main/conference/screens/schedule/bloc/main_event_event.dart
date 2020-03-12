@@ -7,9 +7,16 @@ abstract class MainEventEvent extends Equatable {
 
 class LoadMainEvents extends MainEventEvent {
   final String id;
-  final bool savedEvents;
-  const LoadMainEvents({@required this.id, this.savedEvents = false});
+  const LoadMainEvents({@required this.id});
 
   @override
-  List<Object> get props => [id, savedEvents];
+  List<Object> get props => [id];
+}
+
+class ToggleSavedEvents extends MainEventEvent {
+  final bool savedEvents;
+  const ToggleSavedEvents({@required this.savedEvents});
+
+  @override
+  List<Object> get props => [savedEvents];
 }
