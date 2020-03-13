@@ -1,8 +1,9 @@
+import 'dart:html';
+
 import 'package:hive/hive.dart';
+import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/entities/main_event_item_entity.dart';
-
-import 'constants.dart';
 
 abstract class BasePreferences {
   void putEvents(List<EventItemEntity> events);

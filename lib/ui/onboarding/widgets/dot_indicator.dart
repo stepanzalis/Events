@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uhk_events/util/theme/colors.dart';
+import 'package:uhk_events/ui/shared/theme/colors.dart';
 
 class DotIndicator extends StatelessWidget {
   final int pageLength;

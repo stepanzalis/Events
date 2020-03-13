@@ -2,11 +2,11 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:uhk_events/common/constants.dart';
+import 'package:uhk_events/common/date_formatter.dart';
 import 'package:uhk_events/common/extensions/context.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/event_item.dart';
-import 'package:uhk_events/ui/common/widgets.dart';
-import 'package:uhk_events/util/date_formatter.dart';
+import 'package:uhk_events/ui/shared/widgets.dart';
 
 class EventDetailModal extends StatelessWidget {
   final EventItem eventItem;

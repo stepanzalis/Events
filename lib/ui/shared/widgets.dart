@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:uhk_events/util/constants.dart';
+import 'package:uhk_events/common/constants.dart';
 
 class BlurredDialog extends StatelessWidget {
   final Widget child;

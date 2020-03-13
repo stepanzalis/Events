@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uhk_events/common/colors.dart';
+import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/context.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/faculty.dart';
-import 'package:uhk_events/ui/common/widgets.dart';
-import 'package:uhk_events/util/constants.dart';
+import 'package:uhk_events/ui/shared/widgets.dart';
 
 import 'main_event_inherited_widget.dart';
 

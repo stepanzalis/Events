@@ -1,6 +1,6 @@
+import 'package:uhk_events/common/date_formatter.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/model/event_item.dart';
-import 'package:uhk_events/util/date_formatter.dart';
 
 import '../constants.dart';
 

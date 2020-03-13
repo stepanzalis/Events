@@ -10,7 +10,6 @@ import 'package:uhk_events/common/transitions/slide_transition.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/faculty.dart';
-import 'package:uhk_events/ui/common/app_bar.dart';
 import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/conference_view.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
@@ -18,7 +17,7 @@ import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/widget/detail/event_detail_modal.dart';
 import 'package:uhk_events/ui/main/home/widget/faculty_button.dart';
 import 'package:uhk_events/ui/main/home/widget/item_event.dart';
-import 'package:uhk_events/util/constants.dart';
+import 'package:uhk_events/ui/shared/app_bar.dart';
 import 'package:uhk_events/util/service_locator.dart';
 
 class HomeView extends StatelessWidget {

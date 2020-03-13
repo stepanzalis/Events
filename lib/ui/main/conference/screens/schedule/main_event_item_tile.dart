@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uhk_events/common/colors.dart';
 import 'package:uhk_events/common/constants.dart';
+import 'package:uhk_events/common/date_formatter.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
-import 'package:uhk_events/ui/common/widgets.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
-import 'package:uhk_events/util/date_formatter.dart';
+import 'package:uhk_events/ui/shared/widgets.dart';
 
 class MainEventItemTile extends StatelessWidget {
   final MainEventItem item;
