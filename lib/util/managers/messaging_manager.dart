@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
-import 'package:uhk_events/util/preference_manager.dart';
+import 'package:uhk_events/util/managers/preference_manager.dart';
 
 class MessagingManager {
   static final StreamController<Map<String, dynamic>> _controller =
@@ -38,7 +38,8 @@ class MessagingManager {
     await _controller.add(message);
   }
 
-  void iOSNotificationPermission() => firebaseMessaging.requestNotificationPermissions();
+  void iOSNotificationPermission() =>
+      firebaseMessaging.requestNotificationPermissions();
 
   void saveToken() async {
     final String token = await firebaseMessaging.getToken();

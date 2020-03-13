@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/firebase/firebase_auth_provider.dart';
-import 'package:uhk_events/util/network_info.dart';
+import 'package:uhk_events/util/managers/network_info.dart';
 
 abstract class UserRepository {
   Future<void> signInAnonymously();
@@ -16,7 +16,8 @@ class UserRepositoryImp extends UserRepository {
   final AuthProvider remoteProvider;
   final NetworkInfo networkInfo;
 
-  UserRepositoryImp({@required this.remoteProvider, @required this.networkInfo});
+  UserRepositoryImp(
+      {@required this.remoteProvider, @required this.networkInfo});
 
   @override
   Future<String> getUserId() => remoteProvider.getUserId();

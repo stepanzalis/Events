@@ -11,17 +11,18 @@ import 'package:print_lumberdash/print_lumberdash.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/home_view.dart';
+import 'package:uhk_events/ui/shared/theme/styling.dart';
 import 'package:uhk_events/ui/splashscreen/splashscreen.dart';
 import 'package:uhk_events/util/constants.dart';
-import 'package:uhk_events/util/messaging_manager.dart';
+import 'package:uhk_events/util/managers/messaging_manager.dart';
 import 'package:uhk_events/util/service_locator.dart';
-import 'package:uhk_events/util/theme/styling.dart';
 
+import 'common/bloc_delegate.dart';
+import 'common/constants.dart';
 import 'io/entities/event_item_entity.dart';
 import 'io/entities/main_event_item_entity.dart';
 import 'ui/main/home/auth_bloc/auth_bloc.dart';
 import 'ui/onboarding/onboarding_view.dart';
-import 'util/bloc_delegate.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,7 @@ void main() {
 
   runApp(
     BlocProvider(
-      create: (context) => injector<AuthenticationBloc>(),
+      create: (context) => injector<AuthenticationBloc>()..add(AppStarted()),
       child: EventsApp(),
     ),
   );
@@ -73,16 +74,16 @@ class _EventsAppState extends State<EventsApp> {
 
   @override
   void initState() {
-    super.initState();
     injector<MessagingManager>()
         .notifications()
         .listen((onData) => {injector<EventsBloc>().add(LoadEvents())});
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     injector<MessagingManager>().close();
+    super.dispose();
   }
 }
 

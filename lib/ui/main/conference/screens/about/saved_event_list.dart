@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/io/model/saved_event.dart';
 import 'package:uhk_events/ui/main/conference/widget/item_my_event.dart';
 
@@ -14,8 +15,10 @@ class MainEventItemsListView extends StatelessWidget {
           builder: (context, state) {
             if (state is EventsLoaded) {
               final List<SavedEvent> events = state.events;
+              if (events.isEmpty) return _NoEventsLoaded();
+
               return ListView.builder(
-                itemCount: state.events.length,
+                itemCount: state.events?.length ?? 0,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   final SavedEvent event = events[index];
@@ -30,5 +33,16 @@ class MainEventItemsListView extends StatelessWidget {
             }
           },
         ));
+  }
+}
+
+class _NoEventsLoaded extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Text(context.translate("noEventsLoaded")),
+      ),
+    );
   }
 }

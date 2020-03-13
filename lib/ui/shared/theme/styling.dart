@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../common/colors.dart';
+import 'colors.dart';
 
 ThemeData theme = ThemeData(
   backgroundColor: Colors.white,

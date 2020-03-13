@@ -10,8 +10,8 @@ import 'package:uhk_events/io/model/general_info.dart';
 import 'package:uhk_events/io/model/main_event.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
 import 'package:uhk_events/util/error/failures.dart';
-import 'package:uhk_events/util/network_info.dart';
-import 'package:uhk_events/util/preference_manager.dart';
+import 'package:uhk_events/util/managers/network_info.dart';
+import 'package:uhk_events/util/managers/preference_manager.dart';
 
 abstract class EventRepository {
   Future<Either<Failure, List<EventItem>>> getEventList();

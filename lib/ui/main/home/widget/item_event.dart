@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/faculty.dart';
-import 'package:uhk_events/ui/common/widgets.dart';
+import 'package:uhk_events/ui/shared/widgets.dart';
 
 class EventItemRow extends StatelessWidget {
   final Faculty faculty;

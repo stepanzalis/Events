@@ -5,8 +5,8 @@ import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/context.dart';
 import 'package:uhk_events/common/extensions/faculty_extensions.dart';
 import 'package:uhk_events/io/model/event_item.dart';
-import 'package:uhk_events/ui/common/widgets.dart';
-import 'package:uhk_events/util/date_formatter.dart';
+import 'package:uhk_events/ui/shared/widgets.dart';
+import 'package:uhk_events/common/date_formatter.dart';
 
 class EventDetailModal extends StatelessWidget {
   final EventItem eventItem;

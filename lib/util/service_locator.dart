@@ -15,17 +15,17 @@ import 'package:uhk_events/ui/main/home/auth_bloc/auth_bloc.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/notification_bloc.dart';
-import 'package:uhk_events/util/preference_manager.dart';
+import 'package:uhk_events/util/managers/preference_manager.dart';
 
-import 'messaging_manager.dart';
-import 'network_info.dart';
+import 'managers/messaging_manager.dart';
+import 'managers/network_info.dart';
 
 final injector = GetIt.instance;
 
 Future<void> initDi() async {
   // Blocs
   injector.registerFactory<AuthenticationBloc>(
-    () => AuthenticationBloc(userRepository: injector())..add(AppStarted()),
+    () => AuthenticationBloc(userRepository: injector()),
   );
 
   injector.registerFactory<EventsBloc>(

@@ -13,16 +13,12 @@ class AboutView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SavedEventsBloc>(
-          create: (context) => injector<SavedEventsBloc>()
-            ..add(
-              LoadMyEvents(eventId: eventId),
-            ),
+          create: (context) =>
+              injector<SavedEventsBloc>()..add(LoadMyEvents(eventId: eventId)),
         ),
         BlocProvider<AboutInfoBloc>(
-          create: (context) => injector<AboutInfoBloc>()
-            ..add(
-              LoadMainEventInfo(id: eventId),
-            ),
+          create: (context) =>
+              injector<AboutInfoBloc>()..add(LoadMainEventInfo(id: eventId)),
         )
       ],
       child: AboutContent(),

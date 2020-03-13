@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:uhk_events/common/constants.dart';
-import 'package:uhk_events/util/date_formatter.dart';
+import 'package:uhk_events/common/date_formatter.dart';
 
 part 'event_item_entity.g.dart';
 
