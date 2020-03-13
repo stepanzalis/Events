@@ -18,7 +18,7 @@ import 'package:uhk_events/ui/main/home/widget/detail/event_detail_modal.dart';
 import 'package:uhk_events/ui/main/home/widget/faculty_button.dart';
 import 'package:uhk_events/ui/main/home/widget/item_event.dart';
 import 'package:uhk_events/ui/shared/app_bar.dart';
-import 'package:uhk_events/util/service_locator.dart';
+import 'package:uhk_events/common/service_locator.dart';
 
 class HomeView extends StatelessWidget {
   @override

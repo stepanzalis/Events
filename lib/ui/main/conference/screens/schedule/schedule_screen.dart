@@ -7,7 +7,7 @@ import 'package:uhk_events/io/model/scheduled_event.dart';
 import 'package:uhk_events/ui/main/conference/screens/schedule/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
 import 'package:uhk_events/ui/shared/app_bar.dart';
-import 'package:uhk_events/util/service_locator.dart';
+import 'package:uhk_events/common/service_locator.dart';
 
 import 'main_event_item_tile.dart';
 

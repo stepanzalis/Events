@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uhk_events/common/managers/preference_manager.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
-import 'package:uhk_events/util/managers/preference_manager.dart';
 
 class MessagingManager {
   static final StreamController<Map<String, dynamic>> _controller =

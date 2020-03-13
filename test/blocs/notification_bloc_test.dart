@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:uhk_events/common/managers/messaging_manager.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/notification_bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/notification_state.dart';
-import 'package:uhk_events/util/managers/messaging_manager.dart';
 
 class MockMessagaingManager extends Mock implements MessagingManager {}
 

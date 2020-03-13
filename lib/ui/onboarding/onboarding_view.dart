@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/widgets/page_view_indicator.dart';
-import 'package:uhk_events/util/service_locator.dart';
+import 'package:uhk_events/common/service_locator.dart';
 
 import 'bloc/onboarding_bloc.dart';
 

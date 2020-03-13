@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uhk_events/util/managers/messaging_manager.dart';
+import 'package:uhk_events/common/managers/messaging_manager.dart';
 
 import './bloc.dart';
 

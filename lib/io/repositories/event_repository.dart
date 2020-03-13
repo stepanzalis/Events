@@ -1,6 +1,9 @@
 import 'package:either_option/either_option.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uhk_events/common/error/failures.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
+import 'package:uhk_events/common/managers/network_info.dart';
+import 'package:uhk_events/common/managers/preference_manager.dart';
 import 'package:uhk_events/io/api/api_provider.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
 import 'package:uhk_events/io/entities/main_event_item_entity.dart';
@@ -9,9 +12,7 @@ import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/general_info.dart';
 import 'package:uhk_events/io/model/main_event.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
-import 'package:uhk_events/util/error/failures.dart';
-import 'package:uhk_events/util/managers/network_info.dart';
-import 'package:uhk_events/util/managers/preference_manager.dart';
+
 
 abstract class EventRepository {
   Future<Either<Failure, List<EventItem>>> getEventList();

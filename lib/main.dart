@@ -13,11 +13,10 @@ import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/home_view.dart';
 import 'package:uhk_events/ui/shared/theme/styling.dart';
 import 'package:uhk_events/ui/splashscreen/splashscreen.dart';
-import 'package:uhk_events/util/managers/messaging_manager.dart';
-import 'package:uhk_events/util/service_locator.dart';
-
+import 'package:uhk_events/common/service_locator.dart';
 import 'common/bloc_delegate.dart';
 import 'common/constants.dart';
+import 'common/managers/messaging_manager.dart';
 import 'io/entities/event_item_entity.dart';
 import 'io/entities/main_event_item_entity.dart';
 import 'ui/main/home/auth_bloc/auth_bloc.dart';

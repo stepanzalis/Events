@@ -15,10 +15,11 @@ import 'package:uhk_events/ui/main/home/auth_bloc/auth_bloc.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/notification_bloc.dart';
-import 'package:uhk_events/util/managers/preference_manager.dart';
 
 import 'managers/messaging_manager.dart';
 import 'managers/network_info.dart';
+import 'managers/preference_manager.dart';
+
 
 final injector = GetIt.instance;
 

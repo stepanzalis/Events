@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:uhk_events/common/managers/network_info.dart';
 import 'package:uhk_events/io/firebase/firebase_auth_provider.dart';
-import 'package:uhk_events/util/managers/network_info.dart';
 
 abstract class UserRepository {
   Future<void> signInAnonymously();

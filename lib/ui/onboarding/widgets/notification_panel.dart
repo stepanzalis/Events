@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
+import 'package:uhk_events/common/managers/messaging_manager.dart';
 import 'package:uhk_events/ui/main/home/auth_bloc/auth_bloc.dart';
 import 'package:uhk_events/ui/main/home/auth_bloc/authentification_bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/onboarding_view.dart';
-import 'package:uhk_events/util/managers/messaging_manager.dart';
-import 'package:uhk_events/util/service_locator.dart';
+import 'package:uhk_events/common/service_locator.dart';
 
 class NotificationPanel extends StatelessWidget {
   const NotificationPanel();
