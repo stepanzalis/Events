@@ -41,10 +41,15 @@ class MessagingManager {
   void iOSNotificationPermission() =>
       firebaseMessaging.requestNotificationPermissions();
 
-  void saveToken() async {
-    final String token = await firebaseMessaging.getToken();
-    await firestoreProvider.sendFirebaseToken(token);
-    await preferenceManager.putToken(token);
+  Future<void> saveToken() async {
+    final token = await firebaseMessaging.getToken();
+
+    if (token.isNotEmpty) {
+      final String userDocumentId =
+          await firestoreProvider.sendFirebaseToken(token);
+      await preferenceManager.putUserDocumentId(userDocumentId);
+      await preferenceManager.putToken(token);
+    }
   }
 
   Stream<Map<String, dynamic>> notifications() {

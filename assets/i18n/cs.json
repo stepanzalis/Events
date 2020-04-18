@@ -3,9 +3,10 @@
   "continue" : "Pokračovat",
   "addToCalendar": "Události si můžete přidat do svého kalendáře.",
   "conference": "Některé události lze navšívit a zjistit detailní program. Můžete si vytvořit svůj harmonogram tak, aby vám to vyhovovalo.",
-  "notifications": "Pokud si přejete dostávat notifikaci o nově přidaných událostech, povolte notifikace níže.",
+  "notifications": "Přejete si dostávat notifikace o nově vzniklých událostech?",
   "allowNotifications": "Povolit notifikace",
   "skipOnboarding": "Přeskočit",
+  "notificationError": "Chyba - zkuste to později.",
 
   "appTitle": "Events",
   "scheduleTitle": "Program",

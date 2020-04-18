@@ -26,7 +26,7 @@ class _Circle extends StatelessWidget {
   _Circle({@required this.index, this.selectedIndex});
 
   final double size = 10.0;
-  final double spacing = 3.0;
+  final double spacing = 10.0;
 
   @override
   Widget build(BuildContext context) => Container(

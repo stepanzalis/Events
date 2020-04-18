@@ -1,11 +1,26 @@
-import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
-abstract class OnboardingState extends Equatable {}
-
-class CurrentPageState extends OnboardingState {
+@immutable
+class OnboardingState {
   final int index;
-  CurrentPageState(this.index);
+  final bool isSkipped;
 
-  @override
-  List<Object> get props => [index];
+  OnboardingState({@required this.index, this.isSkipped});
+
+  factory OnboardingState.initial() {
+    return OnboardingState(index: 0, isSkipped: false);
+  }
+
+  OnboardingState updatePage({int nextIndex}) {
+    return copyWith(index: nextIndex ?? index + 1);
+  }
+
+  OnboardingState skipOnboarding() {
+    return copyWith(isSkipped: true);
+  }
+
+  OnboardingState copyWith({int index, bool isSkipped}) {
+    return OnboardingState(
+        index: index ?? this.index, isSkipped: isSkipped ?? this.isSkipped);
+  }
 }

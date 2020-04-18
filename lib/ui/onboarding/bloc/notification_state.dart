@@ -1,21 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
-@immutable
-class NotificationState extends Equatable {
-  final bool allowed;
-  final String icon;
+abstract class NotificationState extends Equatable {}
 
-  NotificationState.initial(
-      {this.allowed = false, this.icon = "assets/icons/notification.svg"});
-  NotificationState.enabled(
-      {this.allowed = true, this.icon = "assets/icons/notification.svg"});
-  NotificationState.disabled(
-      {this.allowed = false, this.icon = "assets/icons/no_notification.svg"});
+class NotificationsInitial extends NotificationState {
+  @override
+  List<Object> get props => [];
+}
+
+class NotificationsSuccess extends NotificationState {
+  @override
+  List<Object> get props => [];
+}
+
+class NotificationsError extends NotificationState {
+  final Exception e;
+  NotificationsError(this.e);
 
   @override
-  List<Object> get props => [allowed, icon];
-
-  @override
-  String toString() => 'Notifications {state: $allowed, icon: $icon}';
+  List<Object> get props => [e];
 }

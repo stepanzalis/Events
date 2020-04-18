@@ -12,25 +12,24 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   NotificationBloc({@required this.messagingManager});
 
   @override
-  NotificationState get initialState => NotificationState.initial();
+  NotificationState get initialState => NotificationsInitial();
 
   @override
   Stream<NotificationState> mapEventToState(
     NotificationEvent event,
   ) async* {
-    if (event is ToggleNotifications) {
-      if (event.allowed) {
-        _saveNotificationValue(event.allowed);
-        yield NotificationState.enabled();
-      } else {
-        yield NotificationState.disabled();
+    if (event is NotificationsAllowedPressed) {
+      try {
+        await _saveNotificationValue();
+        yield NotificationsSuccess();
+      } catch (e) {
+        yield NotificationsError(e);
       }
     }
   }
 
-  _saveNotificationValue(bool allowed) async {
-    if (allowed) {
-      await messagingManager.saveToken();
-    }
+  _saveNotificationValue() async {
+    await messagingManager.iOSNotificationPermission();
+    await messagingManager.saveToken();
   }
 }
