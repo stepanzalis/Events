@@ -4,14 +4,16 @@ import 'package:uhk_events/io/model/scheduled_event.dart';
 
 @immutable
 class MainEventDay extends Equatable {
+  final DateTime date;
   final String dayDate;
   final List<MainEventItem> events;
 
-  MainEventDay({@required this.dayDate, @required this.events})
+  MainEventDay(
+      {@required this.dayDate, @required this.date, @required this.events})
       : assert(dayDate != null, "$dayDate must not be null or empty"),
         assert(events != null,
             "$events must not be null, provide empty list if no events scheduled");
 
   @override
-  List<Object> get props => [dayDate, events];
+  List<Object> get props => [dayDate, events, date];
 }

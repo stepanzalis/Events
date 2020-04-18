@@ -34,8 +34,10 @@ class AboutContent extends StatelessWidget {
                     text: state.description,
                     color: faculty.facultyColor(),
                     onClick: () => BlocProvider.of<AboutInfoBloc>(context).add(
-                        ToggleDescription(
-                            expanded: !state.isDescriptionExpanded)),
+                          ToggleDescription(
+                            expanded: !state.isDescriptionExpanded,
+                          ),
+                        ),
                     isExpanded: state.isDescriptionExpanded),
               ],
             ),
@@ -58,7 +60,9 @@ class _ExpandedScrollContainer extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, children: children),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children,
+        ),
       ),
     );
   }

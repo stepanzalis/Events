@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 abstract class AuthProvider {
   Future<void> signInAnonymously();
@@ -11,23 +12,21 @@ abstract class AuthProvider {
 }
 
 class FirebaseAuthProvider with AuthProvider {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth firebaseAuth;
+  FirebaseAuthProvider({@required this.firebaseAuth});
 
   @override
-  Future<void> signInAnonymously() => _firebaseAuth.signInAnonymously();
+  Future<void> signInAnonymously() => firebaseAuth.signInAnonymously();
 
   @override
-  Future<void> signOut() async => _firebaseAuth.signOut();
+  Future<void> signOut() async => firebaseAuth.signOut();
 
   @override
-  Future<bool> isSignedIn() async {
-    final currentUser = await _firebaseAuth.currentUser();
-    return currentUser != null;
-  }
+  Future<bool> isSignedIn() async => await getUserId() != null;
 
   @override
   Future<String> getUserId() async {
-    final user = await _firebaseAuth.currentUser();
-    return user.uid;
+    final user = await firebaseAuth?.currentUser();
+    return await user?.uid;
   }
 }

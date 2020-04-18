@@ -35,7 +35,7 @@ void main() {
       'emits [EventsLoading(), EventsLoaded()] when LoadEvent is fired',
       build: () {
         when(mockEventRepository.getEventList())
-            .thenAnswer((_) async => Right([mockEventItem]));
+            .thenAnswer((_) async => await Right([mockEventItem]));
         return bloc;
       },
       act: (bloc) => bloc.add(LoadEvents()),

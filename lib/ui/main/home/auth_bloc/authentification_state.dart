@@ -15,9 +15,9 @@ class Uninitialized extends AuthenticationState {
 }
 
 class Authenticated extends AuthenticationState {
-  final String user;
-  Authenticated(this.user);
+  final String userId;
+  Authenticated(this.userId);
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [userId];
 }

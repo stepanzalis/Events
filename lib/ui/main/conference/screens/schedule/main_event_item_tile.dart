@@ -10,18 +10,25 @@ import 'package:uhk_events/ui/shared/widgets.dart';
 
 class MainEventItemTile extends StatelessWidget {
   final MainEventItem item;
+  final VoidCallback onSavedClick;
+  final VoidCallback onDetailClick;
 
-  MainEventItemTile({@required this.item});
+  MainEventItemTile(
+      {@required this.item, this.onSavedClick, this.onDetailClick});
 
   @override
   Widget build(BuildContext context) {
-    return ItemContainerSkeleton(
-      child: _ListTile(
-        title: item.title,
-        subtitle: item.description,
-        startTime:
-            format(dateTime: item.startDateTime, format: ONLY_TIME_FORMAT),
-        onStarClick: () => null,
+    return GestureDetector(
+      onTap: onDetailClick,
+      child: ItemContainerSkeleton(
+        child: _ListTile(
+          title: item.title,
+          subtitle: item.description,
+          isSelected: item.isSaved,
+          startTime:
+              format(dateTime: item.startDateTime, format: ONLY_TIME_FORMAT),
+          onStarClick: onSavedClick,
+        ),
       ),
     );
   }
@@ -32,14 +39,14 @@ class _ListTile extends StatelessWidget {
   final String subtitle;
   final String startTime;
   final VoidCallback onStarClick;
-  final double isSelected;
+  final bool isSelected;
 
   _ListTile(
       {@required this.title,
       @required this.subtitle,
       @required this.startTime,
       @required this.onStarClick,
-      this.isSelected = 0.3});
+      this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +80,7 @@ class _ListTile extends StatelessWidget {
             ),
           ),
           SizedBox(width: 10),
-          SaveEventStar(isSelected: isSelected, onClick: onStarClick),
+          SaveEventStar(isSelected: isSelected ? 1 : 0.3, onClick: onStarClick),
         ],
       ),
     );

@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:hive/hive.dart';
 import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/io/entities/event_item_entity.dart';
@@ -12,27 +10,35 @@ abstract class BasePreferences {
 
   void saveMainItemsEvents(List<MainEventItemEntity> events);
 
+  void putUserDocumentId(String userDocumentId);
+
   Future<String> getToken();
 
   Future<List<EventItemEntity>> getEvents();
 
   Future<bool> isUserLoggedIn();
 
+  Future<String> getUserDocumentId();
+
   Future<List<MainEventItemEntity>> getMainItemsEvents();
 }
 
 class AppPreferences with BasePreferences {
   @override
-  void putEvents(List<EventItemEntity> events) {
-    Hive.box<EventItemEntity>(Events)
-      ..clear()
-      ..clear()
-      ..addAll(events);
+  void putEvents(List<EventItemEntity> events) async {
+    final box = Hive.box<EventItemEntity>(Events);
+    await box.clear();
+    await box.addAll(events);
   }
 
   @override
   void putToken(String token) {
     Hive.box(Preferences)..put(ApiToken, token);
+  }
+
+  @override
+  void putUserDocumentId(String userDocumentId) {
+    Hive.box(Preferences)..put(UserDocumentId, userDocumentId);
   }
 
   @override
@@ -46,6 +52,12 @@ class AppPreferences with BasePreferences {
   Future<String> getToken() async {
     final Box box = await Hive.box(Preferences);
     return await box.get(ApiToken);
+  }
+
+  @override
+  Future<String> getUserDocumentId() async {
+    final Box box = await Hive.box(Preferences);
+    return await box.get(UserDocumentId);
   }
 
   @override

@@ -17,14 +17,17 @@ class EventsBloc extends Bloc<EventsEvent, EventsState> {
   @override
   Stream<EventsState> mapEventToState(EventsEvent event) async* {
     if (event is LoadEvents) {
-      yield* _mapLoadEventToState(repository);
+      yield* _mapLoadEventToState();
     }
   }
-}
 
-Stream<EventsState> _mapLoadEventToState(EventRepository repository) async* {
-  yield EventsLoading();
-  final itemsOrError = await repository.getEventList();
-  yield itemsOrError.fold(
-      (failure) => EventsNotLoaded(), (response) => EventsLoaded(response));
+  Stream<EventsState> _mapLoadEventToState() async* {
+    yield EventsLoading();
+    final itemsOrError = await repository.getEventList();
+    yield itemsOrError.fold(
+      (failure) => EventsNotLoaded(),
+      (response) =>
+          response.isEmpty ? EventsNotLoaded() : EventsLoaded(response),
+    );
+  }
 }

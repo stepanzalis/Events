@@ -11,6 +11,7 @@ class MainEventItem extends Equatable {
   final DateTime startDateTime;
   final DateTime endDateTime;
   final String description;
+  final bool isSaved;
   final String place;
 
   MainEventItem(
@@ -20,6 +21,7 @@ class MainEventItem extends Equatable {
       @required this.startDateTime,
       @required this.endDateTime,
       @required this.detailImageUrl,
+      @required this.isSaved,
       @required this.place})
       : assert(title != null),
         assert(startDateTime != null);
@@ -30,12 +32,14 @@ class MainEventItem extends Equatable {
           String backgroundUrl,
           DateTime date,
           String description,
+          bool isSaved,
           String place}) =>
       MainEventItem(
           id: id ?? this.id,
           title: title ?? this.title,
-          description: detailImageUrl ?? this.description,
+          description: description ?? this.description,
           detailImageUrl: backgroundUrl ?? this.detailImageUrl,
+          isSaved: isSaved ?? this.isSaved,
           startDateTime: date ?? this.startDateTime,
           endDateTime: date ?? this.endDateTime,
           place: place ?? this.place);
@@ -47,11 +51,13 @@ class MainEventItem extends Equatable {
       detailImageUrl: entity.backgroundUrl ?? "",
       startDateTime: entity.startDateTime.toDate(),
       endDateTime: entity.endDateTime.toDate(),
+      isSaved: entity.isChosen,
       place: entity.place ?? "");
 
   MainEventItemEntity toEntity() => MainEventItemEntity(
       id: id,
       title: title,
+      isChosen: isSaved,
       description: description,
       startDateTime: Timestamp.fromMillisecondsSinceEpoch(
           startDateTime.millisecondsSinceEpoch),
@@ -68,6 +74,7 @@ class MainEventItem extends Equatable {
         startDateTime,
         endDateTime,
         description,
+        isSaved,
         place
       ];
 }

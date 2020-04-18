@@ -27,8 +27,8 @@ class EventFilteredBloc extends Bloc<EventFilteredEvent, EventFilteredState> {
   @override
   EventFilteredState get initialState {
     if (eventsBloc.state is EventsLoaded) {
-      return FilteredEventsLoaded(
-          (eventsBloc.state as EventsLoaded).events, const <Faculty>[]);
+      final List<EventItem> events = (state as EventsLoaded).events;
+      return FilteredEventsLoaded(events, const <Faculty>[]);
     } else {
       return FilteredEventsLoading();
     }

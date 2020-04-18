@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
+import 'package:uhk_events/common/service_locator.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
 import 'package:uhk_events/ui/main/conference/screens/schedule/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
+import 'package:uhk_events/ui/main/home/home_view.dart';
 import 'package:uhk_events/ui/shared/app_bar.dart';
-import 'package:uhk_events/common/service_locator.dart';
 
 import 'main_event_item_tile.dart';
 
@@ -19,7 +20,7 @@ class ScheduleView extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider<MainEventBloc>(
           create: (context) =>
-              injector<MainEventBloc>()..add(LoadMainEvents(id: eventId))),
+              injector<MainEventBloc>()..add(LoadMainEvents(eventId: eventId))),
     ], child: _ScheduleScreen());
   }
 }
@@ -29,19 +30,35 @@ class _ScheduleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = MainEventInheritedWidget.of(context).faculty.facultyColor();
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          appBar: EventAppBar(context.translate("scheduleTitle"),
+    return BlocBuilder<MainEventBloc, MainEventState>(
+      builder: (context, state) {
+        return DefaultTabController(
+          length: state.dayEvents?.length ?? 0,
+          child: Scaffold(
+            appBar: EventAppBar(
+              context.translate("scheduleTitle"),
               actions: [MyScheduleFilter()],
-              tabBar: createTabBar([
-                Tab(text: "Pondělí 1.10"),
-                Tab(text: "Úterý 2.10"),
-              ], color, context)),
-          body: TabBarView(children: [
-            _EventList(events: []),
-            _EventList(events: []),
-          ])),
+              tabBar: state.dayEvents == null
+                  ? null
+                  : createTabBar(
+                      state.dayEvents
+                          ?.map((dayEvent) => Tab(text: "${dayEvent?.dayDate}"))
+                          ?.toList(),
+                      color,
+                      context),
+            ),
+            body: state.dayEvents == null
+                ? EmptyEventList(textKey: "noSavedEvents")
+                : TabBarView(
+                    children: state.dayEvents?.map((dayEvent) {
+                      return dayEvent.events.isNotEmpty
+                          ? _EventList(events: dayEvent.events)
+                          : EmptyEventList(textKey: "noEventsLoaded");
+                    })?.toList(),
+                  ),
+          ),
+        );
+      },
     );
   }
 }
@@ -56,14 +73,20 @@ class _EventList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: ListView.builder(
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return MainEventItemTile(
-              item: MainEventItem(
-                  title: "asdasd",
-                  description: "asdasd",
-                  startDateTime: DateTime.now()));
-        },
+        itemCount: events.length,
+        itemBuilder: (context, index) => MainEventItemTile(
+          item: events[index],
+          onDetailClick: () {},
+          onSavedClick: () {
+            final eventId = MainEventInheritedWidget.of(context).id;
+            BlocProvider.of<MainEventBloc>(context).add(
+              ToggleEvent(
+                mainEventItem: events[index],
+                eventId: eventId,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -72,7 +95,7 @@ class _EventList extends StatelessWidget {
 class MyScheduleFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final color = MainEventInheritedWidget.of(context).faculty.facultyColor();
+    final eventInfo = MainEventInheritedWidget.of(context);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -83,18 +106,20 @@ class MyScheduleFilter extends StatelessWidget {
         BlocBuilder<MainEventBloc, MainEventState>(
             builder: (_, MainEventState state) {
           return Switch.adaptive(
-              activeColor: color,
-              value: state.showSavedEvents,
-              onChanged: (value) => _toggleSaveEvents(context, value));
+            activeColor: eventInfo.faculty.facultyColor(),
+            value: state.showSavedEvents,
+            onChanged: (value) =>
+                _toggleSaveEvents(context, value, eventInfo.id),
+          );
         }),
         SizedBox(width: appBarRightPadding)
       ],
     );
   }
 
-  void _toggleSaveEvents(BuildContext context, bool value) {
+  void _toggleSaveEvents(BuildContext context, bool value, String eventId) {
     BlocProvider.of<MainEventBloc>(context).add(
-      ToggleSavedEvents(savedEvents: value),
+      ToggleSavedEvents(savedEvents: value, eventId: eventId),
     );
   }
 }

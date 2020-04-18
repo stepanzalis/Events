@@ -15,6 +15,8 @@ DateTime getDate(String date, String format) {
 
 String format(
     {@required DateTime dateTime, String format = HUMAN_DATE_TIME_FORMAT}) {
+  assert(format != "");
+
   var formatter = DateFormat(format);
   return formatter.format(dateTime);
 }

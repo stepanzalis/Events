@@ -1,29 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/entities/general_info_entity.dart';
 import 'package:uhk_events/io/entities/main_event_entity.dart';
 import 'package:uhk_events/io/entities/main_event_item_entity.dart';
-import 'package:uhk_events/io/entities/user_entity.dart';
 import 'package:uhk_events/io/model/general_info.dart';
 import 'package:uhk_events/io/model/main_event.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
 
 class FirestoreProvider {
-  final Firestore _firestore = Firestore.instance;
+  final Firestore firestore;
+
+  FirestoreProvider({@required this.firestore})
+      : assert(firestore != null, "Provide Firestore.instance!");
 
   Future<bool> isConferenceType(String id) async {
-    final snapShot = await _firestore.collection('events').document(id).get();
+    final snapShot = await firestore.collection('events').document(id).get();
     return snapShot != null && snapShot.exists;
   }
 
-  Future<void> sendFirebaseToken(String token) =>
-      _firestore.collection('users').add({"firebaseToken": token});
+  Future<String> sendFirebaseToken(String token) async {
+    final reference = firestore.collection('users').document();
+    await reference.setData({"firebaseToken": token});
+    return reference.documentID;
+  }
 
-  Future<List<String>> fetchMainEvents() => _firestore
+  Future<List<String>> fetchMainEvents() => firestore
       .collection('events')
       .getDocuments()
       .then((list) => list.documents.map((doc) => doc.documentID).toList());
 
-  Future<MainEvent> fetchMainEventInfo(String id) => _firestore
+  Future<MainEvent> fetchMainEventInfo(String id) => firestore
       .collection('events')
       .getDocuments()
       .then((list) => list.documents
@@ -32,7 +38,7 @@ class FirestoreProvider {
           .first);
 
   Future<List<MainEventItem>> fetchScheduleFromEvent(String eventId) =>
-      _firestore
+      firestore
           .collection('events')
           .document(eventId)
           .collection('schedule')
@@ -42,30 +48,26 @@ class FirestoreProvider {
                   MainEventItemEntity.fromSnapshot(doc, eventId)))
               .toList());
 
-  Future<String> sendUser(UserEntity user, String eventId) =>
-      _firestore.collection('users').add(user.toDocument()).then((value) {
-        return value.documentID;
-      });
-
   Future<GeneralInfo> fetchGeneralInfo() =>
-      _firestore.collection('generalInfo').getDocuments().then((list) {
+      firestore.collection('generalInfo').getDocuments().then((list) {
         return GeneralInfo.fromEntity(
             GeneralInfoEntity.fromSnapshot(list.documents[0]));
       });
 
   Future<void> postSchedule(
           String userId, String eventId, MainEventItem event) =>
-      _firestore
+      firestore
           .collection('users')
           .document(userId)
           .collection('mySchedule')
           .document(eventId)
           .collection('schedule')
-          .add(event.toEntity().toDocument());
+          .document(event.id)
+          .setData(event.toEntity().toDocument());
 
   Future<void> removeSchedule(
           String userId, String eventId, String scheduleEventId) =>
-      _firestore
+      firestore
           .collection('users')
           .document(userId)
           .collection('mySchedule')
@@ -73,4 +75,20 @@ class FirestoreProvider {
           .collection('schedule')
           .document(scheduleEventId)
           .delete();
+
+  Future<List<MainEventItem>> fetchScheduleFromUser(
+          String userId, String eventId) =>
+      firestore
+          .collection('users')
+          .document(userId)
+          .collection('mySchedule')
+          .document(eventId)
+          .collection('schedule')
+          .getDocuments()
+          .then(
+            (list) => list.documents
+                .map((doc) => MainEventItem.fromEntity(
+                    MainEventItemEntity.fromSnapshot(doc, eventId)))
+                .toList(),
+          );
 }

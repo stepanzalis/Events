@@ -16,14 +16,14 @@ void main() {
 
   group('Onboarding', () {
     test('initial state should be SplashScreen', () {
-      expect(bloc.initialState, CurrentPageState(0));
+      expect(0, bloc.state);
     });
 
     blocTest(
       'page index should be incremented by 1 when index is changed',
       build: () => OnboardingBloc(),
       act: (bloc) => bloc.add(ChangedPaged(index: 1)),
-      expect: [CurrentPageState(0), CurrentPageState(1)],
+      expect: [0, 1],
     );
   });
 }

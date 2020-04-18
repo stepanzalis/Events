@@ -25,23 +25,9 @@ class SavedEventsBloc extends Bloc<SavedEventsEvent, SavedEventsState> {
     SavedEventsEvent event,
   ) async* {
     if (event is LoadMyEvents) {
-      yield* _mapLoadEventsToState(event.eventId);
-    } else if (event is StartObserving) {
-      yield* _mapStartObservingToState();
+      // yield* _mapLoadEventsToState(event.eventId);
     } else if (event is StopObserving) {
-      _mapStopObservingToState();
-    }
-  }
-
-  Stream<SavedEventsState> _mapLoadEventsToState(String eventId) async* {
-    final List<MainEventItemEntity> events =
-        await eventRepository.getMainItemEvents(eventId);
-    if (events.isEmpty) {
-      yield EmptyList();
-    } else {
-      final List<SavedEvent> myEventOverview =
-          await _mapMainItemEventToOverview(events);
-      yield EventsLoaded(events: myEventOverview);
+      // _mapStopObservingToState();
     }
   }
 
@@ -50,10 +36,11 @@ class SavedEventsBloc extends Bloc<SavedEventsEvent, SavedEventsState> {
     return events.map((e) => SavedEvent.fromEntity(e)).toList();
   }
 
-  Stream<SavedEventsState> _mapStartObservingToState() async* {
+  Stream<SavedEventsState> _mapStartObservingToState(String eventId) async* {
     await _minuteSubscription?.cancel();
-    _minuteSubscription =
-        ticker.tick().listen((duration) => add(LoadMyEvents()));
+    _minuteSubscription = ticker.tick().listen((duration) => add(
+          LoadMyEvents(eventId: eventId),
+        ));
   }
 
   Stream<SavedEventsState> _mapStopObservingToState() async* {

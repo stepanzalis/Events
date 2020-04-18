@@ -8,12 +8,13 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lumberdash/lumberdash.dart';
 import 'package:print_lumberdash/print_lumberdash.dart';
+import 'package:uhk_events/common/service_locator.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/home/home_view.dart';
 import 'package:uhk_events/ui/shared/theme/styling.dart';
 import 'package:uhk_events/ui/splashscreen/splashscreen.dart';
-import 'package:uhk_events/common/service_locator.dart';
+
 import 'common/bloc_delegate.dart';
 import 'common/constants.dart';
 import 'common/managers/messaging_manager.dart';
@@ -72,10 +73,10 @@ class _EventsAppState extends State<EventsApp> {
 
   @override
   void initState() {
-    injector<MessagingManager>()
-        .notifications()
-        .listen((onData) => {injector<EventsBloc>().add(LoadEvents())});
     super.initState();
+    //injector<MessagingManager>()
+    //    .notifications()
+    //    .listen((onData) => {injector<EventsBloc>().add(LoadEvents())});
   }
 
   @override

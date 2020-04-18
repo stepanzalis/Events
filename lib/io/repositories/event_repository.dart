@@ -1,5 +1,7 @@
 import 'package:either_option/either_option.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uhk_events/common/constants.dart';
+import 'package:uhk_events/common/date_formatter.dart';
 import 'package:uhk_events/common/error/failures.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/common/managers/network_info.dart';
@@ -11,8 +13,8 @@ import 'package:uhk_events/io/firebase/firestore_provider.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 import 'package:uhk_events/io/model/general_info.dart';
 import 'package:uhk_events/io/model/main_event.dart';
+import 'package:uhk_events/io/model/main_event_day.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
-
 
 abstract class EventRepository {
   Future<Either<Failure, List<EventItem>>> getEventList();
@@ -23,6 +25,9 @@ abstract class EventRepository {
 
   Future<void> postSchedule(String userId, String eventId, MainEventItem event);
 
+  Future<void> togglePostSchedule(
+      String userId, String eventId, MainEventItem event);
+
   Future<void> removeSchedule(
       String userId, String eventId, String scheduleEventId);
 
@@ -32,7 +37,11 @@ abstract class EventRepository {
 
   Future<void> saveMainItemsEvents(List<MainEventItemEntity> events);
 
-  Future<List<MainEventItemEntity>> getMainItemEvents(String eventId);
+  Future<List<MainEventDay>> getDaysFromMainEvent(
+      List<MainEventItem> eventItemList);
+
+  Future<List<MainEventItem>> fetchScheduleFromUser(
+      String userId, String eventId);
 }
 
 class EventRepositoryImpl extends EventRepository {
@@ -53,15 +62,9 @@ class EventRepositoryImpl extends EventRepository {
   }
 
   @override
-  Future<List<MainEventItem>> fetchScheduleFromEvent(String eventId) {
-    return firestoreProvider.fetchScheduleFromEvent(eventId);
-  }
-
-  @override
-  Future<List<MainEventItemEntity>> getMainItemEvents(String eventId) {
-    return localDataSource.getMainItemsEvents().then((events) {
-      return filterFromEvent(eventId, events);
-    });
+  Future<List<MainEventItem>> fetchScheduleFromUser(
+      String eventId, String userId) {
+    return firestoreProvider.fetchScheduleFromUser(userId, eventId);
   }
 
   List<MainEventItemEntity> filterFromEvent(
@@ -137,6 +140,65 @@ class EventRepositoryImpl extends EventRepository {
 
   @override
   Future<void> saveMainItemsEvents(List<MainEventItemEntity> events) async {
-    return await localDataSource.saveMainItemsEvents(events);
+    return localDataSource.saveMainItemsEvents(events);
   }
+
+  @override
+  Future<List<MainEventDay>> getDaysFromMainEvent(
+      List<MainEventItem> eventItemList) async {
+    List<MainEventDay> dayEvents = [];
+
+    if (eventItemList.isEmpty) return null;
+    eventItemList.sort((a, b) => a.startDateTime.compareTo(b.startDateTime));
+
+    for (int i = 0; i < eventItemList.length; i++) {
+      if (dayEvents.any((dayEvent) =>
+          dayEvent.date.isSameDate(eventItemList[i].startDateTime))) {
+        continue;
+      } else {
+        final DateTime day = eventItemList[i].startDateTime;
+        dayEvents.add(
+          _castToDayWithEvents(
+            day,
+            eventItemList,
+          ),
+        );
+      }
+    }
+
+    return dayEvents;
+  }
+
+  /// Return [MainEventDay] with associated events that are in the same day
+  MainEventDay _castToDayWithEvents(
+      DateTime startDay, List<MainEventItem> events) {
+    return MainEventDay(
+        date: startDay,
+        dayDate: format(dateTime: startDay, format: API_DATE_FORMAT_LOCALE),
+        events:
+            events.where((e) => e.startDateTime.isSameDate(startDay)).toList());
+  }
+
+  @override
+  Future<void> togglePostSchedule(
+      String userId, String eventId, MainEventItem event) {
+    return event.isSaved
+        ? removeSchedule(userId, eventId, event.id)
+        : postSchedule(userId, eventId, event);
+  }
+
+  @override
+  Future<List<MainEventItem>> fetchScheduleFromEvent(String eventId) {
+    return firestoreProvider.fetchScheduleFromEvent(eventId);
+  }
+}
+
+extension XDateTime on DateTime {
+  bool isSameDate(DateTime other) {
+    return this.year == other.year &&
+        this.month == other.month &&
+        this.day == other.day;
+  }
+
+  DateTime nextDay() => this.add(Duration(days: 1));
 }

@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/context.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
+import 'package:uhk_events/common/service_locator.dart';
 import 'package:uhk_events/common/transitions/slide_transition.dart';
 import 'package:uhk_events/io/common/constants.dart';
 import 'package:uhk_events/io/model/event_item.dart';
@@ -18,13 +19,14 @@ import 'package:uhk_events/ui/main/home/widget/detail/event_detail_modal.dart';
 import 'package:uhk_events/ui/main/home/widget/faculty_button.dart';
 import 'package:uhk_events/ui/main/home/widget/item_event.dart';
 import 'package:uhk_events/ui/shared/app_bar.dart';
-import 'package:uhk_events/common/service_locator.dart';
 
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: EventAppBar(context.translate("appTitle"),
-            actions: [_FacultyFilterButtons()]),
+        appBar: EventAppBar(
+          context.translate("appTitle"),
+          actions: [_FacultyFilterButtons()],
+        ),
         body: BlocBuilder<EventFilteredBloc, EventFilteredState>(
           builder: (_, state) {
             if (state is FilteredEventsLoading) {
@@ -32,7 +34,13 @@ class HomeView extends StatelessWidget {
             } else if (state is FilteredEventsLoaded) {
               return _EventListView(items: state.events);
             } else {
-              return _EmptyEventList();
+              return EmptyEventList(
+                textKey: "eventError",
+                icon: SvgPicture.asset(
+                  "assets/icons/no_wifi.svg",
+                  width: NoInternetIconSize,
+                ),
+              );
             }
           },
         ),
@@ -92,27 +100,26 @@ class _EventListView extends StatelessWidget {
   }
 }
 
-class _EmptyEventList extends StatelessWidget {
+class EmptyEventList extends StatelessWidget {
+  final String textKey;
+  final Widget icon;
+
+  EmptyEventList({@required this.textKey, this.icon});
+
   @override
   Widget build(BuildContext context) => Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SvgPicture.asset(
-                  "assets/icons/no_wifi.svg",
-                  width: NoInternetIconSize,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  context.translate("eventError"),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.body1,
-                ),
-              ],
-            ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              icon ?? Container(),
+              const SizedBox(height: 20),
+              Text(
+                context.translate(textKey),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.body1,
+              ),
+            ],
           ),
         ),
       );

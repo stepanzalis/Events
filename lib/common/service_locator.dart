@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +21,6 @@ import 'package:uhk_events/ui/onboarding/bloc/notification_bloc.dart';
 import 'managers/messaging_manager.dart';
 import 'managers/network_info.dart';
 import 'managers/preference_manager.dart';
-
 
 final injector = GetIt.instance;
 
@@ -46,13 +47,20 @@ Future<void> initDi() async {
   injector.registerFactory<NavigatorBloc>(() => NavigatorBloc());
 
   injector.registerFactory<SavedEventsBloc>(
-      () => SavedEventsBloc(eventRepository: injector(), ticker: injector()));
+    () => SavedEventsBloc(eventRepository: injector(), ticker: injector()),
+  );
 
   injector.registerFactory<AboutInfoBloc>(
-      () => AboutInfoBloc(eventRepository: injector()));
+    () => AboutInfoBloc(
+      eventRepository: injector(),
+    ),
+  );
 
   injector.registerFactory<MainEventBloc>(
-    () => MainEventBloc(eventRepository: injector()),
+    () => MainEventBloc(
+      eventRepository: injector(),
+      userRepository: injector(),
+    ),
   );
 
   // Repositories
@@ -65,8 +73,11 @@ Future<void> initDi() async {
   );
 
   injector.registerLazySingleton<UserRepository>(
-    () =>
-        UserRepositoryImp(remoteProvider: injector(), networkInfo: injector()),
+    () => UserRepositoryImp(
+      remoteProvider: injector(),
+      networkInfo: injector(),
+      localProvider: injector(),
+    ),
   );
 
   // Data sources
@@ -75,11 +86,11 @@ Future<void> initDi() async {
   );
 
   injector.registerLazySingleton<FirestoreProvider>(
-    () => FirestoreProvider(),
+    () => FirestoreProvider(firestore: injector()),
   );
 
   injector.registerLazySingleton<AuthProvider>(
-    () => FirebaseAuthProvider(),
+    () => FirebaseAuthProvider(firebaseAuth: injector()),
   );
 
   injector.registerLazySingleton<AppPreferences>(
@@ -101,5 +112,7 @@ Future<void> initDi() async {
   injector.registerLazySingleton(() => DataConnectionChecker());
   injector.registerLazySingleton(() => FirebaseMessaging());
   injector.registerLazySingleton(() => Ticker());
+  injector.registerLazySingleton(() => FirebaseAuth.instance);
+  injector.registerLazySingleton(() => Firestore.instance);
   injector.registerLazySingleton(() => http.Client());
 }
