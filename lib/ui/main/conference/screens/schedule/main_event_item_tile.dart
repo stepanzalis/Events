@@ -91,7 +91,7 @@ class SaveEventStar extends StatelessWidget {
   final double isSelected;
   final VoidCallback onClick;
 
-  const SaveEventStar({@required this.isSelected, @required this.onClick});
+  const SaveEventStar({@required this.isSelected, this.onClick});
 
   @override
   Widget build(BuildContext context) {

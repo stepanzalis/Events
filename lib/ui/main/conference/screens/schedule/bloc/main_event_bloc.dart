@@ -53,12 +53,15 @@ class MainEventBloc extends Bloc<MainEventEvent, MainEventState> {
   Stream<MainEventState> _mapLoadMainEventsToState(
       String eventId, String userId,
       {bool showSaved = false}) async* {
+    yield state.copyWith(showSavedEvents: showSaved);
+
     final List<MainEventItem> events =
         await eventRepository.fetchScheduleFromEvent(eventId);
     final List<MainEventItem> savedEvents =
         await eventRepository.fetchScheduleFromUser(eventId, userId);
 
-    final evensToShow = await _getEventsWithSavedArgument(showSaved, events, savedEvents);
+    final evensToShow =
+        await _getEventsWithSavedArgument(showSaved, events, savedEvents);
 
     final List<MainEventDay> dayEvents =
         await eventRepository.getDaysFromMainEvent(evensToShow);

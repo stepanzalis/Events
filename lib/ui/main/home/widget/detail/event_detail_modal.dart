@@ -75,19 +75,21 @@ class _TopSection extends StatelessWidget {
       );
 }
 
-class _EventTimeSubSection extends StatelessWidget {
-  final EventItem item;
+class EventTimeSubSection extends StatelessWidget {
+  final String time;
+  final String icon;
+  final Color color;
 
-  const _EventTimeSubSection({@required this.item});
+  const EventTimeSubSection(
+      {@required this.time, @required this.color, @required this.icon});
 
   @override
   Widget build(BuildContext context) => Row(
         children: <Widget>[
-          SvgPicture.asset("assets/icons/time_icon.svg",
-              width: 15, color: item.faculty.facultyColor()),
+          SvgPicture.asset(icon, width: 15, color: color),
           const SizedBox(width: 20),
           Expanded(
-              child: Text(item.eventTime,
+              child: Text(time,
                   style: Theme.of(context)
                       .textTheme
                       .display1
@@ -107,7 +109,11 @@ class _BottomSection extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            _EventTimeSubSection(item: item),
+            EventTimeSubSection(
+              time: item.eventTime,
+              color: item.faculty.facultyColor(),
+              icon: "assets/icons/time_icon.svg",
+            ),
             Align(alignment: Alignment.centerLeft, child: Text("")),
             _CalendarButton(item: item)
           ],

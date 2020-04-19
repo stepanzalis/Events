@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/common/service_locator.dart';
+import 'package:uhk_events/common/transitions/slide_transition.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
+import 'package:uhk_events/ui/main/conference/screens/detail/schedule_detail_screen.dart';
 import 'package:uhk_events/ui/main/conference/screens/schedule/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
 import 'package:uhk_events/ui/main/home/home_view.dart';
@@ -19,8 +21,9 @@ class ScheduleView extends StatelessWidget {
 
     return MultiBlocProvider(providers: [
       BlocProvider<MainEventBloc>(
-          create: (context) =>
-              injector<MainEventBloc>()..add(LoadMainEvents(eventId: eventId))),
+        create: (context) =>
+            injector<MainEventBloc>()..add(LoadMainEvents(eventId: eventId)),
+      ),
     ], child: _ScheduleScreen());
   }
 }
@@ -52,7 +55,7 @@ class _ScheduleScreen extends StatelessWidget {
                 : TabBarView(
                     children: state.dayEvents?.map((dayEvent) {
                       return dayEvent.events.isNotEmpty
-                          ? _EventList(events: dayEvent.events)
+                          ? _EventList(events: dayEvent.events, color: color)
                           : EmptyEventList(textKey: "noEventsLoaded");
                     })?.toList(),
                   ),
@@ -65,8 +68,9 @@ class _ScheduleScreen extends StatelessWidget {
 
 class _EventList extends StatelessWidget {
   final List<MainEventItem> events;
+  final Color color;
 
-  const _EventList({@required this.events});
+  const _EventList({@required this.events, @required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +80,19 @@ class _EventList extends StatelessWidget {
         itemCount: events.length,
         itemBuilder: (context, index) => MainEventItemTile(
           item: events[index],
-          onDetailClick: () {},
+          onDetailClick: () {
+            Navigator.of(context).push(
+              SlideLeftRoute(
+                child: BlocProvider.value(
+                  value: injector<MainEventBloc>(),
+                  child: ScheduleDetailScreen(
+                    eventItem: events[index],
+                    color: color,
+                  ),
+                ),
+              ),
+            );
+          },
           onSavedClick: () {
             final eventId = MainEventInheritedWidget.of(context).id;
             BlocProvider.of<MainEventBloc>(context).add(

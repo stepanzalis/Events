@@ -13,7 +13,7 @@ class BannerWidget extends StatelessWidget {
       {@required this.title,
       @required this.url,
       @required this.color,
-      this.date});
+      this.date = ""});
 
   @override
   Widget build(BuildContext context) {
