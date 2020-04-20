@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/entities/general_info_entity.dart';
 import 'package:uhk_events/io/entities/main_event_entity.dart';
 import 'package:uhk_events/io/entities/main_event_item_entity.dart';
+import 'package:uhk_events/io/entities/wifi_info_entity.dart';
 import 'package:uhk_events/io/model/general_info.dart';
 import 'package:uhk_events/io/model/main_event.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
+import 'package:uhk_events/io/model/wifi_info.dart';
 
 class FirestoreProvider {
   final Firestore firestore;
@@ -28,6 +30,13 @@ class FirestoreProvider {
       .collection('events')
       .getDocuments()
       .then((list) => list.documents.map((doc) => doc.documentID).toList());
+
+  Future<WifiInfo> fetchWifiInfo() => firestore
+      .collection('generalInfo')
+      .document('wifi')
+      .get()
+      .then((document) =>
+          WifiInfo.fromEntity(WifiInfoEntity.fromDocument(document)));
 
   Future<MainEvent> fetchMainEventInfo(String id) => firestore
       .collection('events')

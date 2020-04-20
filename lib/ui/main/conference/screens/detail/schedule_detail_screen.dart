@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:uhk_events/common/constants.dart';
 import 'package:uhk_events/common/date_formatter.dart';
 import 'package:uhk_events/io/model/scheduled_event.dart';
 import 'package:uhk_events/ui/main/conference/screens/about/about_banner.dart';
@@ -29,7 +29,9 @@ class ScheduleDetailScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: EventTimeSubSection(
                       icon: "assets/icons/time_icon.svg",
-                      time: format(dateTime: eventItem.startDateTime),
+                      time: format(
+                          dateTime: eventItem.startDateTime,
+                          format: HUMAN_DATE_TIME_DAYNAME_FORMAT),
                       color: color,
                     ),
                   ),
@@ -103,10 +105,10 @@ class _FloatingActionButton extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: color,
       child: Center(
-        child: SvgPicture.asset(
-          "assets/icons/star.svg",
-          width: 30,
+        child: Icon(
+          Icons.star,
           color: Colors.white,
+          size: 40,
         ),
       ),
       onPressed: () {},

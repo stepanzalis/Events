@@ -14,21 +14,19 @@ import 'package:uhk_events/ui/shared/app_bar.dart';
 
 import 'main_event_item_tile.dart';
 
-class ScheduleView extends StatelessWidget {
+class ScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String eventId = MainEventInheritedWidget.of(context).id;
 
-    return MultiBlocProvider(providers: [
-      BlocProvider<MainEventBloc>(
+    return BlocProvider<MainEventBloc>(
         create: (context) =>
             injector<MainEventBloc>()..add(LoadMainEvents(eventId: eventId)),
-      ),
-    ], child: _ScheduleScreen());
+        child: _ScheduleView());
   }
 }
 
-class _ScheduleScreen extends StatelessWidget {
+class _ScheduleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = MainEventInheritedWidget.of(context).faculty.facultyColor();
@@ -95,12 +93,12 @@ class _EventList extends StatelessWidget {
           },
           onSavedClick: () {
             final eventId = MainEventInheritedWidget.of(context).id;
-            BlocProvider.of<MainEventBloc>(context).add(
-              ToggleEvent(
-                mainEventItem: events[index],
-                eventId: eventId,
-              ),
-            );
+            context.bloc<MainEventBloc>().add(
+                  ToggleEvent(
+                    mainEventItem: events[index],
+                    eventId: eventId,
+                  ),
+                );
           },
         ),
       ),
@@ -134,8 +132,8 @@ class MyScheduleFilter extends StatelessWidget {
   }
 
   void _toggleSaveEvents(BuildContext context, bool value, String eventId) {
-    BlocProvider.of<MainEventBloc>(context).add(
-      ToggleSavedEvents(savedEvents: value, eventId: eventId),
-    );
+    context.bloc<MainEventBloc>().add(
+          ToggleSavedEvents(savedEvents: value, eventId: eventId),
+        );
   }
 }

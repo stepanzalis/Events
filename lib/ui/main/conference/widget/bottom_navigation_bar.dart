@@ -18,8 +18,8 @@ class ConferenceBottomNavigation extends StatelessWidget {
       currentIndex: index,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      onTap: (int i) => BlocProvider.of<NavigatorBloc>(context)
-          .add(ChangePageIndex(index: i)),
+      onTap: (int i) =>
+          context.bloc<NavigatorBloc>().add(ChangePageIndex(index: i)),
       items: navigationItems(context),
     );
   }

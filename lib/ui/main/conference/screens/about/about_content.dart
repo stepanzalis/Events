@@ -10,7 +10,7 @@ import 'about_banner.dart';
 import 'bloc/about_info_event.dart';
 import 'saved_event_list.dart';
 
-class AboutContent extends StatelessWidget {
+class AboutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Faculty faculty = MainEventInheritedWidget.of(context).faculty;
@@ -33,7 +33,7 @@ class AboutContent extends StatelessWidget {
                 _EventDescriptionText(
                     text: state.description,
                     color: faculty.facultyColor(),
-                    onClick: () => BlocProvider.of<AboutInfoBloc>(context).add(
+                    onClick: () => context.bloc<AboutInfoBloc>().add(
                           ToggleDescription(
                             expanded: !state.isDescriptionExpanded,
                           ),
@@ -114,15 +114,15 @@ class _EventDescriptionTextState extends State<_EventDescriptionText>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AnimatedSize(
-                vsync: this,
-                duration: const Duration(milliseconds: 400),
-                child: Text(
-                  widget.text,
-                  maxLines: widget.isExpanded ? null : 3,
-                  style:
-                      Theme.of(context).textTheme.body2.copyWith(height: 1.5),
-                  overflow: TextOverflow.fade,
-                )),
+              vsync: this,
+              duration: const Duration(milliseconds: 400),
+              child: Text(
+                widget.text,
+                maxLines: widget.isExpanded ? null : 3,
+                style: Theme.of(context).textTheme.body2.copyWith(height: 1.5),
+                overflow: TextOverflow.fade,
+              ),
+            ),
             widget.text.length >= _maxCharCount
                 ? _ShowMoreButton(
                     title: widget.isExpanded
@@ -152,10 +152,14 @@ class _ShowMoreButton extends StatelessWidget {
       height: 30,
       width: 80,
       child: RaisedButton(
-        child: Text(title.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.display1.copyWith(
-                fontSize: 13, color: Colors.white, letterSpacing: 1.5)),
+        child: Text(
+          title.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: Theme.of(context)
+              .textTheme
+              .display1
+              .copyWith(fontSize: 13, color: Colors.white, letterSpacing: 1.5),
+        ),
         onPressed: onClick,
         color: color,
         shape: RoundedRectangleBorder(

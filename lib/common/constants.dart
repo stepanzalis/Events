@@ -1,5 +1,6 @@
 const String HUMAN_DATE_FORMAT = "dd. MM. yyyy";
 const String HUMAN_DATE_TIME_FORMAT = "dd. MM. yyyy HH:mm";
+const String HUMAN_DATE_TIME_DAYNAME_FORMAT = "EEEE, dd. MM. yyyy HH:mm";
 const String API_DATE_FORMAT = "MM-dd-yyyy";
 const String ONLY_TIME_FORMAT = "HH:mm";
 const String API_DATE_FORMAT_LONGER = "MM-dd-yyyy-HH-mm";
@@ -14,6 +15,8 @@ const double appBarRightPadding = 10;
 const String Preferences = "preferences";
 const String ApiToken = "ApiToken";
 const String UserDocumentId = "UserDocumentId";
+const String DarkMode = "DarkMode";
+const String Notification = "Notifications";
 
 const String Events = "Events";
 const String FacultyTag = "Faculty";

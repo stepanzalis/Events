@@ -71,7 +71,7 @@ class _EventListView extends StatelessWidget {
       );
 
   void _showModalDialog(EventItem item, BuildContext context) {
-    final bloc = BlocProvider.of<EventFilteredBloc>(context);
+    final bloc = context.bloc<EventFilteredBloc>();
 
     showModal(
         context: context,
@@ -174,9 +174,9 @@ class _FacultyFilterButtons extends StatelessWidget {
               return Row(
                   children: faculties
                       .map((faculty) => GestureDetector(
-                            onTap: () =>
-                                BlocProvider.of<EventFilteredBloc>(context)
-                                    .add(UpdateFilter(faculty)),
+                            onTap: () => context
+                                .bloc<EventFilteredBloc>()
+                                .add(UpdateFilter(faculty)),
                             child: FilterFacultyButton(
                                 faculty: faculty,
                                 isActive:

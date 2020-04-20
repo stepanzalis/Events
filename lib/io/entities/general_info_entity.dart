@@ -9,7 +9,7 @@ class GeneralInfoEntity extends Equatable {
   const GeneralInfoEntity({@required this.wifi});
 
   factory GeneralInfoEntity.fromSnapshot(DocumentSnapshot snap) {
-    return GeneralInfoEntity(wifi: WifiInfoEntity.fromSnapshot(snap));
+    return GeneralInfoEntity(wifi: WifiInfoEntity.fromDocument(snap));
   }
 
   @override

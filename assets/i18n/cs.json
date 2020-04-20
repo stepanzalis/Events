@@ -20,5 +20,13 @@
   "less": "Méně",
   "noSavedEvents": "Nemáte zatím žádné uložené akce",
   "tillStart": " do začátku",
-  "noEventsLoaded": "Žádné události nebyly načteny."
+  "noEventsLoaded": "Žádné události nebyly načteny.",
+  "information": "Informace",
+  "ssid": "SSID: ",
+  "password": "Heslo: ",
+  "wifi": "WiFi",
+  "settings": "Nastavení",
+  "darkMode": "Tmavý mód",
+  "developer": "Vývojář",
+  "graphics": "Design s chutí"
 }

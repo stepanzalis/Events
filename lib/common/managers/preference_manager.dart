@@ -12,7 +12,13 @@ abstract class BasePreferences {
 
   void putUserDocumentId(String userDocumentId);
 
+  void setDarkMode(bool enabled);
+
+  void setNotifications(bool enabled);
+
   Future<String> getToken();
+
+  Future<bool> getDarkMode();
 
   Future<List<EventItemEntity>> getEvents();
 
@@ -76,7 +82,23 @@ class AppPreferences with BasePreferences {
 
   @override
   Future<bool> isUserLoggedIn() async {
-    String token = await getToken();
-    return (token != null && token.isNotEmpty);
+    String userId = await getUserDocumentId();
+    return (userId != null && userId.isNotEmpty);
+  }
+
+  @override
+  Future<bool> getDarkMode() async {
+    final Box box = await Hive.box(Preferences);
+    return await box.get(DarkMode);
+  }
+
+  @override
+  void setDarkMode(bool enabled) {
+    Hive.box(Preferences)..put(DarkMode, enabled);
+  }
+
+  @override
+  void setNotifications(bool enabled) {
+    Hive.box(Preferences)..put(Notification, enabled);
   }
 }

@@ -55,7 +55,7 @@ class _PageViewIndicatorState extends State<PageViewIndicator> {
   }
 
   void pageChanged(int index) =>
-      BlocProvider.of<OnboardingBloc>(context).add(ChangedPaged(index: index));
+      context.bloc<OnboardingBloc>().add(ChangedPaged(index: index));
 
   @override
   void initState() {
@@ -74,7 +74,7 @@ class _BottomDotIndicator extends StatelessWidget {
     return BlocConsumer<OnboardingBloc, OnboardingState>(
       listenWhen: (_, state) => state.isSkipped == true,
       listener: (context, state) => {
-        BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn()),
+        context.bloc<AuthenticationBloc>().add(LoggedIn()),
       },
       builder: (context, state) {
         return Align(

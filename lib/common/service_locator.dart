@@ -8,10 +8,15 @@ import 'package:uhk_events/io/api/api_provider.dart';
 import 'package:uhk_events/io/firebase/firebase_auth_provider.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
 import 'package:uhk_events/io/repositories/event_repository.dart';
+import 'package:uhk_events/io/repositories/info_repository.dart';
+import 'package:uhk_events/io/repositories/map_repository.dart';
 import 'package:uhk_events/io/repositories/user_repository.dart';
 import 'package:uhk_events/ui/main/conference/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/screens/about/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/screens/about/bloc/ticker.dart';
+import 'package:uhk_events/ui/main/conference/screens/information/information/bloc.dart';
+import 'package:uhk_events/ui/main/conference/screens/information/wifi/wifi_info_bloc.dart';
+import 'package:uhk_events/ui/main/conference/screens/map/bloc/bloc.dart';
 import 'package:uhk_events/ui/main/conference/screens/schedule/bloc/main_event_bloc.dart';
 import 'package:uhk_events/ui/main/home/auth_bloc/auth_bloc.dart';
 import 'package:uhk_events/ui/main/home/bloc/bloc.dart';
@@ -42,6 +47,14 @@ Future<void> initDi() async {
     () => NotificationBloc(messagingManager: injector()),
   );
 
+  injector.registerFactory<InformationBloc>(
+    () => InformationBloc(infoRepository: injector()),
+  );
+
+  injector.registerFactory<WifiInfoBloc>(
+    () => WifiInfoBloc(),
+  );
+
   injector.registerFactory<OnboardingBloc>(() => OnboardingBloc());
 
   injector.registerFactory<NavigatorBloc>(() => NavigatorBloc());
@@ -63,6 +76,10 @@ Future<void> initDi() async {
     ),
   );
 
+  injector.registerFactory<MapBloc>(
+    () => MapBloc(mapRepository: injector()),
+  );
+
   // Repositories
   injector.registerLazySingleton<EventRepository>(
     () => EventRepositoryImpl(
@@ -79,6 +96,16 @@ Future<void> initDi() async {
       localProvider: injector(),
     ),
   );
+
+  injector.registerLazySingleton<InfoRepository>(
+    () => InfoRepositoryImp(
+      remoteProvider: injector(),
+      localDataSource: injector(),
+      messagingManager: injector(),
+    ),
+  );
+
+  injector.registerLazySingleton<MapRepository>(() => MapRepositoryImp());
 
   // Data sources
   injector.registerLazySingleton<ApiProvider>(

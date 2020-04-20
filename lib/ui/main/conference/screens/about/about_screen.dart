@@ -6,7 +6,7 @@ import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget
 import 'about_content.dart';
 import 'bloc/bloc.dart';
 
-class AboutView extends StatelessWidget {
+class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String eventId = MainEventInheritedWidget.of(context).id;
@@ -21,7 +21,7 @@ class AboutView extends StatelessWidget {
               injector<AboutInfoBloc>()..add(LoadMainEventInfo(id: eventId)),
         )
       ],
-      child: AboutContent(),
+      child: AboutView(),
     );
   }
 }

@@ -8,8 +8,8 @@ class WifiInfoEntity extends Equatable {
 
   const WifiInfoEntity({@required this.ssid, @required this.password});
 
-  factory WifiInfoEntity.fromSnapshot(DocumentSnapshot snap) =>
-      WifiInfoEntity(ssid: snap.data['SSID'], password: snap.data['password']);
+  factory WifiInfoEntity.fromDocument(DocumentSnapshot doc) =>
+      WifiInfoEntity(ssid: doc.data['SSID'], password: doc.data['password']);
 
   @override
   String toString() => 'WifiEntity{ id: $ssid, title: $password}';
