@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Společná budova A",
+    "lat": 50.203692,
+    "lon": 15.830035,
+    "icon_path": "assets/icons/building_a.png"
+  },
+  {
+    "name": "Budova J",
+    "lat": 50.204270,
+    "lon": 15.830035,
+    "icon_path": "assets/icons/building_j.png"
+  },
+  {
+    "name": "Budova C",
+    "lat": 50.209431,
+    "lon": 15.826658,
+    "icon_path": "assets/icons/building_c.png"
+  },
+  {
+    "name": "Budova E",
+    "lat": 50.210831,
+    "lon": 15.849922,
+    "icon_path": "assets/icons/building_e.png"
+  },
+  {
+    "name": "Budova F",
+    "lat": 50.209058,
+    "lon": 15.833416,
+    "icon_path": "assets/icons/building_f.png"
+  },
+  {
+    "name": "Budova S",
+    "lat": 50.203887,
+    "lon": 15.828456,
+    "icon_path": "assets/icons/building_s.png"
+  }
+]
