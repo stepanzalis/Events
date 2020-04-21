@@ -71,6 +71,8 @@ class NotificationPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<NotificationBloc, NotificationState>(
+      condition: (_, state) =>
+          state is NotificationsError || state is NotificationsSuccess,
       listener: (context, state) {
         if (state is NotificationsSuccess) {
           _skipOnboarding(context);
@@ -88,10 +90,17 @@ class NotificationPageView extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 40),
-            child: RoundedButton(
-                onClick: () => _allowNotifications(context),
-                title: context.translate("allowNotifications"),
-                color: color),
+            child: BlocBuilder<NotificationBloc, NotificationState>(
+                builder: (context, state) {
+              if (state is NotificationsLoading) {
+                return CircularProgressIndicator();
+              } else {
+                return RoundedButton(
+                    onClick: () => _allowNotifications(context),
+                    title: context.translate("allowNotifications"),
+                    color: color);
+              }
+            }),
           ),
           FlatButton(
               onPressed: () => _skipOnboarding(context),

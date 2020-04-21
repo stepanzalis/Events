@@ -20,6 +20,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   ) async* {
     if (event is NotificationsAllowedPressed) {
       try {
+        yield NotificationsLoading();
         await _saveNotificationValue();
         yield NotificationsSuccess();
       } catch (e) {
