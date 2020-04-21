@@ -1,7 +1,11 @@
 # Events
 
-<img src="https://camo.githubusercontent.com/de20d75ca61aa884f5259e6e34090efeda1bfd45/68747470733a2f2f666c75747465722e6465762f6173736574732f666c75747465722d6c6f636b75702d346362306565303732616233313265353937383464396662663466623761643432363838613766646165613132373063636636626266346633346237653033662e737667" alt="Flutter logo" style="max-width:100%;">
+![UHK Events](/assets/launcher/uhk_events.png)
 
 **Android & iOS app to see events at Univerzita Hradec Králové**
 
 [![Codemagic build status](https://api.codemagic.io/apps/5dc476090679e126d8facf36/5dc476090679e126d8facf35/status_badge.svg)](https://codemagic.io/apps/5dc476090679e126d8facf36/5dc476090679e126d8facf35/latest_build)
+
+**Backend**
+- Firebase Firestore was chosen as a backend service provider
+- Firebase Auth - anonymous sign in to get user id
