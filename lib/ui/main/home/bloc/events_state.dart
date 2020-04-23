@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:uhk_events/io/model/event_item.dart';
 
 abstract class EventsState {
@@ -13,7 +14,7 @@ class EventsLoading extends EventsState with EquatableMixin {
 class EventsLoaded extends EventsState with EquatableMixin {
   final List<EventItem> events;
 
-  EventsLoaded(this.events);
+  EventsLoaded({@required this.events});
 
   @override
   List<Object> get props => [events];

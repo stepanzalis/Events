@@ -4,11 +4,11 @@ import 'package:uhk_events/common/extensions/extensions.dart';
 import 'package:uhk_events/io/model/faculty.dart';
 import 'package:uhk_events/ui/main/conference/screens/about/bloc/about_info_bloc.dart';
 import 'package:uhk_events/ui/main/conference/screens/about/bloc/about_info_state.dart';
+import 'package:uhk_events/ui/main/conference/screens/about/saved_event_list.dart';
 import 'package:uhk_events/ui/main/conference/widget/main_event_inherited_widget.dart';
 
 import 'about_banner.dart';
 import 'bloc/about_info_event.dart';
-import 'saved_event_list.dart';
 
 class AboutView extends StatelessWidget {
   @override
@@ -26,23 +26,25 @@ class AboutView extends StatelessWidget {
                 title: state.title,
                 url: state.url,
                 date: state.date),
-            _SectionTitle(text: context.translate("aboutEvent")),
-            _ExpandedScrollContainer(
-              children: <Widget>[
-                const SizedBox(height: 10),
-                _EventDescriptionText(
-                    text: state.description,
-                    color: faculty.facultyColor(),
-                    onClick: () => context.bloc<AboutInfoBloc>().add(
-                          ToggleDescription(
-                            expanded: !state.isDescriptionExpanded,
+            Expanded(
+              child: _ExpandedScrollContainer(
+                children: <Widget>[
+                  _SectionTitle(text: context.translate("aboutEvent")),
+                  const SizedBox(height: 10),
+                  _EventDescriptionText(
+                      text: state.description,
+                      color: faculty.facultyColor(),
+                      onClick: () => context.bloc<AboutInfoBloc>().add(
+                            ToggleDescription(
+                              expanded: !state.isDescriptionExpanded,
+                            ),
                           ),
-                        ),
-                    isExpanded: state.isDescriptionExpanded),
-              ],
+                      isExpanded: state.isDescriptionExpanded),
+                  _SectionTitle(text: context.translate("mySchedule")),
+                  MainEventItemsListView()
+                ],
+              ),
             ),
-            _SectionTitle(text: context.translate("mySchedule")),
-            MainEventItemsListView()
           ],
         );
       },
@@ -57,12 +59,10 @@ class _ExpandedScrollContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
       ),
     );
   }

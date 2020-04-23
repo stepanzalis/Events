@@ -19,7 +19,7 @@ class NotificationsLoading extends NotificationState {
 
 class NotificationsError extends NotificationState {
   final Exception e;
-  NotificationsError(this.e);
+  NotificationsError({this.e});
 
   @override
   List<Object> get props => [e];

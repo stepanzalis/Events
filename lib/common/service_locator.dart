@@ -128,7 +128,8 @@ Future<void> initDi() async {
     () => MessagingManager(
         preferenceManager: injector(),
         firestoreProvider: injector(),
-        firebaseMessaging: injector()),
+        firebaseMessaging: injector())
+      ..init(),
   );
 
   // Core

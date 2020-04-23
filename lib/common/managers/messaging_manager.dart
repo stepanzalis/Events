@@ -7,8 +7,7 @@ import 'package:uhk_events/common/managers/preference_manager.dart';
 import 'package:uhk_events/io/firebase/firestore_provider.dart';
 
 class MessagingManager {
-  static final StreamController<Map<String, dynamic>> _controller =
-      StreamController();
+  final StreamController<Map<String, dynamic>> _controller = StreamController();
 
   final FirebaseMessaging firebaseMessaging;
   final AppPreferences preferenceManager;
@@ -17,26 +16,25 @@ class MessagingManager {
   MessagingManager(
       {@required this.firebaseMessaging,
       @required this.preferenceManager,
-      @required this.firestoreProvider}) {
+      @required this.firestoreProvider});
+
+  void init() {
     firebaseMessaging.configure(
-      onBackgroundMessage:
-          Platform.isAndroid ? _backgroundMessageHandler : null,
-      onMessage: (Map<String, dynamic> message) async {
-        _controller.add(message);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        _controller.add(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        _controller.add(message);
-      },
-    );
+        onBackgroundMessage:
+            Platform.isAndroid ? _backgroundMessageHandler : null,
+        onMessage: (Map<String, dynamic> message) async {
+          _controller.add(message);
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          _controller.add(message);
+        },
+        onResume: (Map<String, dynamic> message) async {
+          _controller.add(message);
+        });
   }
 
-  static Future<dynamic> _backgroundMessageHandler(
-      Map<String, dynamic> message) async {
-    await _controller.add(message);
-  }
+  static Future<void> _backgroundMessageHandler(
+      Map<String, dynamic> message) async {}
 
   void iOSNotificationPermission() =>
       firebaseMessaging.requestNotificationPermissions();

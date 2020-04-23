@@ -58,7 +58,7 @@ class _WifiBox extends StatelessWidget {
               Row(
                 children: <Widget>[
                   SvgPicture.asset("assets/icons/wifi.svg", height: 20),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Text(
                     context.translate("wifi"),
                     style: Theme.of(context)

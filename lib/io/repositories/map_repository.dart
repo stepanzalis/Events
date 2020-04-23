@@ -27,7 +27,8 @@ class MapRepositoryImp extends MapRepository {
                 markerId: MarkerId(faculty.name),
                 position: LatLng(faculty.lat, faculty.lon),
                 icon: await BitmapDescriptor.fromAssetImage(
-                    ImageConfiguration(size: Size(20, 20)), faculty.assetPath)),
+                    ImageConfiguration(devicePixelRatio: 1),
+                    faculty.assetPath)),
           ),
         )
         .toList();

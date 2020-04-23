@@ -17,7 +17,6 @@ class LoggedIn extends AuthenticationEvent {
 
   @override
   String toString() => 'LoggedIn';
-
 }
 
 class SkippedAuth extends AuthenticationEvent {

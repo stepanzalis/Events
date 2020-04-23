@@ -27,7 +27,7 @@ class EventsBloc extends Bloc<EventsEvent, EventsState> {
     yield itemsOrError.fold(
       (failure) => EventsNotLoaded(),
       (response) =>
-          response.isEmpty ? EventsNotLoaded() : EventsLoaded(response),
+          response.isEmpty ? EventsNotLoaded() : EventsLoaded(events: response),
     );
   }
 }

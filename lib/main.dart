@@ -74,9 +74,10 @@ class _EventsAppState extends State<EventsApp> {
   @override
   void initState() {
     super.initState();
-    //injector<MessagingManager>()
-    //    .notifications()
-    //    .listen((onData) => {injector<EventsBloc>().add(LoadEvents())});
+
+    injector<MessagingManager>()
+        .notifications()
+        .listen((onData) => {injector<EventsBloc>().add(LoadEvents())});
   }
 
   @override
@@ -89,7 +90,7 @@ class _EventsAppState extends State<EventsApp> {
 void _statusBarColor() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.transparent),
   );
 }

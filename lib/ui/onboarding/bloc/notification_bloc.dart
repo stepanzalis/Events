@@ -24,7 +24,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         await _saveNotificationValue();
         yield NotificationsSuccess();
       } catch (e) {
-        yield NotificationsError(e);
+        yield NotificationsError();
       }
     }
   }

@@ -137,7 +137,7 @@ class _LoadingList extends StatelessWidget {
               child: Shimmer.fromColors(
                 highlightColor: Colors.white,
                 baseColor: Colors.grey[300],
-                period: const Duration(milliseconds: 400),
+                period: const Duration(milliseconds: 800),
                 child: Container(
                   height: 80,
                   child: Column(
