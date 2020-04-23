@@ -26,16 +26,27 @@ void main() {
   });
 
   blocTest(
-    'emits [NotificationState.initial(), NotificationState.enabled()] when notifications are allowed',
+    'emits [NotificationsInitial, NotificationStateSuccess] when notifications are allowed',
     build: () => bloc,
-    // act: (bloc) => bloc.add(ToggleNotifications(allowed: true)),
-    // expect: [NotificationState.initial(), NotificationState.enabled()],
+    act: (bloc) => bloc.add(NotificationsAllowedPressed()),
+    expect: [
+      NotificationsInitial(),
+      NotificationsLoading(),
+      NotificationsSuccess()
+    ],
   );
 
   blocTest(
     'emits [NotificationState.initial(), NotificationState.disabled()] when notifications are disabled',
-    build: () => bloc,
-    // act: (bloc) => bloc.add(ToggleNotifications(allowed: false)),
-    // expect: [NotificationState.initial(), NotificationState.disabled()],
+    build: () {
+      when(mockMessagaingManager.saveToken()).thenThrow(throwsException);
+      return NotificationBloc(messagingManager: mockMessagaingManager);
+    },
+    act: (bloc) => bloc.add(NotificationsAllowedPressed()),
+    expect: [
+      NotificationsInitial(),
+      NotificationsLoading(),
+      NotificationsError()
+    ],
   );
 }

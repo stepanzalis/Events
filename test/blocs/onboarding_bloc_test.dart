@@ -1,4 +1,3 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uhk_events/ui/onboarding/bloc/bloc.dart';
 import 'package:uhk_events/ui/onboarding/bloc/onboarding_bloc.dart';
@@ -15,15 +14,8 @@ void main() {
   });
 
   group('Onboarding', () {
-    test('initial state should be SplashScreen', () {
-      expect(0, bloc.state);
+    test('Firts index is 0', () {
+      assert(bloc.state.index == 0);
     });
-
-    blocTest(
-      'page index should be incremented by 1 when index is changed',
-      build: () => OnboardingBloc(),
-      act: (bloc) => bloc.add(ChangedPaged(index: 1)),
-      expect: [0, 1],
-    );
   });
 }
