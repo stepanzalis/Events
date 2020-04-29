@@ -3,36 +3,42 @@
     "name": "Společná budova A",
     "lat": 50.203692,
     "lon": 15.830035,
-    "icon_path": "assets/icons/building_a.png"
+    "android_icon_path": "assets/icons/building_a.png",
+    "icon_path": "assets/icons/2.0x/building_a.png"
   },
   {
     "name": "Budova J",
-    "lat": 50.204270,
-    "lon": 15.830035,
-    "icon_path": "assets/icons/building_j.png"
+    "lat": 50.2043,
+    "lon": 15.8294,
+    "android_icon_path": "assets/icons/building_j.png",
+    "ios_icon_path": "assets/icons/2.0x/building_j.png"
   },
   {
     "name": "Budova C",
     "lat": 50.209431,
     "lon": 15.826658,
-    "icon_path": "assets/icons/building_c.png"
+    "android_icon_path": "assets/icons/building_c.png",
+    "ios_icon_path": "assets/icons/2.0x/building_c.png"
   },
   {
     "name": "Budova E",
     "lat": 50.210831,
     "lon": 15.849922,
-    "icon_path": "assets/icons/building_e.png"
+    "android_icon_path": "assets/icons/building_e.png",
+    "ios_icon_path": "assets/icons/2.0x/building_e.png"
   },
   {
     "name": "Budova F",
     "lat": 50.209058,
     "lon": 15.833416,
-    "icon_path": "assets/icons/building_f.png"
+    "android_icon_path": "assets/icons/building_f.png",
+    "ios_icon_path": "assets/icons/2.0x/building_f.png"
   },
   {
     "name": "Budova S",
     "lat": 50.203887,
     "lon": 15.828456,
-    "icon_path": "assets/icons/building_s.png"
+    "android_icon_path": "assets/icons/building_s.png",
+    "ios_icon_path": "assets/icons/2.0x/building_s.png"
   }
 ]

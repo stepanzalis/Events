@@ -36,7 +36,9 @@ class _MapView extends StatelessWidget {
             ),
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
-              context.bloc<MapBloc>().add(LoadFaculties());
+              context
+                  .bloc<MapBloc>()
+                  .add(LoadFaculties(platform: Theme.of(context).platform));
             },
             markers: state.markers,
           ),

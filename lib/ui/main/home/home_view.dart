@@ -22,7 +22,8 @@ import 'package:uhk_events/ui/shared/app_bar.dart';
 
 class HomeView extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) =>
+      Scaffold(
         appBar: EventAppBar(
           context.translate("appTitle"),
           actions: [_FacultyFilterButtons()],
@@ -53,12 +54,14 @@ class _EventListView extends StatelessWidget {
   const _EventListView({@required this.items});
 
   @override
-  Widget build(BuildContext context) => ListView.builder(
+  Widget build(BuildContext context) =>
+      ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {
           final EventItem event = items[index];
           return GestureDetector(
-            onTap: () => event.isConference
+            onTap: () =>
+            event.isConference
                 ? _showConferenceView(event, context)
                 : _showModalDialog(event, context),
             child: EventItemRow(
@@ -107,7 +110,8 @@ class EmptyEventList extends StatelessWidget {
   EmptyEventList({@required this.textKey, this.icon});
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) =>
+      Container(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +121,10 @@ class EmptyEventList extends StatelessWidget {
               Text(
                 context.translate(textKey),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.body1,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .body1,
               ),
             ],
           ),
@@ -128,11 +135,15 @@ class EmptyEventList extends StatelessWidget {
 class _LoadingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final int itemCount = MediaQuery.of(context).size.height ~/ 100;
+    final int itemCount = MediaQuery
+        .of(context)
+        .size
+        .height ~/ 100;
 
     return ListView.builder(
         itemCount: itemCount,
-        itemBuilder: (_, index) => Padding(
+        itemBuilder: (_, index) =>
+            Padding(
               padding: const EdgeInsets.all(15.0),
               child: Shimmer.fromColors(
                 highlightColor: Colors.white,
@@ -153,7 +164,10 @@ class _LoadingList extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.only(top: 17, left: 20),
                           height: 17,
-                          width: MediaQuery.of(context).size.width / 1.5,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width / 1.5,
                           color: Colors.grey,
                         ),
                       ]),
@@ -165,30 +179,32 @@ class _LoadingList extends StatelessWidget {
 
 class _FacultyFilterButtons extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.only(right: appBarRightPadding),
-        child: BlocBuilder<EventFilteredBloc, EventFilteredState>(
-          condition: (_, state) => state is FilteredEventsLoaded,
-          builder: (context, state) {
-            if (state is FilteredEventsLoaded) {
-              return Row(
-                  children: faculties
-                      .map((faculty) => GestureDetector(
-                            onTap: () => context
-                                .bloc<EventFilteredBloc>()
-                                .add(UpdateFilter(faculty)),
-                            child: FilterFacultyButton(
-                                faculty: faculty,
-                                isActive:
-                                    isFilterActive(state.faculties, faculty)),
-                          ))
-                      .toList());
-            } else {
-              return Container();
-            }
-          },
-        ),
-      );
+  Widget build(BuildContext context) {
+    return BlocBuilder<EventFilteredBloc, EventFilteredState>(
+        condition: (_, state) => state is FilteredEventsLoaded,
+        builder: (context, state) {
+          if (state is FilteredEventsLoaded) {
+            return Row(
+                children: faculties
+                    .map((faculty) =>
+                    GestureDetector(
+                      onTap: () =>
+                          context
+                              .bloc<EventFilteredBloc>()
+                              .add(UpdateFilter(faculty)),
+                      child: FilterFacultyButton(
+                          faculty: faculty,
+                          isActive:
+                          isFilterActive(state.faculties, faculty)),
+                    ))
+                    .toList());
+          }
+          else {
+            return Container();
+          }
+        },
+    );
+  }
 
   bool isFilterActive(List<Faculty> allFaculties, Faculty faculty) =>
       allFaculties.contains(faculty);

@@ -18,11 +18,13 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Stream<MapState> mapEventToState(
     MapEvent event,
   ) async* {
-    yield* _mapLoadMarkersToState();
+    if (event is LoadFaculties) {
+      yield* _mapLoadMarkersToState(event.platform);
+    }
   }
 
-  Stream<MapState> _mapLoadMarkersToState() async* {
-    final Set<Marker> markers = await mapRepository.loadMarkers();
+  Stream<MapState> _mapLoadMarkersToState(TargetPlatform platform) async* {
+    final Set<Marker> markers = await mapRepository.loadMarkers(platform);
     yield MapState.loaded(markers);
   }
 }

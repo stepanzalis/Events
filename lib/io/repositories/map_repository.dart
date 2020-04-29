@@ -6,12 +6,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uhk_events/io/entities/faculty_marker.dart';
 
 abstract class MapRepository {
-  Future<Set<Marker>> loadMarkers();
+  Future<Set<Marker>> loadMarkers(TargetPlatform platform);
 }
 
 class MapRepositoryImp extends MapRepository {
   @override
-  Future<Set<Marker>> loadMarkers() async {
+  Future<Set<Marker>> loadMarkers(TargetPlatform platform) async {
     final markers = Set<Marker>();
 
     final String jsonString = await _loadFacultiesAsset();
@@ -27,8 +27,10 @@ class MapRepositoryImp extends MapRepository {
                 markerId: MarkerId(faculty.name),
                 position: LatLng(faculty.lat, faculty.lon),
                 icon: await BitmapDescriptor.fromAssetImage(
-                    ImageConfiguration(devicePixelRatio: 1),
-                    faculty.assetPath)),
+                    ImageConfiguration(),
+                    platform == TargetPlatform.android
+                        ? faculty.androidAssetPath
+                        : faculty.iOsAssetPath)),
           ),
         )
         .toList();

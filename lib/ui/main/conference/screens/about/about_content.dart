@@ -17,53 +17,72 @@ class AboutView extends StatelessWidget {
 
     return BlocBuilder<AboutInfoBloc, AboutInfoState>(
       builder: (context, state) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            BannerWidget(
-                color: faculty.facultyColor(),
-                title: state.title,
-                url: state.url,
-                date: state.date),
-            Expanded(
-              child: _ExpandedScrollContainer(
-                children: <Widget>[
-                  _SectionTitle(text: context.translate("aboutEvent")),
-                  const SizedBox(height: 10),
-                  _EventDescriptionText(
-                      text: state.description,
-                      color: faculty.facultyColor(),
-                      onClick: () => context.bloc<AboutInfoBloc>().add(
-                            ToggleDescription(
-                              expanded: !state.isDescriptionExpanded,
-                            ),
-                          ),
-                      isExpanded: state.isDescriptionExpanded),
-                  _SectionTitle(text: context.translate("mySchedule")),
-                  MainEventItemsListView()
-                ],
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: constraints.maxWidth,
+                  minHeight: constraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      BannerWidget(
+                          color: faculty.facultyColor(),
+                          title: state.title,
+                          url: state.url,
+                          date: state.date),
+                      Expanded(child: _AboutEventText(state, faculty)),
+                      _MyEventsWithTitle()
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+            );
+          },
         );
       },
     );
   }
 }
 
-class _ExpandedScrollContainer extends StatelessWidget {
-  final List<Widget> children;
+class _AboutEventText extends StatelessWidget {
+  final AboutInfoState state;
+  final Faculty faculty;
 
-  _ExpandedScrollContainer({@required this.children});
+  _AboutEventText(this.state, this.faculty);
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: children,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _SectionTitle(text: context.translate("aboutEvent")),
+        const SizedBox(height: 10),
+        _EventDescriptionText(
+            text: state.description,
+            color: faculty.facultyColor(),
+            onClick: () => context.bloc<AboutInfoBloc>().add(
+                  ToggleDescription(
+                    expanded: !state.isDescriptionExpanded,
+                  ),
+                ),
+            isExpanded: state.isDescriptionExpanded),
+      ],
+    );
+  }
+}
+
+class _MyEventsWithTitle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _SectionTitle(text: context.translate("mySchedule")),
+        MainEventItemsListView()
+      ],
     );
   }
 }
@@ -107,32 +126,30 @@ class _EventDescriptionTextState extends State<_EventDescriptionText>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            AnimatedSize(
-              vsync: this,
-              duration: const Duration(milliseconds: 400),
-              child: Text(
-                widget.text,
-                maxLines: widget.isExpanded ? null : 3,
-                style: Theme.of(context).textTheme.body2.copyWith(height: 1.5),
-                overflow: TextOverflow.fade,
-              ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          AnimatedSize(
+            vsync: this,
+            duration: const Duration(milliseconds: 300),
+            child: Text(
+              widget.text,
+              maxLines: widget.isExpanded ? null : 3,
+              style: Theme.of(context).textTheme.body2.copyWith(height: 1.5),
+              overflow: TextOverflow.fade,
             ),
-            widget.text.length >= _maxCharCount
-                ? _ShowMoreButton(
-                    title: widget.isExpanded
-                        ? context.translate("less")
-                        : context.translate("more"),
-                    color: widget.color,
-                    onClick: widget.onClick)
-                : Container()
-          ],
-        ),
+          ),
+          widget.text.length >= _maxCharCount
+              ? _ShowMoreButton(
+                  title: widget.isExpanded
+                      ? context.translate("less")
+                      : context.translate("more"),
+                  color: widget.color,
+                  onClick: widget.onClick)
+              : Container()
+        ],
       ),
     );
   }
